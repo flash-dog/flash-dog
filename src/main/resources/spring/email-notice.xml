@@ -7,8 +7,8 @@
 
         <property name="host" value="pop.sky-mobi.com"/>
 
-        <property name="username" value="monitor@sky-mobi.com"/>
-        <property name="password" value="m_123456"/>
+        <property name="username" value=""/>
+        <property name="password" value=""/>
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="javaMailProperties">
             <props>
