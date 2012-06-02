@@ -1,0 +1,42 @@
+#set($mainMenu='warnings')
+#parse("/WEB-INF/content/project/_header.vm")
+<script src="$link.setRelative('/js/metric_chart.js')"></script>
+<script type="text/javascript">
+    var alerts =$fm.toJson($alerts);
+    $(document).ready(function () {
+          drawAlerts();
+    });
+    function drawAlerts() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '事件');
+        data.addColumn('string', '内容');
+        data.addColumn('string', '时间');
+
+        for (var key in alerts) {
+            data.addRow([  alerts[key].title , alerts[key].content , alerts[key].createTime]);
+        }
+
+
+        var chart = new google.visualization.Table(document.getElementById('table_div'));
+        chart.draw(data, {showRowNumber:false});
+    }
+</script>
+<div id="content">
+    <div class="contextual">
+    #if($authz.hasProject($project))
+        <a href="$link.setRelative("projects/${project.Name}/warnings/clear")" class="icon icon-delete">清空</a>
+    #end
+    </div>
+    <div>
+        <div>
+            <h2>告警</h2>
+        </div>
+
+    </div>
+    <div id="table_div">
+
+    </div>
+    <div>
+
+    </div>
+</div>

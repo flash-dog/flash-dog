@@ -1,0 +1,116 @@
+#set($mainMenu='settings')
+#parse("/WEB-INF/content/project/_header.vm")
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //选择显示哪个标签
+        $("#tab-${module}").addClass("selected");
+        $("#tab-content-${module}").removeClass("hidden");
+        $("#dogs_form").validate();
+        drawDogsTable();
+    });
+
+    var dogs =$fm.toJson($project.metricDogs);
+    function drawDogsTable() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', '时间段');
+        data.addColumn('boolean', '状态');
+
+        for (var key in dogs) {
+            data.addRow([  dogs[key].name , dogs[key].startTime +"-"+dogs[key].endTime, dogs[key].enable]);
+        }
+
+
+        var table = new google.visualization.Table(document.getElementById('dogs_table_div'));
+        google.visualization.events.addListener(table, 'select',
+                function (event) {
+                    if (table.getSelection()[0]) {
+                        var row = table.getSelection()[0].row;
+                        var dog = dogs[row];
+                        $('#dogs_form_name').val(dog.name);
+                        $('#dogs_form_desc').val(dog.desc);
+                        $('#dogs_form_enable').attr('checked', dog.enable);
+                        $('#dogs_form_metricName').val(dog.metricName);
+                        $('#dogs_form_operator').val(dog.operator);
+                        $('#dogs_form_targetValue').val(dog.targetValue);
+                        $('#dogs_form_startTime').val(dog.startTime);
+                        $('#dogs_form_endTime').val(dog.endTime);
+                        $('#dogs_form_excludeTimeMode').attr('checked',dog.excludeTimeMode);
+                    }
+                });
+        table.draw(data, {showRowNumber:false, 'allowHtml':true});
+    }
+</script>
+<div id="content">
+    <h2>配置</h2>
+
+    <div class="tabs">
+        <ul>
+            <li><a href="$link.setRelative("/projects/$project.name/settings/info")" class="info-tab " id="tab-info"
+                    >信息</a></li>
+            <li><a href="$link.setRelative("/projects/$project.name/settings/warnings")" class="warning-tab"
+                   id="tab-warnings"
+                    >告警</a></li>
+            <li><a href="$link.setRelative("/projects/$project.name/settings/members")" class="warning-tab"
+                   id="tab-members"
+                    >成员</a></li>
+
+        </ul>
+
+    </div>
+    <div>
+        <div id="tab-content-info" class="box hidden">
+
+            <form id="info_form" action="$link.setRelative("/projects/$project.name/info")" method="post">
+                <input name="name" type="hidden" value="$project.name"/>
+                别名:<input name="alias" value="$project.alias"/><br/>
+                数据库地址:<input name="mongoUri" value="$project.mongoUri" style="width: 250px"/><br/>
+                mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]<br/>
+                度量表名:<input name="metricCollection" value="${project.metricCollection}"/><br/>
+                原始日志表:<input name="logCollection" value="$!{project.logCollection}"/>（逗号分隔）<br/>
+                邮件列表:<input name="mailList" value="$!{project.mailList}"/>（逗号分隔）<br/>
+                <input type="submit" value="确定"/>
+            </form>
+
+        </div>
+
+        <div id="tab-content-warnings" class="box hidden">
+            <div id='dogs_table_div'></div><br/>
+            <form id="dogs_form" action="$link.setRelative("/projects/$project.name/warnings")" method="post">
+
+                名称:<input name="name" id='dogs_form_name'  class="{required:true,minlength:3}" value=""/> <br/>
+                描叙:<input name="desc" id='dogs_form_desc' value=""/><br/>
+                是否开启:<input name="enable" id='dogs_form_enable' type="checkbox" checked=""/> <br/>
+                如果：   <select id="dogs_form_metricName" name="metricName">
+                #foreach($metricName in $project.findMetricNames() )
+                    <option>$metricName</option>
+                #end
+            </select>
+                <select id="dogs_form_operator" name="operator" >
+                        <option value="<">小于</option>
+                        <option value="=">等于</option>
+                        <option value=">">大于</option>
+                        </select>
+                目标值：<input id='dogs_form_targetValue' name="targetValue" value="0"><br/>
+
+                开始时间:<input name="startTime" id='dogs_form_startTime'   class="{required:true,name:true,minlength:8}" value="00:00:00"/> <br/>
+                结束时间:<input name="endTime" id='dogs_form_endTime'  class="{required:true,name:true,minlength:8}" value="24:00:00"/> <br/>
+                是否为除了此时间段模式: <input name="excludeTimeMode" id='dogs_form_excludeTimeMode' type="checkbox" /> (在此时间段内不会告警)<br/>
+                <input type="submit" value="保存"/>
+##                <a href="" class="icon icon-delete">删除</a>
+
+
+            </form>
+
+        </div>
+
+        <div id="tab-content-members" class="box hidden">
+
+            <form id="members_form" action="$link.setRelative("/projects/$project.name/members")" method="post">
+
+                管理员:<input name="admins" value="$fm.join($project.admins)"/>（逗号分隔）<br/>
+                <input type="submit" value="确定"/>
+            </form>
+    </div>
