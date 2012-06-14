@@ -96,5 +96,4 @@ public class ChartAction {
 
         return "redirect:/projects/" + projectName + "/charts";
     }
-
 }
