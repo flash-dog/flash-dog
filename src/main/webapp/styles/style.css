@@ -215,3 +215,21 @@ border-width: 1px 0 0;
 #account {
     float: right;
 }
+
+#login-form table {
+    margin-top: 5em;
+    padding: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #FDBF3B;
+    background-color: #FFEBC1;
+}
+#login-form table td {
+    padding: 6px;
+}
+#login-form label {
+    font-weight: bold;
+}
+#login-form input#j_username, #login-form input#j_password {
+    width: 300px;
+}

@@ -1,8 +1,23 @@
+/**
+ * Copyright (C) 2012 skymobi LTD
+ *
+ * Licensed under GNU GENERAL PUBLIC LICENSE  Version 3 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.skymobi.monitor.action;
 
 import com.skymobi.monitor.model.Chart;
-import com.skymobi.monitor.service.ProjectService;
 import com.skymobi.monitor.model.Project;
+import com.skymobi.monitor.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -39,9 +54,10 @@ public class ChartAction {
 
         return "chart/show";
     }
-     @RequestMapping(value = "/projects/{projectName}/charts/{chartName}/render", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/projects/{projectName}/charts/{chartName}/render", method = RequestMethod.GET)
     public String render(ModelMap map, @PathVariable String projectName, @PathVariable String chartName) {
-         Project project = projectService.findProject(projectName);
+        Project project = projectService.findProject(projectName);
         Chart chart = project.findChart(chartName);
         List data = chart.findData();
 
@@ -62,7 +78,7 @@ public class ChartAction {
     @RequestMapping(value = "/projects/{projectName}/charts", method = RequestMethod.POST)
     public String update(ModelMap map, @PathVariable String projectName, Chart chart) {
         Project project = projectService.findProject(projectName);
-        Assert.notNull("chart name can't be null",chart.getName());
+        Assert.notNull("chart name can't be null", chart.getName());
         project.saveChart(chart);
         projectService.saveProject(project);
         map.put("project", project);

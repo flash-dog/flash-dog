@@ -1,6 +1,6 @@
 #set($mainMenu='warnings')
 #parse("/WEB-INF/content/project/_header.vm")
-<script src="$link.setRelative('/js/metric_chart.js')"></script>
+<script type='text/javascript' src="#springUrl('/js/google-visualization-table.I.js')"></script>
 <script type="text/javascript">
     var alerts =$fm.toJson($alerts);
     $(document).ready(function () {
@@ -13,7 +13,10 @@
         data.addColumn('string', '时间');
 
         for (var key in alerts) {
-            data.addRow([  alerts[key].title , alerts[key].content , alerts[key].createTime]);
+            var content=  alerts[key].content;
+            if(content && content.length > 100)
+                content=content.substring(0,100) +"...";
+            data.addRow([  alerts[key].title ,content  , alerts[key].createTime]);
         }
 
 

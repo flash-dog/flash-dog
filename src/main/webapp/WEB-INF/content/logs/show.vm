@@ -1,7 +1,10 @@
 #set($mainMenu='logs')
+#set($logUrl=$link.setRelative("/projects/${project.name}/logs/more?format=json"))
+#set($flushUrl=$link.setRelative("/projects/${project.name}/logs/flush?format=json"))
 #parse("/WEB-INF/content/project/_header.vm")
 <script src="$link.setRelative('/jsEditor/codemirror.js')" type="text/javascript"></script>
 <script src="$link.setRelative('/jsEditor/model/javascript.js')" type="text/javascript"></script>
+<script src="$link.setRelative('/js/jquery.stream-1.2.js')" type="text/javascript"></script>
 <script src="$link.setRelative('/js/My97DatePicker/WdatePicker.js')" type="text/javascript"></script>
 <link rel="stylesheet" href="$link.setRelative('/jsEditor/codemirror.css')">
 <link rel="stylesheet" href="$link.setRelative('/jsEditor/model/javascript.css')">
@@ -14,11 +17,44 @@
     var lastDate=0;
 	var  script_text;
     $(document).ready(function() {
-        setInterval(refreshLog,5000);
-
          $("#clear_btn").click(function() {
              script_text.setValue("");
          });
+         $("#search_btn").click(function() {
+             var params = jQuery.param({
+            start:$("#datepicker_start").val(),
+            end:$("#datepicker_end").val(),
+            keyWord:$("#key_word_input").val(),
+            level: $("#level").val()});
+            $("#search_btn").attr("disabled",true);
+            $("#search_btn").val("请等待");
+			jQuery.ajax({
+                url:"$logUrl",
+                data: params,
+                type:'get',
+                success : function(msg) {
+	                $("#search_btn").val("查询");
+	                $("#search_btn").attr("disabled",false);
+	                appendLogs(msg);
+                }
+            });
+         });
+         
+         $("#flush_btn").click(function() {
+             var params = jQuery.param({
+            start:$("#datepicker_start").val(),
+            end:$("#datepicker_end").val(),
+            keyWord:$("#key_word_input").val(),
+            level: $("#level").val()});
+            var iWidth=1000;
+            var iHeight=600;
+            var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
+			var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
+         	window.open ('${flushUrl}&'+params, '滚动日志', 'height='+iHeight+', width='+iWidth+', top='+iTop+', left='+iLeft+', toolbar=no, menubar=no, scrollbars=no,depended=yes,resizable=no,location=no, status=no') 
+         });
+         
+         
+         
 		 
 	script_text = CodeMirror.fromTextArea(document.getElementById("script_text"), {
 	lineNumbers: true,
@@ -26,40 +62,8 @@
   });
 
     });
-    function  refreshLog(){
-       if($("#refresh_check_box:checked").length==1){
-            var params = jQuery.param({
-            start:$("#datepicker_start").val(),
-            end:$("#datepicker_end").val(),
-            keyWord:$("#key_word_input").val(),
-            level: $("#level").val()});
-            jQuery.ajax({
-                url:"$link.setRelative("/projects/${project.name}/logs/more?format=json")",
-                data: params,
-                type:'get',
-                success : function(msg) {
-                    appendLogs(msg.logs);
-
-                } ,
-                fail:
-            });
-        }
-    }
-    function appendLogs(logs){
-      var text="";
-
-      logs.reverse();
-      for(var key in logs){
-          var log=logs[key];
-          var date= new Date(log.timestamp);
-          var loggerName=log.loggerName?log.loggerName.fullyQualifiedClassName:log.class;
-          text += $ .datepicker.formatDate('yy-mm-dd',date) +" " +date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()+" " + log.level + " "
-                 +"[" +loggerName+"] - "
-                  + log.message;
-          text += "\n";
-
-      }
-      script_text.setValue(text);
+    function appendLogs(log){
+      script_text.setValue(log);
     }
 </script>
 
@@ -78,7 +82,9 @@
     </select>
   Date: <input type="text" id="datepicker_start"  onClick="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:false})")">
   to: <input type="text" id="datepicker_end"      onClick="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:false})">
-    <input type="checkbox" id="refresh_check_box"  checked="checked"/>自动刷新
+  <!--  <input type="checkbox" id="refresh_check_box"  checked="checked"/>自动刷新-->
+    <input type="button" id="search_btn" value="查询"/>
+    <input type="button" id="flush_btn" value="实时查询"/>
     <input type="button" id="clear_btn" value="清空输出"/><br/>
 
 </div>

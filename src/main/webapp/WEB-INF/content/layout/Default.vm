@@ -11,7 +11,7 @@
     <script src="#springUrl('/js/jquery-ui-1.8.16.min.js')" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="$link.setRelative('/styles/style.css')">
     <script type='text/javascript' src="#springUrl('/js/google-jsapi.js')"></script>
-    <script type='text/javascript' src="#springUrl('/js/google-visualization-table.I.js')"></script>
+
     <script type='text/javascript' src="#springUrl('/js/google-visualization-corechart.I.js')"></script>
 
 
@@ -19,11 +19,25 @@
 <body>
 <div id="top-menu">
     <div id="account">
-        <ul><li><a href="" class="login">$authz.principal</a></li></ul>    </div>
+        <ul>
+            #if($authz.isAuthenticated())
+                <li><a href="" class="login">$authz.principal</a></li>
+                <li><a href="$link.setRelative("/j_spring_security_logout")" class="login">退出</a></li>
+                #else
+                <li><a href="$link.setRelative("/j_spring_security_check")" class="login">登录</a></li>
+            #end
+
+        </ul>
+    </div>
+
+
     <ul>
 ##        <li><a href="" class="my-page">我的工作台</a></li>
         <li><a href="$link.setRelative("projects")" class="projects">项目</a></li>
-##        <li><a href="" class="help">帮助</a></li>
+         #if($authz.isAdmin())
+             <li><a href="$link.setRelative("/admin/user/list")" class="help">管理</a></li>
+        #end
+
     </ul>
 </div>
     $screen_content<br/>

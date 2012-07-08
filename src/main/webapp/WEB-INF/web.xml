@@ -6,7 +6,7 @@
          version="2.5">
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:spring/oms-jmx-client.xml</param-value>
+        <param-value>classpath*:spring/env-config.xml,classpath*:spring/spring-security.xml,classpath:spring/mongo-config.xml,classpath:spring/email-notice.xml</param-value>
     </context-param>
 
     <context-param>
@@ -14,6 +14,20 @@
         <!--这里需要替换成需要接入的服务器地址-->
         <param-value>http://localhost:8080</param-value>
     </context-param>
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <listener>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -56,64 +70,4 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-
-    <filter>
-        <filter-name>CAS Authentication Filter</filter-name>
-        <filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
-        <init-param>
-            <param-name>casServerLoginUrl</param-name>
-            <param-value>https://omsserver:8443/cas/login</param-value>
-        </init-param>
-    </filter>
-    <filter>
-        <filter-name>CAS Validation Filter</filter-name>
-        <filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
-        <init-param>
-            <param-name>casServerUrlPrefix</param-name>
-            <param-value>https://omsserver:8443/cas</param-value>
-        </init-param>
-    </filter>
-    <filter>
-        <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
-        <filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>CAS Authentication Filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>CAS Validation Filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!--    END SSO CONFIG    -->
-
-    <!--
-        如果需要对每次操作都要进行权限验证，则配置如下filter。
-        START OmsRmiSecurityFilter CONFIG
-    -->
-    <filter>
-        <filter-name>OmsRmiSecurityFilter</filter-name>
-        <filter-class>oms.security.filter.OmsRmiSecurityFilter</filter-class>
-        <init-param>
-            <param-name>reCheckPermissionsFromJmx</param-name>
-            <param-value>false</param-value>
-        </init-param>
-        <init-param>
-            <param-name>filterIps</param-name>
-            <param-value/>
-        </init-param>
-        <init-param>
-            <param-name>publicResources</param-name>
-            <param-value/>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>OmsRmiSecurityFilter</filter-name>
-        <url-pattern>*.do</url-pattern>
-    </filter-mapping>
 </web-app>

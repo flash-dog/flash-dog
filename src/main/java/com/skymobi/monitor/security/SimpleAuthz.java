@@ -1,6 +1,20 @@
+/**
+ * Copyright (C) 2012 skymobi LTD
+ *
+ * Licensed under GNU GENERAL PUBLIC LICENSE  Version 3 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.skymobi.monitor.security;
 
-import com.google.common.collect.Lists;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.service.ProjectService;
 import org.slf4j.Logger;
@@ -12,21 +26,22 @@ import org.springframework.web.context.request.RequestContextHolder;
 import javax.annotation.Resource;
 import java.security.Principal;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
  * @author Hill.Hu
  * @see Authz
  */
-public class SimpleAuthz  {
-    private static Logger logger = LoggerFactory.getLogger(Authz.class);
+@SuppressWarnings("unused")
+public class SimpleAuthz {
+    private static Logger logger = LoggerFactory.getLogger(SimpleAuthz.class);
     public static final String USER_PRINCIPAL = "userPrincipal";
 
-
-    private List<String> admins=Lists.newArrayList();
     @Resource
     private ProjectService projectService;
+
+    @Resource
+    private UserManager userManager;
 
     /**
      * Get the username of the user
@@ -41,6 +56,10 @@ public class SimpleAuthz  {
         } else {
             return "guest";
         }
+    }
+
+    public boolean isAuthenticated() {
+        return getUserPrincipal() != null;
     }
 
     private Principal getUserPrincipal() {
@@ -86,7 +105,7 @@ public class SimpleAuthz  {
      */
     public boolean noneGranted(String roleList) {
         Set<String> userRoles = getUserRoles();
-        String [] roles=roleList.split(",");
+        String[] roles = roleList.split(",");
         for (String role : roles) {
             if (userRoles.contains(role))
                 return false;
@@ -94,7 +113,6 @@ public class SimpleAuthz  {
         return true;
 
     }
-
 
 
     private Set<String> getUserRoles() {
@@ -113,14 +131,15 @@ public class SimpleAuthz  {
         return roles;
     }
 
-    public boolean hasProject(Project project){
+    public boolean hasProject(Project project) {
         String principal = getPrincipal();
-        return admins.contains(principal) ||project.hasMember(principal);
+        return userManager.isSystemAdmin(principal) || project.hasMember(principal);
     }
-    
-
-
-    public void setAdmins(List<String> admins) {
-        this.admins = admins;
+   public boolean  isAdmin(){
+       String principal = getPrincipal();
+       return userManager.isSystemAdmin(principal);
+   }
+    public void setUserManager(UserManager userManager) {
+        this.userManager = userManager;
     }
 }

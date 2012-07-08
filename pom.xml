@@ -11,8 +11,21 @@
         <spring.data.mongo.version>1.0.1.RELEASE</spring.data.mongo.version>
         <slf4j.version>1.6.1</slf4j.version>
     </properties>
+    <licenses>
+        <license>
+            <name>gpl_v3</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <dependencies>
+        <dependency>
+            <groupId>org.log4mongo</groupId>
+            <artifactId>log4mongo-java</artifactId>
+            <version>0.7.4</version>
+        </dependency>
+
         <dependency>
             <groupId>aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
@@ -44,7 +57,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.4</version>
+            <version>4.7</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -80,7 +93,6 @@
             <version>${org.springframework.version}</version>
 
         </dependency>
-
 
 
         <dependency>
@@ -172,33 +184,38 @@
             <version>1.4</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.jasig.cas</groupId>
-            <artifactId>cas-client-core</artifactId>
-            <version>3.1.3</version>
-        </dependency>
+
         <dependency>
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
             <version>3.1.5</version>
         </dependency>
-        <dependency>
-            <groupId>com.skymobi</groupId>
-            <artifactId>oms-security</artifactId>
-            <version>1.002</version>
-        </dependency>
+
         <dependency>
             <groupId>com.skymobi</groupId>
             <artifactId>skymobi-ssh3</artifactId>
             <version>1.003</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-cas</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -229,7 +246,30 @@
                 <version>2.1</version>
 
             </plugin>
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.10.b1</version>
+                <configuration>
+                    <basedir>${basedir}</basedir>
+                    <header>license/head.txt</header>
+                    <strictCheck>true</strictCheck>
+                    <includes>
+                        <include>**/src/main/java/**</include>
+                        <include>**/src/test/java/**</include>
+                    </includes>
+                    <properties>
+                        <year>2012</year>
+                    </properties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-
     </build>
 </project>

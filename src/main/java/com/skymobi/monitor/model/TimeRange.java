@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2012 skymobi LTD
+ *
+ * Licensed under GNU GENERAL PUBLIC LICENSE  Version 3 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.skymobi.monitor.model;
 
 import java.util.Calendar;
@@ -11,7 +26,7 @@ import java.util.Date;
  */
 public class TimeRange {
 
-    private transient Date now=new Date();
+    private transient Date now = new Date();
     private int last;
     /**
      * 时间单位，参见Calendar
@@ -20,7 +35,7 @@ public class TimeRange {
      * DATE = 5
      */
     private int unit;
-    private transient Date start,end;
+    private transient Date start, end;
 
     public TimeRange(int last, int unit) {
         this.last = last;
@@ -30,9 +45,10 @@ public class TimeRange {
     public TimeRange() {
     }
 
-    public static TimeRange lastDay(){
-        return new TimeRange(1,5);
+    public static TimeRange lastDay() {
+        return new TimeRange(1, 5);
     }
+
     public int getLast() {
         return last;
     }
@@ -50,10 +66,10 @@ public class TimeRange {
     }
 
     public Date getStart() {
-        if(last>0){
+        if (last > 0) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(now);
-            calendar.add(unit,-last);
+            calendar.add(unit, -last);
             return calendar.getTime();
         }
         return start;

@@ -5,12 +5,13 @@ var drawCharts = function(chartPanel, url, varName) {
                 url: url,
                 data:'format=json',
                 dataType:"json",
+                headers: { "Accept": "application/json" },
                 success: function(response) {
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Year');
                     data.addColumn('number', varName);
 
-                    data.addRows(response.data);
+                    data.addRows(response);
 
                     var options = {
                         width: '70%', height: 440,

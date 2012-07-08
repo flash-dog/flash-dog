@@ -1,5 +1,6 @@
 #set($mainMenu='settings')
 #parse("/WEB-INF/content/project/_header.vm")
+<script type='text/javascript' src="#springUrl('/js/google-visualization-table.I.js')"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {

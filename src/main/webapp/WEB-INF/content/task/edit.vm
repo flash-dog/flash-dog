@@ -54,7 +54,7 @@
             script_text.setValue(
 
                     "//统计日志里某些关键字频率，并提取到告警邮件里\n"+
-                            'keyWord="关键字";\n   metric_name=keyWord;\n   m=function () {\n       result = this.message.match("关键字");\n       if (result) {\n         emit("content", this.message);\n       }\n   } \n   \n   r= function (key, values) {\n     var content = "";\n       for (var i = 0; i < values.length; i++) {\n           content += values[i]+"\\n----------------------------------\\n";\n       }\n       return content;\n   }\n   res=db.${project.logCollection}.mapReduce(m, r, {out:"${project.logCollection}_output",query:{timestamp:{$gt:new Date(new Date - 300000)}}});\n   content_result=db.${project.logCollection}_output.findOne({_id:"content"});\n   if(content_result)\n     db.${project.metricCollection}.save({name:metric_name,value:res.counts.emit, content:content_result.value,timeStamp:new Date().getTime()});\n   return     res;;');
+                            ' var   metric_name="异常数据次数";       \n var cur = db.${project.logCollection}.find({message:/系统错误/,timestamp:{$gt:new Date(new Date - 60*60*1000)}}); \n  var content = "";  \n  var count=0; \n  cur.forEach( function(log) { \n      count++; \n      content =content+"\\n "+log.timestamp.toLocaleDateString()+" "+ log.timestamp.toLocaleTimeString() +" " +log["message"]; \n  }); \n     \n db.${project.metricCollection}.save({name:metric_name,value:count, content:content,timeStamp:new Date().getTime()}); \n return    "次数:"+ count +" \\n内容"+content;');
         });
 
         $("#money_stats_btn").click(function() {
@@ -64,6 +64,14 @@
 
                     "//统计日志里某些数字总值，如每5分钟收入等\n"+
                             'm=function () { \n     result = this.message.match(".*money=(\\\\d+)"); \n     if (result) { \n         pricePaied = new NumberLong(result[1]);         \n         emit("pricePaied", pricePaied); \n     } \n  \n }  \n  \n r= function (key, values) { \n     var total = 0; \n     for (var i = 0; i < values.length; i++) { \n         total += values[i]; \n     } \n     return total; \n }   \n res=db.${project.logCollection}.mapReduce(m, r, {out:"${project.logCollection}_output", query:{timestamp:{$gt:new Date(new Date - 300000)}}}); \n pricePaied=db.${project.logCollection}_output.findOne({_id:"pricePaied"});\n if(pricePaied) \n    v=pricePaied.value; \n   else \n     v=0;    \n db.${project.metricCollection}.save({name:"5分钟收入",value:v,timeStamp:new Date().getTime()}); \n return res; ');
+        });
+
+        $("#system_btn").click(function() {
+            $("#task_name").val('system_stats');
+            $("#cron_text").val('40 */3 * * * *');
+            script_text.setValue(
+
+                   ' //统计日志里输出的系统信息 如：memoryUsed=26392k  cpuUsed= 0.0 threadCount=32 \n m=function () {  \n      result = this.message.match(".*memoryUsed=(\\\\d+).*cpuUsed=(.*) threadCount=(\\\\d+)");  \n      if (result) {  \n             \n          emit("memoryUsed", parseInt(result[1]));  \n          emit("cpuUsed", parseFloat(result[2]));  \n          emit("threadCount", parseInt(result[3]));  \n      }  \n    \n  }   \n    \n  r= function (key, values) {  \n      var total = 0;  \n      for (var i = 0; i < values.length; i++) {  \n          total += values[i];  \n      }  \n      return total/values.length;  \n  }    \n res=db.${project.logCollection}.mapReduce(m, r, {out:"${project.logCollection}_output", query:{timestamp:{$gt:new Date(new Date - 3*60*1000)}}});  \n if(res.counts.emit > 0){ \n   memoryUsed=new NumberLong(db.${project.logCollection}_output.findOne({_id:"memoryUsed"}).value/1024); \n   cpuUsed=db.${project.logCollection}_output.findOne({_id:"cpuUsed"}).value; \n   threadCount=new NumberLong(db.${project.logCollection}_output.findOne({_id:"threadCount"}).value); \n   db.${project.metricCollection}.save({name:"memoryUsed (M)",value:memoryUsed,timeStamp:new Date().getTime()});  \n   db.${project.metricCollection}.save({name:"cpuUsed",value:cpuUsed,timeStamp:new Date().getTime()});  \n   db.${project.metricCollection}.save({name:"threadCount",value:threadCount,timeStamp:new Date().getTime()});  \n    \n } \n   \n  return "cpuUsed="+ cpuUsed  +" memoryUsed="+memoryUsed  +" threadCount="+threadCount;');
         });
     });
 </script>
@@ -79,6 +87,7 @@
         脚本 模板:<input type="button" id="err_log_btn" value="日志监控"/>
         <input type="button" id="money_stats_btn" value="指标监控"/>
         <input type="button" id="key_word_btn" value="关键字监控"/>
+        <input type="button" id="system_btn" value="性能监控"/>
         <br/>
 		<div style="border-top: 1px solid black; border-bottom: 1px solid black;">
 		<textarea id="script_text"   name="script"  >$!{task.script}</textarea>

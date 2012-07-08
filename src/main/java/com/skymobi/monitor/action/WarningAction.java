@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2012 skymobi LTD
+ *
+ * Licensed under GNU GENERAL PUBLIC LICENSE  Version 3 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.skymobi.monitor.action;
 
 import com.skymobi.monitor.model.MetricDog;
@@ -37,9 +52,10 @@ public class WarningAction {
     public String listWarnings(ModelMap map, @PathVariable String projectName) throws IOException {
         Project project = projectService.findProject(projectName);
         map.put("project", project);
-        map.put("alerts",alertService.findAlerts(projectName));
+        map.put("alerts", alertService.findAlerts(projectName));
         return "warning/list";
     }
+
     @RequestMapping(value = "/projects/{projectName}/warnings", method = RequestMethod.POST)
     public String update(ModelMap map, @PathVariable String projectName, MetricDog metricDog) throws IOException {
         Project project = projectService.findProject(projectName);
@@ -58,9 +74,9 @@ public class WarningAction {
     }
 
     @RequestMapping(value = "/projects/{projectName}/warnings/{dogName}/destroy")
-    public String remove(ModelMap map, @PathVariable String projectName, @PathVariable  String dogName) throws IOException {
+    public String remove(ModelMap map, @PathVariable String projectName, @PathVariable String dogName) throws IOException {
         Project project = projectService.findProject(projectName);
-        
+
         project.removeDog(dogName);
         return "redirect:/projects/" + projectName + "/warnings";
     }

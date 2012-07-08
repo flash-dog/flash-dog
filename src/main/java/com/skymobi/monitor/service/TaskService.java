@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2012 skymobi LTD
+ *
+ * Licensed under GNU GENERAL PUBLIC LICENSE  Version 3 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.skymobi.monitor.service;
 
 import com.google.common.collect.Maps;
@@ -22,6 +37,7 @@ public class TaskService {
 
     private final static ConcurrentTaskScheduler executor = new ConcurrentTaskScheduler();
 
+
     private final static Map<String, ScheduledFuture> futures = Maps.newHashMap();
 
     public void scheduledTask(final Project project, final Task task) {
@@ -35,6 +51,7 @@ public class TaskService {
             public void run() {
                 try {
                     FutureTask _fuFutureTask = TaskService.this.runScript(task.getScript(), project);
+
                     _fuFutureTask.get(task.getTimeout(), TimeUnit.SECONDS);
                 } catch (TimeoutException e) {
                     logger.error("execute task timeout ,script={}", task);
@@ -59,7 +76,7 @@ public class TaskService {
                 return result;
             }
         });
-        _fuFutureTask.run();
+        executor.submit(_fuFutureTask);
         return _fuFutureTask;
     }
 

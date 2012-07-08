@@ -2,19 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
        xsi:schemaLocation="http://www.springframework.org/schema/context
           http://www.springframework.org/schema/context/spring-context-3.0.xsd
-          http://www.springframework.org/schema/data/mongo
-          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <context:annotation-config/>
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations"
-                  value="classpath:conf/${env}/app.properties"/>
-    </bean>
+
     <bean class="com.skymobi.monitor.service.ProjectService" init-method="init">
         <property name="mongoTemplate" ref="mongoTemplate"/>
         <property name="collectionName" value="${mongo.collection}"/>
@@ -38,5 +33,13 @@
     <bean id="alertService" class="com.skymobi.monitor.service.AlertService" init-method="init">
         <property name="emailService" ref="emailService"/>
         <property name="checkSeconds" value="${alert.checkSeconds}"/>
+    </bean>
+
+    <bean id="jvmMonitor" class="org.log4mongo.contrib.JvmMonitor"/>
+
+    <bean id="userManager"  class="com.skymobi.monitor.security.MongoUserManager" init-method="inti">
+        <property name="mongoTemplate" ref="mongoTemplate"/>
+        <property name="systemAdmins" value="${security.systemAdmins}" />
+          <property name="systemAdminInitPassword" value="${security.systemAdminInitPassword}"/>
     </bean>
 </beans>
