@@ -1,2 +1,0 @@
-#parse("/WEB-INF/content/layout/_header.vm")
-您的账号:${user.username}已经注册成功，但是需要管理员审核后才能使用

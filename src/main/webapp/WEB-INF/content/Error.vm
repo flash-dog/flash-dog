@@ -1,2 +1,0 @@
-#parse("/WEB-INF/content/layout/_header.vm")
-$exception
