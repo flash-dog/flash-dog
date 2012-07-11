@@ -26,8 +26,8 @@
                 data: params,
                 type:'post',
                 success : function(msg) {
-				if(console)
-					console.setValue(console.getValue()+msg.retval +"\n"); 
+				if(console){
+                    console.setValue(console.getValue()+ JSON.stringify(msg) +"\n");}
                 }
             });
         });

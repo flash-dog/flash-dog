@@ -9,6 +9,7 @@
     <http entry-point-ref="casAuthenticationEntryPoint" auto-config="true" use-expressions="true" >
 
         <intercept-url pattern="/**" access="isAuthenticated()"/>
+
         <custom-filter position="CAS_FILTER" ref="casAuthenticationFilter"/>
 
     </http>

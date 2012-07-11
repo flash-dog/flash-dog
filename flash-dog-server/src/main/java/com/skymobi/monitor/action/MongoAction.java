@@ -26,6 +26,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -50,19 +51,15 @@ public class MongoAction {
     private TaskService taskService;
 
     @RequestMapping(value = "/projects/{projectName}/mongo/console", method = RequestMethod.POST)
-    public String test(ModelMap map, @PathVariable String projectName, String script) throws IOException, ExecutionException, TimeoutException, InterruptedException {
-        logger.debug("run mongo script =[{}]", script);
+    public @ResponseBody CommandResult  test(ModelMap map, @PathVariable String projectName, String script) throws IOException, ExecutionException, TimeoutException, InterruptedException {
+
         Project project = projectService.findProject(projectName);
         FutureTask<CommandResult> futureTask = taskService.runScript(script, project);
 
         CommandResult result = futureTask.get(20, TimeUnit.SECONDS);
-        map.put("result", result);
-        if (result.ok() && result.get("retval") != null)
-            map.put("retval", result.get("retval").toString());
-        else {
-            map.put("retval", result.toString());
-        }
-        return "mongo/console";
+        logger.debug("run mongo script =[{}] ,result=[{}]", script,result);
+
+         return result;
     }
 
     @RequestMapping(value = "/projects/{projectName}/mongo/console", method = RequestMethod.GET)
