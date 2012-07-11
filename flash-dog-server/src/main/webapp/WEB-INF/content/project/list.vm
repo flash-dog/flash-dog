@@ -1,0 +1,21 @@
+<div id="header">
+    <h1>闪电狗</h1>
+
+    <div id="main-menu">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+    });
+</script>
+<div id="content">
+    <div class="contextual">
+        <a href="$link.setRelative("projects/new")" class="icon icon-add">新建项目</a> |
+    </div>
+    <div>
+        <h2>所有项目</h2>
+    </div>
+    #foreach($project in $projects)
+     <a href="$link.setRelative("/projects/${project.name}")">$project.alias</a>  <br/>  <br/>
+    #end
+</div>

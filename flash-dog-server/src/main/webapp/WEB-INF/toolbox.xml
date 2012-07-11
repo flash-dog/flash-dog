@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<toolbox>
+    <data type="number">
+        <key>app_version</key>
+        <value>0.9</value>
+    </data>
+    <data type="string">
+        <key>app_name</key>
+        <value>Jon's Tool Shop</value>
+    </data>
+    <data type="boolean">
+        <key>debug</key>
+        <value>true</value>
+    </data>
+
+    <tool>
+        <key>math</key>
+        <scope>application</scope>
+        <class>org.apache.velocity.tools.generic.MathTool</class>
+    </tool>
+    <tool>
+        <key>fm</key>
+        <scope>application</scope>
+        <class>com.skymobi.monitor.util.FormatUtil</class>
+    </tool>
+    <tool>
+        <key>link</key>
+        <scope>request</scope>
+        <class>org.apache.velocity.tools.view.tools.LinkTool</class>
+    </tool>
+    <tool>
+        <key>esc</key>
+        <scope>application</scope>
+        <class>org.apache.velocity.tools.generic.EscapeTool</class>
+    </tool>
+
+    <tool>
+        <key>datetool</key>
+        <scope>application</scope>
+        <class>org.apache.velocity.tools.generic.DateTool</class>
+        <parameter name="format" value="yyyy-M-d"/>
+    </tool>
+    <tool>
+   <key>render</key>
+   <scope>request</scope>
+   <class>org.apache.velocity.tools.view.tools.ViewRenderTool</class>
+   <parameter name="parse.depth" value="10"/>
+ </tool>
+</toolbox>

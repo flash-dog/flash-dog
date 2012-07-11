@@ -1,0 +1,80 @@
+#set($mainMenu='index')
+#parse("/WEB-INF/content/project/_header.vm")
+<script charset="utf-8" src="#springUrl('/js/metric_chart.js')"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        #foreach($metricName in $metricNames)
+            drawCharts("metric_$metricName", "$link.setRelative("/projects/${project.name}/metrics").addQueryData('metricName',$metricName)", '$metricName');
+        #end
+        $('#last_selector').val('$!{project.timeRange.last}');
+        $('#unit_selector').val('$!{project.timeRange.unit}');
+    });
+
+
+</script>
+<div id="content">
+    <div class="contextual">
+        #if($authz.hasProject($project))
+            <a href="$link.setRelative("/projects/${project.name}/destroy")" onclick="return confirm('您确定？')"
+               class="icon icon-delete">删除</a>
+        #end
+    </div>
+    <div>
+        <h2>当前监控 </h2>
+    </div>
+    <form action="$link.setRelative("/projects/${project.name}/metrics/timeRange")" method="post">
+        <table width="100%" cellspacing="0" border="0" class="MonitorToolbar">
+
+            <tbody>
+            <tr valign="middle">
+                <td class="boldText" style="text-align:right;">显示范围:</td>
+                <td>
+                    <table width="100%" cellpadding="0" cellspacing="3" border="0">
+                        <tbody>
+                        <tr>
+                            <td>Last</td>
+                            <td nowrap="">
+                                <select name="last" id="last_selector" class="FilterFormText"
+                                        style="visibility: visible; ">
+                                    <option value="1">1</option>
+                                    <option value="4">4</option>
+                                    <option value="8">8</option>
+                                    <option value="12">12</option>
+                                    <option value="24">24</option>
+                                    <option value="30">30</option>
+                                    <option value="48">48</option>
+                                    <option value="60">60</option>
+                                    <option value="90">90</option>
+                                    <option value="120">120</option>
+                                </select>
+                                <select name="unit" id="unit_selector" class="FilterFormText"
+                                        style="visibility: visible; ">
+                                    <option value="12">Minutes</option>
+                                    <option value="10">Hours</option>
+                                    <option value="5">Days</option>
+                                </select>
+                            </td>
+                            <td><input type="image" name="range" src="$link.setRelative("/images/accept.png")"></td>
+                            <td width="100%" style="padding-left: 5px;">
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+
+
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div id="metric_panel">
+
+        #foreach($varName in $metricNames)
+            <div id="metric_$varName"></div>
+        #end
+    </div>
+</div>

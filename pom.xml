@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.skymobi</groupId>
+    <artifactId>flash-dog-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+
+    <licenses>
+        <license>
+            <name>gpl_v3</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>skymobi</id>
+            <name>steven.zheng</name>
+            <email>steven.zheng@skymobi.com</email>
+        </developer>
+        <developer>
+            <id>skymobi</id>
+            <name>Hill Hu</name>
+            <email>hill.hu@skymobi.com</email>
+        </developer>
+    </developers>
+    <modules>
+        <module>flash-dog-api-log4j</module>
+        <module>flash-dog-server</module>
+    </modules>
+</project>

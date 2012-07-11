@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <mvc:resources location="/styles/" mapping="/styles/**"/>
+    <mvc:resources location="/images/" mapping="/images/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/jsEditor/" mapping="/jsEditor//**"/>
+    <import resource="env-config.xml" />
+
+    <aop:aspectj-autoproxy/>
+
+    <context:component-scan base-package="com.skymobi.monitor"/>
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="interceptors" ref="userInterceptor"/>
+    </bean>
+    <bean id="userInterceptor" class="com.skymobi.monitor.security.UserInterceptor"/>
+
+    <!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+
+            </list>
+        </property>
+        <property name="requireSession" value="false"/>
+
+    </bean>
+    <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/"/>
+        <property name="configLocation" value="/WEB-INF/velocity.properties"/>
+
+    </bean>
+    <!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /blog/1.json /blog/1.xml -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <!-- 设置为true以忽略对Accept Header的支持-->
+        <property name="ignoreAcceptHeader" value="true"/>
+        <!-- 在没有扩展名时即: "/user/1" 时的默认展现形式 -->
+        <property name="defaultContentType" value="text/html"/>
+
+        <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+
+            </map>
+
+        </property>
+        <property name="favorPathExtension" value="false"/>
+        <!-- 用于开启 /userinfo/123?format=json 的支持 -->
+        <!--<property name="favorParameter" value="true"/>-->
+        <property name="viewResolvers">
+            <list>
+
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+                <ref bean="velocityLayoutViewResolver"/>
+
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <!-- for application/json -->
+                <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+
+                </bean>
+
+            </list>
+        </property>
+    </bean>
+    <bean id="velocityLayoutViewResolver"
+          class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.velocity.VelocityLayoutView"/>
+        <property name="layoutUrl" value="/WEB-INF/content/layout/Default.vm"/>
+        <property name="cache" value="false"/>
+        <property name="prefix" value="/WEB-INF/content/"/>
+        <property name="suffix" value=".vm"/>
+        <property name="dateToolAttribute" value="datetool"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="allowSessionOverride" value="true"/>
+        <property name="attributesMap">
+            <map>
+                <entry key="authz" value-ref="autzh"/>
+            </map>
+        </property>
+        <!--<property name="allowRequestOverride" value="true"/>-->
+
+    </bean>
+    <bean id="autzh" class="com.skymobi.monitor.security.SimpleAuthz">
+        <property name="userManager" ref="userManager"/>
+    </bean>
+
+    <bean id="exceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="Error"/>
+        <property name="warnLogCategory" value="WARN"/>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.security.core.AuthenticationException">user/login</prop>
+            </props>
+        </property>
+        <property name="defaultStatusCode" value="200"/>
+    </bean>
+</beans>

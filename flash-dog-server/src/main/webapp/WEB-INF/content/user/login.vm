@@ -1,0 +1,46 @@
+#parse("/WEB-INF/content/layout/_header.vm")
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#login_form").validate();
+    });
+ </script>
+<div id="login-form">
+    <form id="login_form" action="$link.setRelative("/j_spring_security_check")" method="post">
+    <table>
+        <tbody>
+            #if($flashMsg)
+            <tr><td></td><td align="left">$!flashMsg</td></tr>
+            #end
+        <tr>
+            <td align="right"><label for="username">登录名:</label></td>
+            <td align="left"><input id="username" name="j_username"  class="{required:true}" tabindex="1" type="text"></td>
+        </tr>
+        <tr>
+            <td align="right"><label for="password">密码:</label></td>
+            <td align="left"><input id="password" name="j_password"  class="{required:true}"  tabindex="2" type="password"></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td align="left">
+
+                <label for="autologin"><input id="autologin" name="autologin" tabindex="4" type="checkbox" value="1"> 保持登录状态</label>
+
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+                <a href="$link.setRelative("/user/new")">注册</a>
+##                <a href="$link.setRelative("/")">忘记密码</a>
+
+            </td>
+            <td align="right">
+                <input type="submit" name="login" value="登录 »" tabindex="5">
+            </td>
+        </tr>
+        </tbody></table>
+    <script type="text/javascript">
+
+    </script>
+    </form>
+</div>
