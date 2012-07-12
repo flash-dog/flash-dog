@@ -34,4 +34,91 @@ log4j.appender.MongoDB.collectionName=flash_dog_log
 log4j.appender.MongoDB.hostname=172.16.3.47
 log4j.appender.MongoDB.port=27017 
 log4j.rootLogger=info,stdout,logfile,MongoDB
+<<<<<<< HEAD
 </code></pre>
+=======
+</code></pre>
+
+ 4. Ê¹ÓÃlogback
+* ÏÂÔØ°²×° [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
+* <pre><code>
+*      mvn clean install 
+* </code></pre>
+
+*  Ôö¼Óslf4j ºÍ logback µÄÒÀÀµ
+<pre><code>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.5</version>
+		</dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>org.slf4j</groupId>-->
+			<!--<artifactId>slf4j-log4j12</artifactId>-->
+			<!--<version>1.6.0</version>-->
+		<!--</dependency>-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>logback.mongodb</groupId>
+            <artifactId>logback.mongodb</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+</code></pre>
+
+*logbackµÄÅäÖÃ
+<pre><code>	
+	<appender name="MONGO" class="logback.mongodb.MongoDBAppender">
+        <connectionSource class="logback.mongodb.MongoDBConnectionSource">
+            <uri>mongodb://172.16.3.47:27017</uri>
+            <db>ugglog</db>
+            <collection>paylog</collection>
+        </connectionSource>
+    </appender>
+
+    <appender name="ASYNCMONGO" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="MONGO" />
+    </appender>
+
+    <logger name="currency" additivity="false" level="warn">
+        <appender-ref ref="MONGO"/>
+    </logger>
+</code></pre>
+
+* ÔÚlogbackÖÐ¿ÉÒÔÊ¹ÓÃMDC¹¦ÄÜÊä³ö¸½¼ÓµÄ×Ö¶Î
+<pre><code>	
+ 		MDC.clear();
+        MDC.put("mob", mob.name());
+        MDC.put("value", value + "");
+        MDC.put("currency", type.name());
+        MDC.put("reason", reason);
+        MDC.put("saveAtOnce", saveAtOnce + "");
+        mongoLogger.info("{}:{} {} {} {} {}", new Object[]{logPre, mob.name(), value, type, reason, saveAtOnce});        
+</code></pre>
+* ÕâÑùÔÚmongodbµÄcollectionÖÐ±£´æµÄscheme»áÔö¼ÓÕâÐ©×Ö¶Î:
+<pre><code>	
+   {
+      mob: '',
+	  value: '',
+      currency: '',
+      reason: '',
+      saveAtOnce: '' 
+   }
+</code></pre>
+
+
+
+
+
+
+>>>>>>> å¢žåŠ logbackçš„ä½¿ç”¨è¯´æ˜Ž
