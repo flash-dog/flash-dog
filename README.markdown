@@ -34,30 +34,23 @@ log4j.appender.MongoDB.collectionName=flash_dog_log
 log4j.appender.MongoDB.hostname=172.16.3.47
 log4j.appender.MongoDB.port=27017 
 log4j.rootLogger=info,stdout,logfile,MongoDB
-<<<<<<< HEAD
 </code></pre>
-=======
-</code></pre>
+
 
  4. Ê¹ÓÃlogback
 * ÏÂÔØ°²×° [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
-* <pre><code>
-*      mvn clean install 
-* </code></pre>
+<pre><code>
+      mvn clean install
+ </code></pre>
 
 *  Ôö¼Óslf4j ºÍ logback µÄÒÀÀµ
-<pre><code>
+<pre><code class="xml">
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.5</version>
 		</dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>org.slf4j</groupId>-->
-			<!--<artifactId>slf4j-log4j12</artifactId>-->
-			<!--<version>1.6.0</version>-->
-		<!--</dependency>-->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
@@ -77,7 +70,7 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
 </code></pre>
 
 *logbackµÄÅäÖÃ
-<pre><code>	
+<pre><code class="xml">
 	<appender name="MONGO" class="logback.mongodb.MongoDBAppender">
         <connectionSource class="logback.mongodb.MongoDBConnectionSource">
             <uri>mongodb://172.16.3.47:27017</uri>
@@ -96,7 +89,7 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
 </code></pre>
 
 * ÔÚlogbackÖÐ¿ÉÒÔÊ¹ÓÃMDC¹¦ÄÜÊä³ö¸½¼ÓµÄ×Ö¶Î
-<pre><code>	
+<pre><code class="java">
  		MDC.clear();
         MDC.put("mob", mob.name());
         MDC.put("value", value + "");
@@ -105,6 +98,7 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
         MDC.put("saveAtOnce", saveAtOnce + "");
         mongoLogger.info("{}:{} {} {} {} {}", new Object[]{logPre, mob.name(), value, type, reason, saveAtOnce});        
 </code></pre>
+
 * ÕâÑùÔÚmongodbµÄcollectionÖÐ±£´æµÄscheme»áÔö¼ÓÕâÐ©×Ö¶Î:
 <pre><code>	
    {
@@ -115,10 +109,3 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
       saveAtOnce: '' 
    }
 </code></pre>
-
-
-
-
-
-
->>>>>>> å¢žåŠ logbackçš„ä½¿ç”¨è¯´æ˜Ž
