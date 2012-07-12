@@ -43,8 +43,8 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
       mvn clean install
  </code></pre>
 
-*  增加slf4j 和 logback 的依赖
-<pre><code class="xml">
+* 增加slf4j 和 logback 的依赖
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -67,10 +67,10 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
             <artifactId>logback.mongodb</artifactId>
             <version>1.0.2</version>
         </dependency>
-</code></pre>
 
-*logback的配置
-<pre><code class="xml">
+
+* logback的配置
+
 	<appender name="MONGO" class="logback.mongodb.MongoDBAppender">
         <connectionSource class="logback.mongodb.MongoDBConnectionSource">
             <uri>mongodb://172.16.3.47:27017</uri>
@@ -86,7 +86,7 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
     <logger name="currency" additivity="false" level="warn">
         <appender-ref ref="MONGO"/>
     </logger>
-</code></pre>
+
 
 * 在logback中可以使用MDC功能输出附加的字段
 <pre><code class="java">
