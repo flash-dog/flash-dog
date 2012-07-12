@@ -1,5 +1,5 @@
 **概述**  
-应用通过log4j输出日志到mongodb数据库中，闪电狗定时运行脚本分析日志，生成监控曲线和告警。主要优点是不影响业务代码，只需加入几个jar包和修改log4j配置文件就能接入。
+应用通过log4j输出日志到mongodb数据库中，闪电狗定时运行脚本分析日志，生成监控曲线和告警。主要优点是不影响业务代码，只需加入几个jar包和修改log4j配置文件就能接入。配置一些javascript小脚本，几乎就能监控所有你想监控的信息。
 ## 
  1. 安装
 * 安装[mongodb](http://www.mongodb.org/downloads),解压出来，配置数据保存路径，即可运行 
@@ -36,8 +36,8 @@ log4j.appender.MongoDB.port=27017
 log4j.rootLogger=info,stdout,logfile,MongoDB
 </code></pre>
 
-
- 4. 使用logback
+**扩展**   
+  如果您的项目没有使用log4j，也可以使用logback.
 * 下载安装 [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
         <pre><code>
             mvn clean install
