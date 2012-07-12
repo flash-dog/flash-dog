@@ -7,10 +7,10 @@
 
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-
+     <import resource="task-templates.xml"/>
     <context:annotation-config/>
     <context:component-scan base-package="com.skymobi.monitor"/>
-    <bean class="com.skymobi.monitor.service.ProjectService" init-method="init">
+    <bean id="projectService" class="com.skymobi.monitor.service.ProjectService" init-method="init">
         <property name="mongoTemplate" ref="mongoTemplate"/>
         <property name="collectionName" value="${mongo.collection}"/>
     </bean>
@@ -29,7 +29,15 @@
     <bean id="taskService" class="com.skymobi.monitor.service.TaskService">
 
     </bean>
-
+     <bean id="projectCreator" class="com.skymobi.monitor.util.ProjectCreator" init-method="createSelf">
+         <property name="initTasks">
+              <list>
+                  <ref bean="logTask"/>
+                  <ref bean="jvmTask"/>
+              </list>
+         </property>
+       <property name="projectService" ref="projectService"/>
+     </bean>
     <bean id="alertService" class="com.skymobi.monitor.service.AlertService" init-method="init">
         <property name="checkSeconds" value="${alert.checkSeconds}"/>
     </bean>

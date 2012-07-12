@@ -318,6 +318,7 @@ public class Project {
                 ", metricCollection='" + metricCollection + '\'' +
                 ", timeRange=" + timeRange +
                 ", mailList='" + mailList + '\'' +
+                ", taskCount='" + tasks.size() + '\'' +
                 '}';
     }
 

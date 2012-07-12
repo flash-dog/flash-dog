@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="logTask" class="com.skymobi.monitor.model.Task" scope="prototype">
+        <property name="cron" value="40 */5 * * * *"/>
+        <property name="name" value="log_stats"/>
+        <property name="script" ><value>
+            <![CDATA[
+  //统计错误日志占比
+  err=db.$project.logCollection.find({'level':'ERROR',timestamp:{$gt:new Date(new Date - 300000)}}).count()
+  total=db.$project.logCollection.find({timestamp:{$gt:new Date(new Date - 300000)}}).count();
+  if(total==0)total=1;
+  value=err*100/total;
+  db.$project.metricCollection.save({name:'错误日志百分比',value:value,timeStamp:new Date().getTime()});
+  return value;
+                    ]]>  </value>
+
+        </property>
+    </bean>
+
+    <bean id="jvmTask" class="com.skymobi.monitor.model.Task" scope="prototype">
+        <property name="cron" value="40 */2 * * * *"/>
+        <property name="name" value="system_stats"/>
+        <property name="script" ><value>
+            <![CDATA[
+   //统计日志里输出的系统信息 如：memoryUsed=26392k  cpuUsed= 0.0 threadCount=32
+   m=function () {  
+      result = this.message.match(".*memoryUsed=(\\d+).*cpuUsed=(.*) threadCount=(\\d+)");  
+      if (result) {  
+             
+          emit("memoryUsed", parseInt(result[1]));  
+          emit("cpuUsed", parseFloat(result[2]));  
+          emit("threadCount", parseInt(result[3]));  
+      }  
+    
+  }   
+    
+  r= function (key, values) {  
+      var total = 0;  
+      for (var i = 0; i < values.length; i++) {  
+          total += values[i];  
+      }  
+      return total/values.length;  
+  }    
+ res=db.$project.logCollection.mapReduce(m, r, {out:"$project.logCollection_output", query:{timestamp:{$gt:new Date(new Date - 3*60*1000)}}});  
+ if(res.counts.emit > 0){ 
+   memoryUsed=new NumberLong(db.$project.logCollection_output.findOne({_id:"memoryUsed"}).value/1024); 
+   cpuUsed=db.$project.logCollection_output.findOne({_id:"cpuUsed"}).value; 
+   threadCount=new NumberLong(db.$project.logCollection_output.findOne({_id:"threadCount"}).value); 
+   db.$project.metricCollection.save({name:"memoryUsed (M)",value:memoryUsed,timeStamp:new Date().getTime()});  
+   db.$project.metricCollection.save({name:"cpuUsed",value:cpuUsed,timeStamp:new Date().getTime()});  
+   db.$project.metricCollection.save({name:"threadCount",value:threadCount,timeStamp:new Date().getTime()});  
+    
+ } 
+   
+  return "cpuUsed="+ cpuUsed  +" memoryUsed="+memoryUsed  +" threadCount="+threadCount;
+                    ]]>  </value>
+
+        </property>
+    </bean>
+</beans>
