@@ -39,9 +39,9 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
 
  4. 使用logback
 * 下载安装 [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
-<pre><code>
-      mvn clean install
- </code></pre>
+        <pre><code>
+            mvn clean install
+        </code></pre>
 
 * 增加slf4j 和 logback 的依赖
 
@@ -71,41 +71,41 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
 
 * logback的配置
 
-	<appender name="MONGO" class="logback.mongodb.MongoDBAppender">
-        <connectionSource class="logback.mongodb.MongoDBConnectionSource">
-            <uri>mongodb://172.16.3.47:27017</uri>
-            <db>ugglog</db>
-            <collection>paylog</collection>
-        </connectionSource>
-    </appender>
+        <appender name="MONGO" class="logback.mongodb.MongoDBAppender">
+            <connectionSource class="logback.mongodb.MongoDBConnectionSource">
+                <uri>mongodb://172.16.3.47:27017</uri>
+                <db>ugglog</db>
+                <collection>paylog</collection>
+            </connectionSource>
+        </appender>
 
-    <appender name="ASYNCMONGO" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="MONGO" />
-    </appender>
+        <appender name="ASYNCMONGO" class="ch.qos.logback.classic.AsyncAppender">
+            <appender-ref ref="MONGO" />
+        </appender>
 
-    <logger name="currency" additivity="false" level="warn">
-        <appender-ref ref="MONGO"/>
-    </logger>
+        <logger name="currency" additivity="false" level="warn">
+            <appender-ref ref="MONGO"/>
+        </logger>
 
 
 * 在logback中可以使用MDC功能输出附加的字段
-<pre><code class="java">
- 		MDC.clear();
-        MDC.put("mob", mob.name());
-        MDC.put("value", value + "");
-        MDC.put("currency", type.name());
-        MDC.put("reason", reason);
-        MDC.put("saveAtOnce", saveAtOnce + "");
-        mongoLogger.info("{}:{} {} {} {} {}", new Object[]{logPre, mob.name(), value, type, reason, saveAtOnce});        
-</code></pre>
+        <pre><code class="java">
+                MDC.clear();
+                MDC.put("mob", mob.name());
+                MDC.put("value", value + "");
+                MDC.put("currency", type.name());
+                MDC.put("reason", reason);
+                MDC.put("saveAtOnce", saveAtOnce + "");
+                mongoLogger.info("{}:{} {} {} {} {}", new Object[]{logPre, mob.name(), value, type, reason, saveAtOnce});
+        </code></pre>
 
 * 这样在mongodb的collection中保存的scheme会增加这些字段:
-<pre><code>	
-   {
-      mob: '',
-	  value: '',
-      currency: '',
-      reason: '',
-      saveAtOnce: '' 
-   }
-</code></pre>
+        <pre><code>
+           {
+              mob: '',
+              value: '',
+              currency: '',
+              reason: '',
+              saveAtOnce: ''
+           }
+        </code></pre>
