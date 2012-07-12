@@ -1,33 +1,33 @@
-**¸ÅÊö**  
-Ó¦ÓÃÍ¨¹ılog4jÊä³öÈÕÖ¾µ½mongodbÊı¾İ¿âÖĞ£¬ÉÁµç¹·¶¨Ê±ÔËĞĞ½Å±¾·ÖÎöÈÕÖ¾£¬Éú³É¼à¿ØÇúÏßºÍ¸æ¾¯¡£Ö÷ÒªÓÅµãÊÇ²»Ó°ÏìÒµÎñ´úÂë£¬Ö»Ğè¼ÓÈë¼¸¸öjar°üºÍĞŞ¸Älog4jÅäÖÃÎÄ¼ş¾ÍÄÜ½ÓÈë¡£
+**æ¦‚è¿°**  
+åº”ç”¨é€šè¿‡log4jè¾“å‡ºæ—¥å¿—åˆ°mongodbæ•°æ®åº“ä¸­ï¼Œé—ªç”µç‹—å®šæ—¶è¿è¡Œè„šæœ¬åˆ†ææ—¥å¿—ï¼Œç”Ÿæˆç›‘æ§æ›²çº¿å’Œå‘Šè­¦ã€‚ä¸»è¦ä¼˜ç‚¹æ˜¯ä¸å½±å“ä¸šåŠ¡ä»£ç ï¼Œåªéœ€åŠ å…¥å‡ ä¸ªjaråŒ…å’Œä¿®æ”¹log4jé…ç½®æ–‡ä»¶å°±èƒ½æ¥å…¥ã€‚
 ## 
- 1. °²×°
-* °²×°[mongodb](http://www.mongodb.org/downloads),½âÑ¹³öÀ´£¬ÅäÖÃÊı¾İ±£´æÂ·¾¶£¬¼´¿ÉÔËĞĞ 
-* ÏÂÔØ[flash-dog-server](https://github.com/flash-dog/flash-dog/downloads)
-* ĞŞ¸Äflash-dog-serverÎÄ¼ş¼ĞÏÂµÄlog4j.propertiesÎÄ¼ş£¬ĞŞ¸Älog4j.appender.MongoDBµÄhostnameºÍportÖ¸ÏòÄã²¿ÊğµÄmongodbµØÖ·ºÍ¶Ë¿Ú£º  
+ 1. å®‰è£…
+* å®‰è£…[mongodb](http://www.mongodb.org/downloads),è§£å‹å‡ºæ¥ï¼Œé…ç½®æ•°æ®ä¿å­˜è·¯å¾„ï¼Œå³å¯è¿è¡Œ 
+* ä¸‹è½½[flash-dog-server](https://github.com/flash-dog/flash-dog/downloads)
+* ä¿®æ”¹flash-dog-serveræ–‡ä»¶å¤¹ä¸‹çš„log4j.propertiesæ–‡ä»¶ï¼Œä¿®æ”¹log4j.appender.MongoDBçš„hostnameå’ŒportæŒ‡å‘ä½ éƒ¨ç½²çš„mongodbåœ°å€å’Œç«¯å£ï¼š  
     log4j.appender.MongoDB.hostname=172.16.3.47  
     log4j.appender.MongoDB.port=27017  
-* ĞŞ¸Äconf/develop/app.properties£¬Ò²Ö¸Ïò¸Õ²Å²¿ÊğµÄmongodb  
+* ä¿®æ”¹conf/develop/app.propertiesï¼Œä¹ŸæŒ‡å‘åˆšæ‰éƒ¨ç½²çš„mongodb  
     mongo.uri=mongodb://172.16.3.47:27017/monitor_test  
-* ½øÈëbinÏÂ£¬ÔËĞĞstart.sh develop»òÕßstart-dev.bat  
- ÔÚä¯ÀÀÆ÷Àï´ò¿ªhttp://localhost:8080/flash-dog/projects ÊäÈëÓÃ»§Ãû£ºadmin ÃÜÂë 123456 £¬Äã½«¿´µ½Ò»¸ö½ĞÉÁµç¹·µÄÏîÄ¿£¬ÕâÊÇÒòÎªÉÁµç¹·Ò²»á¼à¿Ø×Ô¼º£¬wow
+* è¿›å…¥binä¸‹ï¼Œè¿è¡Œstart.sh developæˆ–è€…start-dev.bat  
+ åœ¨æµè§ˆå™¨é‡Œæ‰“å¼€http://localhost:8080/flash-dog/projects è¾“å…¥ç”¨æˆ·åï¼šadmin å¯†ç  123456 ï¼Œä½ å°†çœ‹åˆ°ä¸€ä¸ªå«é—ªç”µç‹—çš„é¡¹ç›®ï¼Œè¿™æ˜¯å› ä¸ºé—ªç”µç‹—ä¹Ÿä¼šç›‘æ§è‡ªå·±ï¼Œwow
 ![screenshot](https://github.com/downloads/flash-dog/flash-dog/image-flash-dog-1.jpg)
- 2. °ÑÄã×Ô¼ºµÄÏîÄ¿¼ÓÈëÉÁµç¹·
-* ´Ó[flash-dog-api-log4j](https://github.com/flash-dog/flash-dog/downloads)ÏÂÔØ¿Í»§¶ËµÄlib¿â£¬»òÕß´Óflash-dog-serverÎÄ¼ş¼ĞlibÄ¿Â¼ÏÂ¿½±´log4mongo-java ,flash-dog-api-log4j ºÍ mongo-java-driver µ½ÏîÄ¿µÄlib¿âÏÂ£¬×¢Òâ»¹ĞèÒªlog4j 1.2.15ÒÔÉÏµÄ°æ±¾
-* ĞŞ¸ÄÄú×Ô¼ºµÄlog4j.propertiesÅäÖÃÎÄ¼ş
-* ÖØÆôÄúµÄÏîÄ¿
-* ½øÈëhttp://localhost:8080/flash-dog/projects ,ĞÂ½¨ÏîÄ¿£¬Èç¹ûÅäÖÃÕıÈ·£¬Äã½«ÔÚ¡¾ÈÕÖ¾·ÖÎö¡¿À¸Ä¿ÖĞ²éÑ¯µ½ÄúµÄÈÕÖ¾£¬enjoy your self£¡
+ 2. æŠŠä½ è‡ªå·±çš„é¡¹ç›®åŠ å…¥é—ªç”µç‹—
+* ä»[flash-dog-api-log4j](https://github.com/flash-dog/flash-dog/downloads)ä¸‹è½½å®¢æˆ·ç«¯çš„libåº“ï¼Œæˆ–è€…ä»flash-dog-serveræ–‡ä»¶å¤¹libç›®å½•ä¸‹æ‹·è´log4mongo-java ,flash-dog-api-log4j å’Œ mongo-java-driver åˆ°é¡¹ç›®çš„libåº“ä¸‹ï¼Œæ³¨æ„è¿˜éœ€è¦log4j 1.2.15ä»¥ä¸Šçš„ç‰ˆæœ¬
+* ä¿®æ”¹æ‚¨è‡ªå·±çš„log4j.propertiesé…ç½®æ–‡ä»¶
+* é‡å¯æ‚¨çš„é¡¹ç›®
+* è¿›å…¥http://localhost:8080/flash-dog/projects ,æ–°å»ºé¡¹ç›®ï¼Œå¦‚æœé…ç½®æ­£ç¡®ï¼Œä½ å°†åœ¨ã€æ—¥å¿—åˆ†æã€‘æ ç›®ä¸­æŸ¥è¯¢åˆ°æ‚¨çš„æ—¥å¿—ï¼Œenjoy your selfï¼
 
- 3. ÅäÖÃËµÃ÷
+ 3. é…ç½®è¯´æ˜
 * log4j.properties
 <pre><code>
 log4j.appender.MongoDB=org.log4mongo.AsynMongoDbLayoutAppender
 log4j.appender.MongoDB.layout=org.log4mongo.contrib.HostInfoPatternLayout
-#pid±íÊ¾½ø³ÌºÅ£¬ipÎªµ±Ç°·şÎñÆ÷ip
+#pidè¡¨ç¤ºè¿›ç¨‹å·ï¼Œipä¸ºå½“å‰æœåŠ¡å™¨ip
 log4j.appender.MongoDB.layout.ConversionPattern={"timestamp":"%d","level":"%p","className":"%c","message":"%m","pid":"%V","ip":"%I"}
-#ºóÌ¨²åÈëÈÕÖ¾Ê¹ÓÃµÄÏß³ÌÊı
+#åå°æ’å…¥æ—¥å¿—ä½¿ç”¨çš„çº¿ç¨‹æ•°
 log4j.appender.MongoDB.threadCount=2
-#ÊÇ·ñ×Ô¶¯´òÓ¡jvmĞÅÏ¢£¬Èçcpu£¬memory£¬threadcount£¬
+#æ˜¯å¦è‡ªåŠ¨æ‰“å°jvmä¿¡æ¯ï¼Œå¦‚cpuï¼Œmemoryï¼Œthreadcountï¼Œ
 log4j.appender.MongoDB.jvmMonitor=true
 log4j.appender.MongoDB.databaseName=test
 log4j.appender.MongoDB.collectionName=flash_dog_log
@@ -37,13 +37,13 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
 </code></pre>
 
 
- 4. Ê¹ÓÃlogback
-* ÏÂÔØ°²×° [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
+ 4. ä½¿ç”¨logback
+* ä¸‹è½½å®‰è£… [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
         <pre><code>
             mvn clean install
         </code></pre>
 
-* Ôö¼Óslf4j ºÍ logback µÄÒÀÀµ
+* å¢åŠ slf4j å’Œ logback çš„ä¾èµ–
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -69,7 +69,7 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
         </dependency>
 
 
-* logbackµÄÅäÖÃ
+* logbackçš„é…ç½®
 
         <appender name="MONGO" class="logback.mongodb.MongoDBAppender">
             <connectionSource class="logback.mongodb.MongoDBConnectionSource">
@@ -88,7 +88,7 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
         </logger>
 
 
-* ÔÚlogbackÖĞ¿ÉÒÔÊ¹ÓÃMDC¹¦ÄÜÊä³ö¸½¼ÓµÄ×Ö¶Î
+* åœ¨logbackä¸­å¯ä»¥ä½¿ç”¨MDCåŠŸèƒ½è¾“å‡ºé™„åŠ çš„å­—æ®µ
         <pre><code class="java">
                 MDC.clear();
                 MDC.put("mob", mob.name());
@@ -99,7 +99,7 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
                 mongoLogger.info("{}:{} {} {} {} {}", new Object[]{logPre, mob.name(), value, type, reason, saveAtOnce});
         </code></pre>
 
-* ÕâÑùÔÚmongodbµÄcollectionÖĞ±£´æµÄscheme»áÔö¼ÓÕâĞ©×Ö¶Î:
+* è¿™æ ·åœ¨mongodbçš„collectionä¸­ä¿å­˜çš„schemeä¼šå¢åŠ è¿™äº›å­—æ®µ:
         <pre><code>
            {
               mob: '',
