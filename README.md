@@ -1,5 +1,5 @@
 **概述**  
-应用通过log4j输出日志到mongodb数据库中，闪电狗定时运行脚本分析日志，生成监控曲线和告警。主要优点是不影响业务代码，只需加入几个jar包和修改log4j配置文件就能接入。配置一些javascript小脚本，几乎就能监控所有你想监控的信息。
+应用通过log4j输出日志到mongodb数据库中，闪电狗定时运行脚本分析日志，生成监控曲线和告警。主要优点是不影响业务代码，只需加入几个jar包和修改log4j配置文件就能接入。配置一些javascript小脚本，几乎就能监控所有你想监控的信息，如cpu内存，错误日志百分比，每日访问人数，收入等等
 ## 
  1. 安装
 * 安装[mongodb](http://www.mongodb.org/downloads),解压出来，配置数据保存路径，即可运行 
@@ -18,7 +18,7 @@
 * 重启您的项目
 * 进入http://localhost:8080/flash-dog/projects ,新建项目，如果配置正确，你将在【日志分析】栏目中查询到您的日志，enjoy your self！
 
- 3. 配置说明
+ 3. log4j配置说明
 * log4j.properties
 <pre><code>
 log4j.appender.MongoDB=org.log4mongo.AsynMongoDbLayoutAppender
@@ -36,6 +36,45 @@ log4j.appender.MongoDB.port=27017
 log4j.rootLogger=info,stdout,logfile,MongoDB
 </code></pre>
 
+ 4. 监控示例
+* 在闪电狗里面新建监控项目后，点击[定时任务]->[新建任务]。假设业务会打印出：  
+  username=jordon pay money=100
+  点击[指标监控]按钮，自动生成脚本如下：
+<pre><code class="java">
+m=function () { 
+     result = this.message.match(".*money=(\\d+)"); 
+     if (result) { 
+         pricePaied = new NumberLong(result[1]);         
+         emit("pricePaied", pricePaied); 
+     } 
+ }  
+ r= function (key, values) { 
+     var total = 0; 
+     for (var i = 0; i < values.length; i++) { 
+         total += values[i]; 
+     } 
+     return total; 
+ }   
+ res=db.flash_dog_log.mapReduce(m, r, {out:"flash_dog_log_output", query:{timestamp:{$gt:new Date(new Date - 300000)}}}); 
+ pricePaied=db.flash_dog_log_output.findOne({_id:"pricePaied"});
+ if(pricePaied) 
+    v=pricePaied.value; 
+   else 
+     v=0;    
+ db.flash_dog_metrics.save({name:"5分钟收入",value:v,timeStamp:new Date().getTime()}); 
+ return res;   
+</code></pre>
+
+  目的为通过脚本扫描最近5分钟日志，通过正则表示提取 this.message.match(".*money=(\\d+)") 金额，加起来即为最近5分钟收入。生成曲线图如下：
+  ![screenshot](https://github.com/downloads/flash-dog/flash-dog/image-shouru-1.jpg)
+* 设置告警 当最近5分钟收入少于100的时候发送邮件，凌晨0点到4点的时候除外。
+  ![screenshot](https://github.com/downloads/flash-dog/flash-dog/image-warning-1.jpg)
+* 闪电狗目前有4个脚本模板，可以边修改，边调试，非常有趣
+ 5. 常见问题
+* 是否可以监控业务
+  可以，默认是监控jvm性能和错误日志，里面提供了脚步模板，稍作修改便能通过分析业务日志进行业务统计和监控  
+* 是否需要连接业务数据库  
+  不需要，只需要连接mongodb 
 **扩展**   
   如果您的项目没有使用log4j，也可以使用logback.
 * 下载安装 [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
