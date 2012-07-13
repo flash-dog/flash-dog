@@ -37,8 +37,10 @@ log4j.rootLogger=info,stdout,logfile,MongoDB
 </code></pre>
 
  4. 监控示例
-* 在闪电狗里面新建监控项目后，点击[定时任务]->[新建任务]。假设业务会打印出：  
+* 在闪电狗里面新建监控项目后，点击[定时任务]->[新建任务]。假设业务会打印出：
+ <pre><code class="java">
   username=jordon pay money=100
+</code></pre>
   点击[指标监控]按钮，自动生成脚本如下：
 <pre><code class="java">
 m=function () { 
