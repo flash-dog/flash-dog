@@ -49,7 +49,7 @@ public class MongoUserManager implements UserManager, UserDetailsService {
     @Resource
     private EmailService emailService;
 
-    public void inti() {
+    public void init() {
         for (String username : loadAdmins()) {
             User user = loadUserByUsername(username);
             if (user == null) {

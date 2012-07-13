@@ -42,7 +42,7 @@
         <property name="checkSeconds" value="${alert.checkSeconds}"/>
     </bean>
 
-    <bean id="userManager"  class="com.skymobi.monitor.security.MongoUserManager" init-method="inti">
+    <bean id="userManager"  class="com.skymobi.monitor.security.MongoUserManager" init-method="init">
         <property name="mongoTemplate" ref="mongoTemplate"/>
         <property name="systemAdmins" value="${security.systemAdmins}" />
           <property name="systemAdminInitPassword" value="${security.systemAdminInitPassword}"/>
