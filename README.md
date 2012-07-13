@@ -65,16 +65,18 @@ m=function () {
  return res;   
 </code></pre>
 
-  目的为通过脚本扫描最近5分钟日志，通过正则表示提取 this.message.match(".*money=(\\d+)") 金额，加起来即为最近5分钟收入。生成曲线图如下：
-  ![screenshot](https://github.com/downloads/flash-dog/flash-dog/image-shouru-1.jpg)
+  目的为通过脚本扫描最近5分钟日志，通过正则表示提取 this.message.match(".*money=(\\d+)") 金额，加起来即为最近5分钟收入。生成曲线图如下：  
+![screenshot](https://github.com/flash-dog/flash-dog/blob/master/screenshot/shouru1.jpg?raw=true)
 * 设置告警 当最近5分钟收入少于100的时候发送邮件，凌晨0点到4点的时候除外。
-  ![screenshot](https://github.com/downloads/flash-dog/flash-dog/image-warning-1.jpg)
+![screenshot](https://github.com/flash-dog/flash-dog/blob/master/screenshot/warning1.jpg?raw=true)
 * 闪电狗目前有4个脚本模板，可以边修改，边调试，非常有趣
  5. 常见问题
-* 是否可以监控业务
+* 是否可以监控业务   
   可以，默认是监控jvm性能和错误日志，里面提供了脚步模板，稍作修改便能通过分析业务日志进行业务统计和监控  
-* 是否需要连接业务数据库  
-  不需要，只需要连接mongodb 
+* 是否需要连接业务数据库    
+  不需要，只需要连接mongodb  
+
+
 **扩展**   
   如果您的项目没有使用log4j，也可以使用logback.
 * 下载安装 [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
