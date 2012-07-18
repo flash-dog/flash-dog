@@ -3,5 +3,7 @@
 *.iws
 .settings
 target
-logs
+
+*.log.*
+*.log
 *.db
