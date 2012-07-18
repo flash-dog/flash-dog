@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.Assert;
@@ -97,7 +99,9 @@ public class MongoUserManager implements UserManager, UserDetailsService {
 
         User user = mongoTemplate.findOne(new Query(Criteria.where("username").is(username)),
                 User.class, COLLECTION_NAME_USER);
-
+        if(user!=null && isSystemAdmin(username))    {
+            user.setAuthorities( AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
+        }
         return user;
     }
 

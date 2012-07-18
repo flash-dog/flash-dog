@@ -39,7 +39,7 @@ public class User implements UserDetails {
     private String password;
     @Id
     private String username;
-    private List<GrantedAuthority> authorities;
+    private List<? extends GrantedAuthority> authorities;
     private boolean accountNonExpired=true;
     private boolean accountNonLocked=true;
     private boolean credentialsNonExpired=true;
@@ -77,7 +77,7 @@ public class User implements UserDetails {
 
     //~ Methods ========================================================================================================
 
-    public Collection<GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
@@ -114,7 +114,7 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public void setAuthorities(List<GrantedAuthority> authorities) {
+    public void setAuthorities(List<?extends GrantedAuthority> authorities) {
         this.authorities = authorities;
     }
 

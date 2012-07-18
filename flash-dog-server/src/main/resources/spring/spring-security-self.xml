@@ -17,7 +17,7 @@
         <form-login  login-page="/login"  default-target-url="/projects" />
 
         <intercept-url pattern="/projects/**" access="isAuthenticated()" />
-
+        <intercept-url pattern="/admin/**" access="hasAuthority(ROLE_ADMIN)"/>
         <form-login/>
         <logout/>
         <remember-me/>
