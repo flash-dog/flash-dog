@@ -13,13 +13,4 @@
 
     });
 </script>
-<div id="content">
-
-    <div>
-        <h2>${chart.name} </h2>
-    </div>
-
-    <div id="stats_panel">
-
-    </div>
 </div>

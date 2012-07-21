@@ -9,12 +9,15 @@ var drawCharts = function(chartPanel, url, varName) {
                 success: function(response) {
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Year');
-                    data.addColumn('number', varName);
-
-                    data.addRows(response);
+                    for(var i=0;i<response.metricNames.length;i++){
+                    	data.addColumn('number', response.metricNames[i]);
+                    }
+                    data.addRows(response.data);
+                    var bodyWidth = document.body.clientWidth;
+                    var bodyHeight = document.body.clientHeight;
 
                     var options = {
-                        width: '70%', height: 440,
+                        width: bodyWidth*0.95, height: 440,
                         title: varName,
                         hAxis:{title:'time',format:'%m/%#d %hh:%M'}
                     };

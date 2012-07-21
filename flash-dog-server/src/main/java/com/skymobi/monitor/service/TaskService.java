@@ -72,7 +72,7 @@ public class TaskService {
 
                 logger.debug("run mongo script = {}", script);
                 CommandResult result = project.fetchMongoTemplate().getDb().doEval(script, new BasicDBObject().append("nolock", true));
-                logger.info("mongo task response {}", result);
+                logger.debug("mongo task response {}", result);
                 return result;
             }
         });

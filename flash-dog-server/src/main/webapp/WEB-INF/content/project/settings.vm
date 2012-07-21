@@ -45,8 +45,13 @@
     }
 </script>
 <div id="content">
-    <h2>配置</h2>
-
+    <div class="contextual" style="position:absolute; right:10px;">
+        #if($authz.hasProject($project))
+            <a href="$link.setRelative("/projects/${project.name}/destroy")" onclick="return confirm('您确定？')"
+               class="icon icon-delete" >删除</a>
+        #end
+    </div>
+	<h2>配置</h2>
     <div class="tabs">
         <ul>
             <li><a href="$link.setRelative("/projects/$project.name/settings/info")" class="info-tab " id="tab-info"

@@ -6,7 +6,11 @@
     <includeBaseDirectory>true</includeBaseDirectory>
 
     <fileSets>
-
+        <fileSet>
+            <directory>src/main/assembly/common/bin/</directory>
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
         <fileSet>
             <directory>src/main/resources/</directory>
             <outputDirectory>/</outputDirectory>

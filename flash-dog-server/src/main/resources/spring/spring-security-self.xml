@@ -23,11 +23,11 @@
         <remember-me/>
 
 
-        <!-- Uncomment to limit the number of sessions a user can have -->
+        <!-- Uncomment to limit the number of sessions a user can have 
         <session-management>
             <concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>
         </session-management>
-
+		-->
     </http>
 
     <beans:bean id="authenticationFailureHandler" class="com.skymobi.monitor.security.SelfAuthenticationFailureHandler"/>

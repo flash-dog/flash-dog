@@ -127,7 +127,7 @@ margin: 0;
 position: absolute;
 bottom: 0;
 padding-left: 1em;
-width: 2000px;
+width: 100%;
 border-bottom: 1px solid #BBB;
 }
 #content .tabs ul li {
@@ -208,6 +208,7 @@ table.files tr.file td {
 text-align: center;
 }
 .monitortoolbar {
+	width:300px;
 background-color: #ffffff;
 border-bottom: solid #ABB1C7;
 border-width: 1px 0 0;

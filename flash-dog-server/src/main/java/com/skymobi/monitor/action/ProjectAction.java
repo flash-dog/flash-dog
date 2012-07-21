@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Hill.Hu
+ * Author: Hill.Hu,steven.zheng
  * Email:  hill.hu@sky-mobi.com
  * Date: 11-11-23 上午8:51
  * 项目转发器
@@ -127,6 +127,10 @@ public class ProjectAction {
         Project project = projectService.findProject(name);
         map.put("project", project);
         map.put("metricNames", project.findMetricNames());
+        Map views = project.getViews();
+        for(String MetricName: project.findMetricNames())
+        	views.put(MetricName, MetricName);
+        map.put("views", project.getViews());
         return "project/show";
     }
 
