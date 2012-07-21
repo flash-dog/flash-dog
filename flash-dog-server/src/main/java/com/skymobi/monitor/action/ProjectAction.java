@@ -17,17 +17,19 @@ package com.skymobi.monitor.action;
 
 import com.google.common.collect.Lists;
 import com.skymobi.monitor.model.Project;
-import com.skymobi.monitor.security.UserManager;
+import com.skymobi.monitor.security.SimpleAuthz;
 import com.skymobi.monitor.service.ProjectService;
 import com.skymobi.monitor.util.SystemConstants;
-import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.support.BindStatus;
 import org.springframework.web.util.WebUtils;
 
 import javax.annotation.Resource;
@@ -38,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Hill.Hu,steven.zheng
+ * Author: Hill.Hu
  * Email:  hill.hu@sky-mobi.com
  * Date: 11-11-23 上午8:51
  * 项目转发器
@@ -51,7 +53,8 @@ public class ProjectAction {
     @Resource
     private ProjectService projectService;
 
-    private UserManager userManager;
+    @Resource
+    private SimpleAuthz simpleAuthz;
 
     @RequestMapping({"/index", "/"})
     public String index(ModelMap map, HttpServletResponse response) throws IOException {
@@ -97,21 +100,21 @@ public class ProjectAction {
      * @throws IOException
      */
     @RequestMapping(value = "/projects", method = RequestMethod.POST)
-    public String save(ModelMap map, HttpServletResponse response, Project project, HttpServletRequest request) throws IOException {
+    public String save(ModelMap map, HttpServletResponse response, Project project,  BindingResult bindingResult) throws IOException {
 
-        AttributePrincipal principal = null;
-        try {
-            principal = (AttributePrincipal) request.getUserPrincipal();
-            String userName = principal.getName();
-            project.setAdmins(Lists.newArrayList(userName));
-        } catch (Exception e) {
-            logger.error("get access name from oms fail:", e);
+        String userName = simpleAuthz.getPrincipal();
+        project.setAdmins(Lists.newArrayList(userName));
 
-        }
         project.setMetricCollection(project.getMetricCollection());
-        if (projectService.findProject(project.getName()) == null)
+        if (projectService.findProject(project.getName()) == null) {
             projectService.saveProject(project);
-        return "redirect:/projects/" + project.getName();
+            return "redirect:/projects/" + project.getName();
+        } else {
+            map.put("project",project);
+            bindingResult.rejectValue("name", "project name has exist");
+            map.put("flashMsg","project  "+project.getName()+ " has exist");
+            return "project/new";
+        }
     }
 
     /**
@@ -198,8 +201,8 @@ public class ProjectAction {
     @RequestMapping(value = "/projects/{name}/ext", method = RequestMethod.POST)
     public String updateExt(ModelMap map, @PathVariable String name, HttpServletRequest request) throws IOException {
         Project dbProject = projectService.findProject(name);
-        Map<String,Object> extProperties = WebUtils.getParametersStartingWith(request, SystemConstants.CONFIG_PREFIX);
-        logger.debug("update project ext properties {}",extProperties);
+        Map<String, Object> extProperties = WebUtils.getParametersStartingWith(request, SystemConstants.CONFIG_PREFIX);
+        logger.debug("update project ext properties {}", extProperties);
         dbProject.getProperties().putAll(extProperties);
         projectService.saveProject(dbProject);
 

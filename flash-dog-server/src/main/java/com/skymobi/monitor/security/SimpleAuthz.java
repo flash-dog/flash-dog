@@ -19,6 +19,8 @@ import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.taglibs.velocity.Authz;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -59,12 +61,12 @@ public class SimpleAuthz {
     }
 
     public boolean isAuthenticated() {
-        return getUserPrincipal() != null;
+        return getUserPrincipal().isAuthenticated() && ! "anonymousUser".equalsIgnoreCase(getPrincipal());
     }
 
-    private Principal getUserPrincipal() {
+    private Authentication getUserPrincipal() {
 
-        return (Principal) RequestContextHolder.getRequestAttributes().getAttribute(USER_PRINCIPAL, RequestAttributes.SCOPE_REQUEST);
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     /**
