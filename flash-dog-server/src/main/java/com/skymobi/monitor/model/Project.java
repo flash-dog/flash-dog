@@ -277,6 +277,7 @@ public class Project {
 
         Query query = fetchTimeQuery();
         query.addCriteria(Criteria.where("name").is(metricName));
+        query.sort().on(Constants.TIME_STAMP_FIELD_NAME, Order.ASCENDING);
         logger.debug("find metric value by {} ,mongo={}", query.getQueryObject(), mongoUri);
         return fetchMongoTemplate().find(query, MetricValue.class, metricCollection);
     }
