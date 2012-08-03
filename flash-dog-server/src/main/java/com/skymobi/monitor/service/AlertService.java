@@ -16,6 +16,7 @@
 package com.skymobi.monitor.service;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.MapMaker;
 import com.skymobi.monitor.model.Alert;
 import com.skymobi.monitor.model.MetricDog;
 import com.skymobi.monitor.model.Project;
@@ -28,9 +29,11 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Hill.Hu
@@ -39,14 +42,16 @@ public class AlertService {
     private static Logger logger = LoggerFactory.getLogger(AlertService.class);
 
     private final static ScheduledExecutorService executor = Executors.newScheduledThreadPool(10);
-
+    private static ConcurrentMap<String, AtomicInteger> notifyTimes;
     @Resource
-    private List<AlertListener> alertListeners= Lists.newArrayList();
+    private List<AlertListener> alertListeners = Lists.newArrayList();
     @Resource
     ProjectService projectService;
     @Resource
     private MongoTemplate mongoTemplate;
     private String collectionName = "flash_dog_alerts";
+    private int limitTimes = 3;
+    private int limitMinutes = 60;
 
     public void setCheckSeconds(int checkSeconds) {
         this.checkSeconds = checkSeconds;
@@ -64,6 +69,7 @@ public class AlertService {
                     }
                 }, 15, checkSeconds, TimeUnit.SECONDS
         );
+        notifyTimes = new MapMaker().expiration(limitMinutes, TimeUnit.MINUTES).makeMap();
     }
 
     private void watch() {
@@ -86,8 +92,10 @@ public class AlertService {
                         @Override
                         public void run() {
                             Alert alert = dog.work(project);
-                            if (alert != null) {
+                            if (isNeedNotify(alert)) {
                                 AlertService.this.notify(alert);
+                            } else {
+                                logger.debug("out of limit times={} ,not notify this alert", limitTimes);
                             }
                         }
                     }
@@ -95,6 +103,19 @@ public class AlertService {
         } catch (Exception e) {
             logger.error("start dog fail ", e);
         }
+    }
+
+    protected boolean isNeedNotify(Alert alert) {
+        if (alert == null)
+            return false;
+        String key = alert.getProjectName() + "_" + alert.getTitle();
+
+        AtomicInteger init = new AtomicInteger(0);
+        AtomicInteger times = notifyTimes.putIfAbsent(key, init);
+        if (times == null)
+            times = init;
+        logger.debug("{} notify times ={}", key, times.get());
+        return times.getAndIncrement() < limitTimes;
     }
 
     private void notify(Alert alert) {
@@ -126,4 +147,16 @@ public class AlertService {
         mongoTemplate.remove(Query.query(Criteria.where("projectName").is(projectName)), collectionName);
     }
 
+    public void setLimitTimes(int limitTimes) {
+        this.limitTimes = limitTimes;
+    }
+
+    public void setLimitMinutes(int limitMinutes) {
+        this.limitMinutes = limitMinutes;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> findWarningProjects() {
+        return mongoTemplate.getCollection(collectionName).distinct("projectName");
+    }
 }

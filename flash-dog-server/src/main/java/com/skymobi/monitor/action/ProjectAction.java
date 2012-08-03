@@ -16,8 +16,10 @@
 package com.skymobi.monitor.action;
 
 import com.google.common.collect.Lists;
+import com.skymobi.monitor.model.Alert;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.security.SimpleAuthz;
+import com.skymobi.monitor.service.AlertService;
 import com.skymobi.monitor.service.ProjectService;
 import com.skymobi.monitor.util.SystemConstants;
 import org.slf4j.Logger;
@@ -56,6 +58,9 @@ public class ProjectAction {
     @Resource
     private SimpleAuthz simpleAuthz;
 
+    @Resource
+    private AlertService alertService;
+
     @RequestMapping({"/index", "/"})
     public String index(ModelMap map, HttpServletResponse response) throws IOException {
 
@@ -74,6 +79,8 @@ public class ProjectAction {
     public String listProject(ModelMap map, HttpServletResponse response) throws IOException {
         List<Project> projects = projectService.findProjects();
         map.put("projects", projects);
+        List<String> warningProjectNames= alertService.findWarningProjects();
+        map.put("warningProjectNames",warningProjectNames);
         return "project/list";
     }
 

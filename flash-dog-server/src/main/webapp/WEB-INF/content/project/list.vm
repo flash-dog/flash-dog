@@ -5,7 +5,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
     });
 </script>
 <div id="content">
@@ -15,7 +15,25 @@
     <div>
         <h2>所有项目</h2>
     </div>
-    #foreach($project in $projects)
-     <a href="$link.setRelative("/projects/${project.name}")">$project.alias</a>  <br/>  <br/>
-    #end
+    <table>
+        <tbody>
+        <tr>
+            #foreach($project in $projects)
+                <td>
+                    #if($warningProjectNames.contains(${project.name}))
+                        <img class="icon24x24 "  src="#springUrl("/images/red.png")" alt="alert" title="清空告警，可以变蓝">
+                    #else
+                        <img class="icon24x24 "  src="#springUrl("/images/blue.png")" alt="fine" title="没有任何告警，真棒">
+                    #end
+                </td>
+                <td style="vertical-align: middle;">
+                    <a href="$link.setRelative("/projects/${project.name}")">$project.alias</a>
+                #if($project.admins.size() > 0)
+                    ($!{project.admins.get(0)})
+                #end</td>
+            </tr>
+            #end
+
+        </tbody>
+    </table>
 </div>

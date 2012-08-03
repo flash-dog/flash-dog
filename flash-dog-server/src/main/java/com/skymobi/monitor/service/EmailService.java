@@ -28,12 +28,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-12-8 上午9:29
  * 扫描各个项目发件箱，并发出邮件
+ *
+ * @author hill.hu
  */
-public class EmailService implements AlertListener{
+public class EmailService implements AlertListener {
     private static Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Resource

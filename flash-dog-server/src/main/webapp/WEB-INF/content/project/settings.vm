@@ -72,14 +72,17 @@
         <div id="tab-content-info" class="box hidden">
 
             <form id="info_form" action="$link.setRelative("/projects/$project.name/info")" method="post">
+                <table width="100%">
                 <input name="name" type="hidden" value="$project.name"/>
-                别名:<input name="alias" value="$project.alias"/><br/>
-                数据库地址:<input name="mongoUri" value="$project.mongoUri" style="width: 250px"/><br/>
-                mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]<br/>
-                度量表名:<input name="metricCollection" value="${project.metricCollection}"/><br/>
-                原始日志表:<input name="logCollection" value="$!{project.logCollection}"/>（逗号分隔）<br/>
-                邮件列表:<input name="mailList" value="$!{project.mailList}"/>（逗号分隔）<br/>
-                <input type="submit" value="确定"/>
+                    <tr ><td class="setting-name">别名:</td><td class="setting-main"><input name="alias"  class="setting-input"  value="$project.alias"/></td> </tr >
+                    <tr ><td class="setting-name">数据库地址:</td><td class="setting-main"><input name="mongoUri"  class="setting-input"  value="$project.mongoUri"  /></td> </tr >
+                    <tr ><td class="setting-name"></td><td class="setting-main"> mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]</td> </tr >
+                    <tr ><td class="setting-name">度量表名:</td><td class="setting-main"><input name="metricCollection"  class="setting-input"  value="${project.metricCollection}"/></td> </tr >
+                    <tr ><td class="setting-name">原始日志表:</td><td class="setting-main"><input name="logCollection"  class="setting-input"  value="$!{project.logCollection}"/></td> </tr >
+                    <tr ><td class="setting-name">邮件列表（逗号分隔）:</td><td class="setting-main"><input name="mailList"  class="setting-input" value="$!{project.mailList}"/></td> </tr >
+                </table>
+                 <input type="submit" value="确定"/>
+
             </form>
 
         </div>
@@ -89,7 +92,7 @@
             <form id="dogs_form" action="$link.setRelative("/projects/$project.name/warnings")" method="post">
 
                 名称:<input name="name" id='dogs_form_name'  class="{required:true,minlength:3}" value=""/> <br/>
-                描叙:<input name="desc" id='dogs_form_desc' value=""/><br/>
+               <label class="setting-name">描叙:</label> <input name="desc" id='dogs_form_desc'  style="width: 80%" value=""/><br/>
                 是否开启:<input name="enable" id='dogs_form_enable' type="checkbox" checked=""/> <br/>
                 如果：   <select id="dogs_form_metricName" name="metricName">
                 #foreach($metricName in $project.findMetricNames() )
@@ -117,9 +120,10 @@
         <div id="tab-content-members" class="box hidden">
 
             <form id="members_form" action="$link.setRelative("/projects/$project.name/members")" method="post">
+                <table width="100%">
+                    <tr ><td class="setting-name">管理员（逗号分隔）:</td><td class="setting-main"><input name="admins"  class="setting-input"   value="$fm.join($project.admins)"/></td>
 
-                管理员:<input name="admins" value="$fm.join($project.admins)"/>（逗号分隔）<br/>
-                <input type="submit" value="确定"/>
+                 </table><input type="submit" value="确定"/>
             </form>
     </div>
 

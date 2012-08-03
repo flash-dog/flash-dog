@@ -12,7 +12,7 @@
             <li><a href="$link.setRelative("projects/$project.name/warnings")" class="warnings">告警</a></li>
             #if($authz.hasProject($project))
                 <li><a href="$link.setRelative("projects/$project.name/tasks")" class="tasks">定时任务</a></li>
-                <li><a href="$link.setRelative("projects/$project.name/charts")" class="charts">统计</a></li>
+##                <li><a href="$link.setRelative("projects/$project.name/charts")" class="charts">统计</a></li>
                 <li><a href="$link.setRelative("projects/$project.name/logs")" class="logs">日志分析</a></li>
                 <li><a href="$link.setRelative("projects/$project.name/mongo/console")" class="console">MongoDB</a></li>
                 <li><a href="$link.setRelative("projects/$project.name/settings/info")" class="settings">设置</a></li>

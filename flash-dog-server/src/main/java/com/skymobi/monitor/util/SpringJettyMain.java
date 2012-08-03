@@ -8,14 +8,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
+ * springMVC+Jetty的容器
+ *
  * @author Hill.Hu
- *         springMVC+Jetty的容器
  */
 public class SpringJettyMain {
 
     private static final Logger logger = LoggerFactory.getLogger(SpringJettyMain.class);
 
     public static void main(String[] args) {
+
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/springWeb-start.xml");
         WebAppContext webAppContext = applicationContext.getBean("webAppContext", WebAppContext.class);
         logger.info("start jetty web context context= " + webAppContext.getContextPath() + ";resource base=" + webAppContext.getResourceBase());

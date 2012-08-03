@@ -96,7 +96,10 @@ padding-left: 20px;
 padding-top: 2px;
 padding-bottom: 3px;
 }
-
+.icon24x24 {
+    width: 24px;
+    height: 24px;
+}
 .box {
 padding: 6px;
 margin-bottom: 10px;

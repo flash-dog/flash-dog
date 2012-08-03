@@ -10,7 +10,8 @@
     <groupId>com.skymobi</groupId>
     <artifactId>flash-dog-server</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
+
     <properties>
         <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
         <spring.data.mongo.version>1.0.1.RELEASE</spring.data.mongo.version>
@@ -268,6 +269,27 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+
+                        <manifest>
+                            <mainClass>com.skymobi.monitor.util.SpringJettyMain</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <packageName>flash-dog-server</packageName>
+                        </manifest>
+
+                    </archive>
+                    <includes>
+                        <include>
+                            **/skymobi/**
+                        </include>
+                    </includes>
+
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>
