@@ -5,7 +5,6 @@
 	<style>
 	#dialog label, #dialog input { display:block; }
 	#dialog label { margin-top: 0.5em; }
-	#dialog input, #dialog textarea { width: 95%; }
 	#tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
 	#add_tab { cursor: pointer; }
 	</style>
@@ -63,9 +62,9 @@
     </div>
     <div id="dialog" title="复合图表">
    			    <label for="tab_title">图表名称</label>
-				<input type="text" name="tab_title" id="tab_title" value="" class="ui-widget-content ui-corner-all" />
+				<input type="text" name="tab_title" id="tab_title" value="" class="ui-widget-content ui-corner-all setting-input" />
 				<label for="tab_content">描述</label>
-				<textarea name="tab_content" id="tab_content" class="ui-widget-content ui-corner-all"></textarea>
+				<textarea name="tab_content" id="tab_content" class="ui-widget-content ui-corner-all setting-input"></textarea>
 		<form>
 		<table>
 		#foreach($varName2 in $metricNames)
