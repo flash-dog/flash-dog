@@ -74,4 +74,16 @@ public class ProjectServiceTest extends AbstractJUnit4SpringContextTests {
         assertNotNull(projectService.findProject("test_project_db"));
         assertEquals(count, projectService.findProjects().size());
     }
+
+    @Test
+    public void test_create() throws Exception {
+        Project project = new Project();
+        project.setName("test_project_1222");
+        project.setMongoUri("mongodb://172.16.3.47:9999/mongolog");
+        try {
+            projectService.create(project);
+        } catch (IllegalArgumentException e) {
+          logger.debug("test error",e);
+        }
+    }
 }

@@ -23,9 +23,8 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-12-7 下午1:43
+* @author hill.hu
+ *
  * 统计类
  */
 public class Chart implements IdentifyObject {

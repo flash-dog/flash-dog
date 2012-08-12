@@ -16,7 +16,6 @@
 package com.skymobi.monitor.action;
 
 import com.google.common.collect.Lists;
-import com.skymobi.monitor.model.Alert;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.security.SimpleAuthz;
 import com.skymobi.monitor.service.AlertService;
@@ -27,11 +26,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.support.BindStatus;
 import org.springframework.web.util.WebUtils;
 
 import javax.annotation.Resource;
@@ -42,10 +39,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-11-23 上午8:51
- * 项目转发器
+ * @author hill.hu
+ *         <p/>
+ *         项目转发器
  */
 @SuppressWarnings("unchecked")
 @Controller
@@ -79,8 +75,8 @@ public class ProjectAction {
     public String listProject(ModelMap map, HttpServletResponse response) throws IOException {
         List<Project> projects = projectService.findProjects();
         map.put("projects", projects);
-        List<String> warningProjectNames= alertService.findWarningProjects();
-        map.put("warningProjectNames",warningProjectNames);
+        List<String> warningProjectNames = alertService.findWarningProjects();
+        map.put("warningProjectNames", warningProjectNames);
         return "project/list";
     }
 
@@ -107,21 +103,21 @@ public class ProjectAction {
      * @throws IOException
      */
     @RequestMapping(value = "/projects", method = RequestMethod.POST)
-    public String save(ModelMap map, HttpServletResponse response, Project project,  BindingResult bindingResult) throws IOException {
+    public String save(ModelMap map, HttpServletResponse response, Project project, BindingResult bindingResult) throws IOException {
 
         String userName = simpleAuthz.getPrincipal();
         project.setAdmins(Lists.newArrayList(userName));
 
         project.setMetricCollection(project.getMetricCollection());
-        if (projectService.findProject(project.getName()) == null) {
-            projectService.saveProject(project);
+        try {
+            projectService.create(project);
             return "redirect:/projects/" + project.getName();
-        } else {
-            map.put("project",project);
-            bindingResult.rejectValue("name", "project name has exist");
-            map.put("flashMsg","project  "+project.getName()+ " has exist");
+        } catch (IllegalArgumentException e) {
+            map.put("project", project);
+            map.put("flashMsg", e.getMessage());
             return "project/new";
         }
+
     }
 
     /**
@@ -138,8 +134,10 @@ public class ProjectAction {
         map.put("project", project);
         map.put("metricNames", project.findMetricNames());
         Map views = project.getViews();
-        for(String MetricName: project.findMetricNames())
-        	views.put(MetricName, MetricName);
+        if (views.isEmpty()) {
+            for (String metricName : project.findMetricNames())
+                views.put(metricName, metricName);
+        }
         map.put("views", project.getViews());
         return "project/show";
     }

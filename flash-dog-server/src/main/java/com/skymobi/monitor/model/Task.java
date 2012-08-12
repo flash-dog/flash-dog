@@ -21,9 +21,8 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.Callable;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-11-30 下午5:54
+* @author hill.hu
+ *
  * mongodb的脚本任务执行器
  */
 @SuppressWarnings("unchecked")

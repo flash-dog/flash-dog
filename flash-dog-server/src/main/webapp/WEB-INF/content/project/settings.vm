@@ -8,6 +8,18 @@
         $("#tab-${module}").addClass("selected");
         $("#tab-content-${module}").removeClass("hidden");
         $("#dogs_form").validate();
+        var params = jQuery.param({script:"return db.${project.logCollection}.stats()"});
+        jQuery.ajax({
+            url:"#springUrl( "/projects/${project.name}/mongo/console?format=json")",
+            data: params,
+            type:'post',
+            success : function(msg) {
+                var stats=msg.retval;
+                $("#log_collection_stats").append("占用空间："+new Number(stats.storageSize/(1024*1024)).toFixed(2)+"m;记录条数:"+stats.count+";cap模式："+stats.capped);
+
+            }
+        });
+
         drawDogsTable();
     });
 
@@ -78,7 +90,7 @@
                     <tr ><td class="setting-name">数据库地址:</td><td class="setting-main"><input name="mongoUri"  class="setting-input"  value="$project.mongoUri"  /></td> </tr >
                     <tr ><td class="setting-name"></td><td class="setting-main"> mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]</td> </tr >
                     <tr ><td class="setting-name">度量表名:</td><td class="setting-main"><input name="metricCollection"  class="setting-input"  value="${project.metricCollection}"/></td> </tr >
-                    <tr ><td class="setting-name">原始日志表:</td><td class="setting-main"><input name="logCollection"  class="setting-input"  value="$!{project.logCollection}"/></td> </tr >
+                    <tr ><td class="setting-name">原始日志表:</td><td class="setting-main"><input name="logCollection"  class="setting-input"  value="$!{project.logCollection}"/><div id="log_collection_stats"></div></td> </tr >
                     <tr ><td class="setting-name">邮件列表（逗号分隔）:</td><td class="setting-main"><input name="mailList"  class="setting-input" value="$!{project.mailList}"/></td> </tr >
                 </table>
                  <input type="submit" value="确定"/>

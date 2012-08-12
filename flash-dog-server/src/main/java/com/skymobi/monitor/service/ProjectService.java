@@ -22,14 +22,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-11-30 下午6:37
+ * @author hill.hu
  */
 @SuppressWarnings("unchecked")
 public class ProjectService {
@@ -117,4 +116,13 @@ public class ProjectService {
         logger.debug("remove project by name={} success", projectName);
     }
 
+    public void create(Project project) throws IllegalArgumentException {
+        Assert.isNull(findProject(project.getName()), "project  [" + project.getName() + "] has exist");
+        MongoTemplate template = project.fetchMongoTemplate();
+        Assert.notNull(template, "mongo uri is not access");
+        Assert.notNull(template.getDb(), "mongo uri is not access");
+        Assert.isTrue(template.collectionExists(project.getLogCollection()), "log collection [" + project.getLogCollection() + "] not exist ");
+
+        saveProject(project);
+    }
 }

@@ -24,9 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-11-23 上午9:09
+* @author hill.hu
+ *
  * 度量监控
  */
 @SuppressWarnings("unused")

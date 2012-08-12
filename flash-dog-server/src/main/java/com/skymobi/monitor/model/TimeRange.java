@@ -19,9 +19,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-12-2 下午5:22
+* @author hill.hu
+ *
  * 时间范围
  */
 public class TimeRange {

@@ -27,10 +27,11 @@
     <tr ><td class="setting-name">数据库地址:</td>
         <td class="setting-main"><input name="mongoUri" class="required valid setting-input"   minlength="3"  value="$!project.mongoUri" /></td>
     </tr>
+    <tr><td></td><td colspan="2">mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]</td> </tr>
     <tr ><td class="setting-name">日志表名:(与log4j配置的表名相同)</td>
         <td class="setting-main"><input name="logCollection" class="required valid setting-input"   minlength="3"  value="$!project.logCollection" /></td>
     </tr>
-    <tr><td></td><td colspan="2">mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]</td> </tr>
+
     <tr ><td class="setting-name">邮件列表:（逗号分隔）</td>
         <td class="setting-main"><input name="mailList" class="required valid setting-input"   minlength="3"  value="$!project.mailList" /></td>
     </tr>

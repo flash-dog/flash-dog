@@ -18,7 +18,12 @@
         $('#last_selector').val('$!{project.timeRange.last}');
         $('#unit_selector').val('$!{project.timeRange.unit}');
         initAddTab();
+        $("input[name=extMetrics]").click(function(){
+             var title=$("#tab_title").attr("value")||$(this).attr("value");
+             $("#tab_title").attr("value",title);
+        });
         $( "#refresh_button" ).button();
+
     });
 	
 	function ajaxChart(divname,metricName,title){
@@ -30,7 +35,7 @@
 	}
 	
 	function deleteChart(title){
-		jQuery.ajax({url: "$link.setRelative("/projects/${project.name}/metricsDelete")"+"?title="+title});
+		jQuery.ajax({url: "#springUrl("/projects/${project.name}/metrics/destroy")"+"?title="+encodeURIComponent(title)});
 	}
 	
 </script>
@@ -55,7 +60,7 @@
             <option value="10">Hours</option>
             <option value="5">Days</option>
         </select>
-    	<button id="refresh_button"  type="submit" >刷新</buton>
+    	<button id="refresh_button"  type="submit" >刷新</button>
         <button id="add_tab" type="button" class="contextual">添加图表</button>
       </form>
     	
@@ -63,8 +68,6 @@
     <div id="dialog" title="复合图表">
    			    <label for="tab_title">图表名称</label>
 				<input type="text" name="tab_title" id="tab_title" value="" class="ui-widget-content ui-corner-all setting-input" />
-				<label for="tab_content">描述</label>
-				<textarea name="tab_content" id="tab_content" class="ui-widget-content ui-corner-all setting-input"></textarea>
 		<form>
 		<table>
 		#foreach($varName2 in $metricNames)

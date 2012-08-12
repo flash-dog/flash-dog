@@ -36,9 +36,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-11-23 上午8:51
+* @author hill.hu
+ *
  */
 @Controller
 public class MongoAction {

@@ -18,9 +18,8 @@ package com.skymobi.monitor.model;
 import java.util.Date;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-11-30 下午7:17
+* @author hill.hu
+ *
  * 度量因子的值
  */
 public class MetricValue implements IdentifyObject {
@@ -29,6 +28,12 @@ public class MetricValue implements IdentifyObject {
     private String name;
     private String content;
     private long timeStamp = new Date().getTime();
+
+    public MetricValue(String name, double value, long timeStamp) {
+        this.name = name;
+        this.value = value;
+        this.timeStamp = timeStamp;
+    }
 
     public MetricValue() {
     }

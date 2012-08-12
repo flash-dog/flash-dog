@@ -15,11 +15,10 @@
  */
 package com.skymobi.monitor.model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.mongodb.Mongo;
+import com.mongodb.MongoURI;
 import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -35,20 +34,19 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.mongodb.Mongo;
-import com.mongodb.MongoURI;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-11-23 上午9:09
  * 项目,包括4个方面
  * 1.图表
  * 2.告警
  * 3.任务
  * 4.度量因子
+ *
+ * @author hill.hu
  */
 @SuppressWarnings("unchecked")
 @Document
@@ -74,11 +72,11 @@ public class Project {
     private String logCollection;
     private TimeRange timeRange = TimeRange.lastDay();
     private String mailList;
-    private Properties properties=new Properties();
+    private Properties properties = new Properties();
     /**
      * 用于存储视图
      */
-    private Map<String,String> views = new HashMap();
+    private Map<String, String> views = new HashMap();
 
     public String getName() {
         return name;
@@ -189,15 +187,16 @@ public class Project {
     public void setMetricDogs(List<MetricDog> metricDogs) {
         this.metricDogs = metricDogs;
     }
-	public Map<String, String> getViews() {
-		return views;
-	}
 
-	public void setViews(Map<String, String> views) {
-		this.views = views;
-	}
+    public Map<String, String> getViews() {
+        return views;
+    }
 
-	public List<String> getAdmins() {
+    public void setViews(Map<String, String> views) {
+        this.views = views;
+    }
+
+    public List<String> getAdmins() {
         return admins;
     }
 
@@ -293,10 +292,9 @@ public class Project {
         query.sort().on(Constants.TIME_STAMP_FIELD_NAME, Order.DESCENDING);
         return fetchMongoTemplate().findOne(query, MetricValue.class, metricCollection);
     }
-    
-    
 
-	public void saveDog(MetricDog metricDog) {
+
+    public void saveDog(MetricDog metricDog) {
         removeDog(metricDog.getName());
         metricDogs.add(metricDog);
     }

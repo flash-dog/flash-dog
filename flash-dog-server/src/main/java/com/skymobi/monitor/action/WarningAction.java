@@ -32,9 +32,8 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-12-7 上午11:29
+* @author hill.hu
+ *
  */
 @Controller
 public class WarningAction {

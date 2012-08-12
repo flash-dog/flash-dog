@@ -31,6 +31,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -39,8 +40,7 @@ import java.text.ParseException;
 import java.util.concurrent.*;
 
 /**
- * Author: Hill.Hu,Steven.Zheng
- *
+ * @author Hill.Hu, Steven.Zheng
  */
 @Controller
 public class LogsAction {
@@ -61,7 +61,7 @@ public class LogsAction {
     private LogsService logsService;
 
     @RequestMapping(value = "/projects/{projectName}/logs", method = RequestMethod.GET)
-    public String test(ModelMap map, @PathVariable String projectName) throws IOException, ExecutionException, TimeoutException, InterruptedException {
+    public String test(ModelMap map, @PathVariable String projectName){
         Project project = projectService.findProject(projectName);
         map.put("project", project);
         return "logs/show";

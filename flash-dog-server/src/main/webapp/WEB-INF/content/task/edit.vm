@@ -79,8 +79,8 @@
     </div>
 
     <form id="add_form" action="$link.setRelative("/projects/$project.name/tasks")" method="post">
-        名称:<input name="name" id="task_name"  class="{required:true,name:true,minlength:2}" value="$!task.name"/> <br/>
-        频率(秒):<input name="cron" id="cron_text" class="{required:true,cron:true,minlength:6}" value="$!task.cron"/><br/>
+        名      称:<input name="name" id="task_name"  class="{required:true,name:true,minlength:2}" value="$!task.name"/> <br/>
+        频率(秒):<input name="cron" id="cron_text" class="{required:true,cron:true,minlength:6}" value="$!task.cron"/>秒 分 时 天 月 年<br/>
         超时(秒):<input name="timeout" value="$!task.timeout"/><br/>
         脚本 模板:<input type="button" id="err_log_btn" value="日志监控"/>
         <input type="button" id="money_stats_btn" value="指标监控"/>

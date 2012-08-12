@@ -21,9 +21,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-12-7 上午11:29
+* @author hill.hu
+ *
  * 告警
  */
 @Document

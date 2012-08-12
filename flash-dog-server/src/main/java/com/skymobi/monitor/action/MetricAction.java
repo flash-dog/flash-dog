@@ -24,6 +24,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.skymobi.monitor.util.ChartUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,7 @@ import com.skymobi.monitor.model.TimeRange;
 import com.skymobi.monitor.service.ProjectService;
 
 /**
- * Author: Hill.Hu,steven.zheng
+ * @author  Hill.Hu,steven.zheng
  */
 @Controller
 public class MetricAction {
@@ -49,8 +50,6 @@ public class MetricAction {
 
     @Resource
     private ProjectService projectService;
-    private SimpleDateFormat sdf = new SimpleDateFormat("M月dd HH:mm");
-
 
     @RequestMapping(value = "/projects/{projectName}/metrics", method = RequestMethod.GET)
     public @ResponseBody ModelMap  renderVar(ModelMap map, @PathVariable String projectName, String metricName,String newChartTitle) {
@@ -59,15 +58,19 @@ public class MetricAction {
 	    		project.getViews().put(newChartTitle, metricName);
 	    		projectService.saveProject(project);
     	}
-    	List<List> varData = Lists.newArrayList();
+
         String[] metrics = metricName.split(",");
-        caculatePoints(metrics,varData,project);
-        map.put("metricNames",metrics);
-        map.put("data", varData);
+
+        List<List<MetricValue>>  metricLists=Lists.newArrayList();
+        for(String name:metrics){
+            metricLists.add(project.findMetricData(name));
+        }
+
+        map.put("data", ChartUtil.format(metricLists));
         return  map;
     }
     
-    @RequestMapping(value = "/projects/{projectName}/metricsDelete", method = RequestMethod.GET)
+    @RequestMapping(value = "/projects/{projectName}/metrics/destroy")
     public @ResponseBody ModelMap  metricsDelete(ModelMap map, @PathVariable String projectName, String title) {
     	Project project = projectService.findProject(projectName);
     	if(StringUtils.isNotEmpty(title)){
@@ -79,63 +82,7 @@ public class MetricAction {
     	return  map;
     }
 
-    
-    /**
-     * 计算合并所需的点
-     * @param metrics
-     * @param varData
-     * @param project
-     */
-    private void caculatePoints(String[] metrics,List<List> varData,Project project){
-    	List<MetricValue>[] datalist = new ArrayList[metrics.length];
-    	int[] cucors = new int[metrics.length];
-    	for(int i=0;i<metrics.length;i++){
-    		cucors[i]=0;
-        	datalist[i]=project.findMetricData(metrics[i]);
-        	//将坐标最多的放在数组的第一位，作为主坐标
-        	if(i!=0&&datalist[i].size()>datalist[0].size()){
-        		List<MetricValue> templ =datalist[i];
-        		datalist[i]=datalist[0];
-        		datalist[0]=templ;
-        		String temp = metrics[i];
-        		metrics[i] = metrics[0];
-        		metrics[0] =temp;
-        	}
-        }
-        List<MetricValue> mainMetric=datalist[0];
-        for(MetricValue metric:mainMetric){
-            List formatResult = new ArrayList();
-            formatResult.add(sdf.format(new Date(metric.getTimeStamp())));
-            formatResult.add(metric.getValue());
-	        for(int j=1;j<datalist.length;j++){
-	        	List<MetricValue> AdditionalMetric=datalist[j];
-				double v1 =0;
-	        	double v2 =0;
-	        	for(int i=cucors[j];i<AdditionalMetric.size()-1;i++){
-	        		if(AdditionalMetric.get(i).getTimeStamp()>metric.getTimeStamp()) break;
-	        		if(AdditionalMetric.get(i).getTimeStamp()<=metric.getTimeStamp()
-	        				&&AdditionalMetric.get(i+1).getTimeStamp()>metric.getTimeStamp()){
-	        			cucors[j]=i;
-	        			v1 = AdditionalMetric.get(cucors[j]).getValue();
-	                	v2 = AdditionalMetric.get(cucors[j]+1).getValue();
-	        			break;
-	        		}
-	        	}
-	        	Double result =null;
-	        	if(cucors[j]<AdditionalMetric.size()-1)
-	        	{
-		        	//算出某个时间点的值
-		        	double v3 = v2-v1;
-		        	long s1 = AdditionalMetric.get(cucors[j]+1).getTimeStamp()-metric.getTimeStamp();
-		        	long s2 = AdditionalMetric.get(cucors[j]+1).getTimeStamp()-AdditionalMetric.get(cucors[j]).getTimeStamp();
-		        	result =v2-((double)s1/s2)*v3;
-	        	}
-	        	formatResult.add(result);
-        	}
-        	varData.add(formatResult);
-        }
-    }
-    
+
 
     @RequestMapping(value = "/projects/{projectName}/metrics/timeRange", method = RequestMethod.POST)
     public String save(@PathVariable String projectName, TimeRange timeRange) {

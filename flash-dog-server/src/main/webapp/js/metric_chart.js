@@ -7,19 +7,14 @@ var drawCharts = function(chartPanel, url, varName) {
                 dataType:"json",
                 headers: { "Accept": "application/json" },
                 success: function(response) {
-                    var data = new google.visualization.DataTable();
-                    data.addColumn('string', 'Year');
-                    for(var i=0;i<response.metricNames.length;i++){
-                    	data.addColumn('number', response.metricNames[i]);
-                    }
-                    data.addRows(response.data);
+                    var data =  google.visualization.arrayToDataTable(response.data);
+
                     var bodyWidth = document.body.clientWidth;
                     var bodyHeight = document.body.clientHeight;
 
                     var options = {
                         width: bodyWidth*0.95, height: 440,
-                        title: varName,
-                        hAxis:{title:'time',format:'%m/%#d %hh:%M'}
+                        title: varName
                     };
 
                     var chart = new google.visualization.LineChart(document.getElementById(chartPanel));

@@ -23,9 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-12-25 下午4:02
+* @author hill.hu
+ *
  */
 public class UserInterceptor extends HandlerInterceptorAdapter {
     private static Logger logger = LoggerFactory.getLogger(UserInterceptor.class);

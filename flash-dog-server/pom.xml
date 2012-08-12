@@ -10,7 +10,7 @@
     <groupId>com.skymobi</groupId>
     <artifactId>flash-dog-server</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 
     <properties>
         <org.springframework.version>3.1.0.RELEASE</org.springframework.version>

@@ -29,9 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 
 /**
- * Author: Hill.Hu
- * Email:  hill.hu@sky-mobi.com
- * Date: 11-11-23 上午8:51
+* @author hill.hu
+ *
  */
 @Controller
 public class TimeRangeAction {
