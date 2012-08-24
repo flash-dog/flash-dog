@@ -151,9 +151,9 @@
                     </tr>
                     <tr ><td class="setting-name">编码:</td><td class="setting-main"><input name="_httpNotifyConfig_encode" class="setting-input"  value="$!project.properties.getProperty('httpNotifyConfig_encode','utf-8')"/></td>
                     </tr>
-                    <tr><td class="setting-name">发送数据模板:</td><td class="setting-main"><textarea name="_httpNotifyConfig_template"  class="setting-input" >$!project.properties.get('httpNotifyConfig_template')</textarea></td>
+                    <tr><td class="setting-name">发送数据模板:</td><td class="setting-main"><textarea style="height: 80px" name="_httpNotifyConfig_template"  class="setting-input" >$!project.properties.get('httpNotifyConfig_template')</textarea></td>
                     </tr>
-                    <tr><td class="setting-name">模板变量:</td><td class="setting-main"><textarea name="_httpNotifyConfig_properties"  class="setting-input"  >$!project.properties.get('httpNotifyConfig_properties')</textarea> </td>
+                    <tr><td class="setting-name">自定义变量:</td><td class="setting-main"><textarea style="height: 90px" name="_httpNotifyConfig_properties"  class="setting-input"  >$!project.properties.get('httpNotifyConfig_properties')</textarea> </td>
                   </tr>
                 </table>
 

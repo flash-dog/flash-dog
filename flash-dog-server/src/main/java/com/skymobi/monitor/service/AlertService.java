@@ -50,7 +50,7 @@ public class AlertService {
     @Resource
     private MongoTemplate mongoTemplate;
     private String collectionName = "flash_dog_alerts";
-    private int limitTimes = 3;
+    private int limitTimes = 1;
     private int limitMinutes = 60;
 
     public void setCheckSeconds(int checkSeconds) {

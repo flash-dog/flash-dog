@@ -9,12 +9,18 @@ import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.lang.StringUtils;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +42,8 @@ public class HttpAlertNotifier implements AlertListener {
     @Resource
     private ProjectService projectService;
     private static final String HTTP_NOTIFY_CONFIG_ENCODE = "httpNotifyConfig_encode";
+    @Resource
+    private VelocityEngine velocityEngine;
 
     @Override
     public void notify(Alert alert) {
@@ -50,7 +58,7 @@ public class HttpAlertNotifier implements AlertListener {
             templateVars.putAll(properties);
             templateVars.put("title", alert.getTitle());
             templateVars.put("content", alert.getContent());
-            templateVars.put("time", sdf.format(alert.getCreateTime()));
+            templateVars.put("createTime", alert.getCreateTime());
             PostMethod httpMethod = new PostMethod();
             httpMethod.setURI(new HttpURL(url));
             String template = properties.getProperty(HTTP_NOTIFY_CONFIG_TEMPLATE);
@@ -70,18 +78,17 @@ public class HttpAlertNotifier implements AlertListener {
 
     }
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd h:m:ss");
-
     public String renderTemplate(String template, Map map) {
-        for (Object key : map.keySet()) {
-            String value = "";
-            if (map.containsKey(key))
-                value = map.get(key) + "";
-            template = StringUtils.replace(template, "$" + key, value);
+        Writer out=new StringWriter();
+        Context context=new VelocityContext(map);
+        map.put("datetool",new org.apache.velocity.tools.generic.DateTool());
+        try {
+            velocityEngine.evaluate(context, out, this.getClass().getName(), template);
 
+        } catch (IOException e) {
+            logger.error("render template  fail",e);
         }
-
-        return template;
+        return out.toString();
     }
 
     public void setHttpClient(HttpClient httpClient) {
@@ -96,4 +103,7 @@ public class HttpAlertNotifier implements AlertListener {
         this.projectService = projectService;
     }
 
+    public void setVelocityEngine(VelocityEngine velocityEngine) {
+        this.velocityEngine = velocityEngine;
+    }
 }

@@ -41,6 +41,7 @@
         <property name="configLocation" value="/WEB-INF/velocity.properties"/>
 
     </bean>
+
     <!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /blog/1.json /blog/1.xml -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <!-- 设置为true以忽略对Accept Header的支持-->

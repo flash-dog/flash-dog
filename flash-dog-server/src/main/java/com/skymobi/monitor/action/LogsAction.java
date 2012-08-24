@@ -107,45 +107,4 @@ public class LogsAction {
 
     }
 
-    @RequestMapping(value = "/projects/{projectName}/logs/flush")
-    public void flush(final HttpServletResponse response, ModelMap map, @PathVariable String projectName, LogQuery logQuery) throws IOException, ParseException {
-        response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().write("<style>body{font:10px/2 Arial, Helvetica, sans-serif;}</style>");
-        response.getWriter().flush();
-        Project project = projectService.findProject(projectName);
-        map.put("project", project);
-        final MongoConverter converter = project.fetchMongoTemplate().getConverter();
-        final DBCursor cursor = logsService.findLogs(projectName, logQuery);
-        @SuppressWarnings("unchecked")
-        FutureTask<Void> task = new FutureTask(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                long startTime = System.currentTimeMillis();
-                //遍历游标，最长不能超过20秒
-                int a = 0;
-                while (cursor.hasNext()) {
-                    a++;
-                    Log log = converter.read(Log.class, cursor.next());
-                    if (a % 2 == 0) response.getWriter().write("<font color=\"#ff0000\">");
-                    response.getWriter().write(log.toString() + "<br/>");
-                    if (a % 2 == 0) response.getWriter().write("</font>");
-                    response.getWriter().flush();
-                    Thread.sleep(100);
-                    long current = System.currentTimeMillis();
-                    if ((current - startTime) / 1000 >= mongWaitSeconds) break;
-                }
-                return null;
-            }
-        });
-        executor.execute(task);
-        try {
-            task.get(mongWaitSeconds, TimeUnit.SECONDS);
-            cursor.close();
-        } catch (Exception e) {
-            logger.error("查询超时 {}", e);
-            task.cancel(true);
-        }
-    }
-
-
 }
