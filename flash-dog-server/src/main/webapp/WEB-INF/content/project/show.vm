@@ -45,6 +45,7 @@
      <form action="$link.setRelative("/projects/${project.name}/metrics/timeRange")" method="post">
            显示范围：<select name="last" id="last_selector" class="FilterFormText" style="visibility: visible; ">
             <option value="1">1</option>
+            <option value="2">2</option>
             <option value="4">4</option>
             <option value="8">8</option>
             <option value="12">12</option>

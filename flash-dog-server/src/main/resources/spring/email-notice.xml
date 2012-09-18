@@ -19,6 +19,7 @@
 
     <bean id="emailService" class="com.skymobi.monitor.service.EmailService">
         <property name="from" value="${email.username}"/>
+        <property name="level" value="WARN"/>
     </bean>
 
 

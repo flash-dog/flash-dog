@@ -27,14 +27,14 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * author: Hill.Hu
  * send alert data to third monitor server
+ *
+ * @author Hill.Hu
  */
-@Component
 @SuppressWarnings("unchecked")
-public class HttpAlertNotifier implements AlertListener {
+public class HttpAlertNotifier extends AbstractAlertNotifier implements AlertListener {
     private static Logger logger = LoggerFactory.getLogger(HttpAlertNotifier.class);
-    public static final String HTTP_NOTIFY_CONFIG_URL =  "httpNotifyConfig_url";
+    public static final String HTTP_NOTIFY_CONFIG_URL = "httpNotifyConfig_url";
     public static final String HTTP_NOTIFY_CONFIG_TEMPLATE = "httpNotifyConfig_template";
     public static final String HTTP_NOTIFY_CONFIG_PROPERTIES = "httpNotifyConfig_properties";
 
@@ -46,7 +46,7 @@ public class HttpAlertNotifier implements AlertListener {
     private VelocityEngine velocityEngine;
 
     @Override
-    public void notify(Alert alert) {
+    public void _notify(Alert alert) {
         try {
             Project project = projectService.findProject(alert.getProjectName());
             Properties properties = project.getProperties();
@@ -59,19 +59,20 @@ public class HttpAlertNotifier implements AlertListener {
             templateVars.put("title", alert.getTitle());
             templateVars.put("content", alert.getContent());
             templateVars.put("createTime", alert.getCreateTime());
+            templateVars.put("ip", alert.getIp());
             PostMethod httpMethod = new PostMethod();
             httpMethod.setURI(new HttpURL(url));
             String template = properties.getProperty(HTTP_NOTIFY_CONFIG_TEMPLATE);
-            Properties configProperties=new Properties();
-            configProperties.load(new StringReader(properties.getProperty(HTTP_NOTIFY_CONFIG_PROPERTIES,"")));
+            Properties configProperties = new Properties();
+            configProperties.load(new StringReader(properties.getProperty(HTTP_NOTIFY_CONFIG_PROPERTIES, "")));
             templateVars.putAll(configProperties);
             String data = renderTemplate(template, templateVars);
-            RequestEntity requestEntity = new ByteArrayRequestEntity(data.getBytes(properties.getProperty(HTTP_NOTIFY_CONFIG_ENCODE,"utf-8")));
+            RequestEntity requestEntity = new ByteArrayRequestEntity(data.getBytes(properties.getProperty(HTTP_NOTIFY_CONFIG_ENCODE, "utf-8")));
             httpMethod.setRequestEntity(requestEntity);
 
-            logger.debug("notify alert to {} ,data={}", url, data);
+            logger.info("notify alert to {} ,data={}", url, data);
             int status = httpClient.executeMethod(httpMethod);
-            logger.info("send alert   to third server ={} ,statusCode={} ,response {}",new Object[]{ url, status,httpMethod.getResponseBodyAsString()});
+            logger.info("send alert   to third server ={} ,statusCode={} ,response {}", new Object[]{url, status, httpMethod.getResponseBodyAsString()});
         } catch (Exception e) {
             logger.error("", e);
         }
@@ -79,14 +80,16 @@ public class HttpAlertNotifier implements AlertListener {
     }
 
     public String renderTemplate(String template, Map map) {
-        Writer out=new StringWriter();
-        Context context=new VelocityContext(map);
-        map.put("datetool",new org.apache.velocity.tools.generic.DateTool());
+        Writer out = new StringWriter();
+        Context context = new VelocityContext(map);
+        map.put("esc", new org.apache.velocity.tools.generic.EscapeTool());
+        map.put("datetool", new org.apache.velocity.tools.generic.DateTool());
+
         try {
             velocityEngine.evaluate(context, out, this.getClass().getName(), template);
 
         } catch (IOException e) {
-            logger.error("render template  fail",e);
+            logger.error("render template  fail", e);
         }
         return out.toString();
     }

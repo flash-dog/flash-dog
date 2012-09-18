@@ -6,7 +6,7 @@
          version="2.5">
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/env-config.xml,classpath:spring/spring-security.xml,classpath:spring/mongo-config.xml,classpath:spring/email-notice.xml</param-value>
+        <param-value>classpath:spring/env-config.xml,classpath:spring/spring-security.xml,classpath:spring/services-config.xml,classpath:spring/email-notice.xml</param-value>
     </context-param>
 
     <filter>

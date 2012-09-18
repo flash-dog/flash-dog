@@ -36,6 +36,9 @@ public class Alert {
 
     private Date createTime = new Date();
 
+    private String ip;
+
+    private String level="WARN";
 
     public String getContent() {
         return content;
@@ -68,6 +71,8 @@ public class Alert {
         return "Alert{" +
                 "content='" + content + '\'' +
                 ", title='" + title + '\'' +
+                ", ip='" + ip + '\'' +
+                ", level='" + level + '\'' +
                 '}';
     }
 
@@ -85,5 +90,21 @@ public class Alert {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

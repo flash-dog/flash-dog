@@ -32,7 +32,7 @@ import java.util.concurrent.ScheduledExecutorService;
  *
  * @author hill.hu
  */
-public class EmailService implements AlertListener {
+public class EmailService extends AbstractAlertNotifier implements AlertListener {
     private static Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Resource
@@ -43,7 +43,7 @@ public class EmailService implements AlertListener {
     private final static ScheduledExecutorService executor = Executors.newScheduledThreadPool(5);
     private String from;
 
-    public void notify(Alert alert) {
+    public void _notify(Alert alert) {
         Project project = projectService.findProject(alert.getProjectName());
         if (project == null) {
             logger.error("projectName of  alert is null, alert={}", alert);

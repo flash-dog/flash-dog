@@ -18,7 +18,6 @@ package com.skymobi.monitor.action;
 import com.skymobi.monitor.model.MetricDog;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.service.AlertService;
-import com.skymobi.monitor.service.EmailService;
 import com.skymobi.monitor.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +40,7 @@ public class WarningAction {
 
     @Resource
     private ProjectService projectService;
-    @Resource
-    private EmailService emailService;
+
     @Resource
     AlertService alertService;
 
@@ -72,11 +70,12 @@ public class WarningAction {
         return "redirect:/projects/" + projectName + "/warnings";
     }
 
-    @RequestMapping(value = "/projects/{projectName}/warnings/{dogName}/destroy")
-    public String remove(ModelMap map, @PathVariable String projectName, @PathVariable String dogName) throws IOException {
+    @RequestMapping(value = "/projects/{projectName}/warnings/remove")
+    public String remove(@PathVariable String projectName,  String dogName) throws IOException {
         Project project = projectService.findProject(projectName);
 
         project.removeDog(dogName);
-        return "redirect:/projects/" + projectName + "/warnings";
+        projectService.saveProject(project);
+        return "redirect:/projects/" + projectName + "/settings/warnings";
     }
 }

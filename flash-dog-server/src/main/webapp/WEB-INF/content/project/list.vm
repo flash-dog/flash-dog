@@ -17,8 +17,12 @@
     </div>
     <table>
         <tbody>
-        <tr>
             #foreach($project in $projects)
+
+            <tr>
+
+
+
                 <td>
                     #if($warningProjectNames.contains(${project.name}))
                         <img class="icon24x24 "  src="#springUrl("/images/red.png")" alt="alert" title="清空告警，可以变蓝">
@@ -31,7 +35,10 @@
                 #if($project.admins.size() > 0)
                     ($!{project.admins.get(0)})
                 #end</td>
-            </tr>
+
+                </tr>
+
+
             #end
 
         </tbody>

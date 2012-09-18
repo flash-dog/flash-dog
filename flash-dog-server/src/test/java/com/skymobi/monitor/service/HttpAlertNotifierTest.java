@@ -2,6 +2,7 @@ package com.skymobi.monitor.service;
 
 import com.skymobi.monitor.model.Alert;
 import com.skymobi.monitor.model.Project;
+import org.apache.commons.collections.ExtendedProperties;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.velocity.app.VelocityEngine;
@@ -38,13 +39,15 @@ public class HttpAlertNotifierTest {
                 "<message>\n" +
                 "<monitoringName>$title</monitoringName>\n" +
                 "<monitoringTime>$datetool.format('yyyy-MM-dd hh:mm:ss',$createTime)</monitoringTime>\n" +
-                "<monitoringInfo>$content</monitoringInfo>\n" +
+                "<monitoringInfo>$esc.xml($content)</monitoringInfo>\n" +
                 "<monitoringDemo></monitoringDemo>\n" +
                 "<noticeNameOne>$noticeNameOne</ noticeNameOne>\n" +
                 "<noticePhonenumOne>13675889987</ noticePhonenumOne>\n" +
                 "<noticeEmailOne>iven.tao@sky-mobi.com</noticeEmailOne>\n" +
                 "</message>\n";
         velocityEngine=new VelocityEngine();
+
+        velocityEngine.setExtendedProperties(new ExtendedProperties());
         notifier.setVelocityEngine(velocityEngine);
     }
 
@@ -64,16 +67,16 @@ public class HttpAlertNotifierTest {
     public void test_render_template() throws Exception {
 
         Map map = new HashMap();
-        map.put("content", "实际结果为0,而预期范围为:【1-1】");
+        map.put("content", "异常数据次数:当前值=9.0 > 阀值3.0");
         map.put("title", "游戏基地数据采集完整性监控");
         map.put("createTime", DateUtils.parseDate("2012-08-20 18:22:20",new String[]{"yyyy-MM-dd hh:mm:ss"}));
         map.put("noticeNameOne","陶国峰");
-        map.put("datetool",new org.apache.velocity.tools.generic.DateTool());
+
         Assert.assertEquals("<?xml version=\"1.0\" encoding=\"GBK\"?>\n" +
                 "<message>\n" +
                 "<monitoringName>游戏基地数据采集完整性监控</monitoringName>\n" +
                 "<monitoringTime>2012-08-20 06:22:20</monitoringTime>\n" +
-                "<monitoringInfo>实际结果为0,而预期范围为:【1-1】</monitoringInfo>\n" +
+                "<monitoringInfo>&#24322;&#24120;&#25968;&#25454;&#27425;&#25968;:&#24403;&#21069;&#20540;=9.0 &gt; &#38400;&#20540;3.0</monitoringInfo>\n" +
                 "<monitoringDemo></monitoringDemo>\n" +
                 "<noticeNameOne>陶国峰</ noticeNameOne>\n" +
                 "<noticePhonenumOne>13675889987</ noticePhonenumOne>\n" +

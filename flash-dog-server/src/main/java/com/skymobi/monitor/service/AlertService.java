@@ -50,7 +50,7 @@ public class AlertService {
     @Resource
     private MongoTemplate mongoTemplate;
     private String collectionName = "flash_dog_alerts";
-    private int limitTimes = 1;
+    private int limitTimes = 10;
     private int limitMinutes = 60;
 
     public void setCheckSeconds(int checkSeconds) {
@@ -91,18 +91,25 @@ public class AlertService {
                     new Runnable() {
                         @Override
                         public void run() {
-                            Alert alert = dog.work(project);
-                            if (isNeedNotify(alert)) {
-                                AlertService.this.notify(alert);
-                            } else {
-                                logger.debug("out of limit times={} ,not notify this alert", limitTimes);
-                            }
+                            List<Alert> alerts = dog.work(project);
+                            notifyAlerts(alerts);
                         }
                     }
             );
         } catch (Exception e) {
             logger.error("start dog fail ", e);
         }
+    }
+
+    private void notifyAlerts(List<Alert> alerts) {
+        for(Alert alert:alerts){
+            if (isNeedNotify(alert)) {
+                notify(alert);
+            } else {
+                logger.debug("out of limit times={} ,not notify this alert", limitTimes);
+            }
+        }
+
     }
 
     protected boolean isNeedNotify(Alert alert) {

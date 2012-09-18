@@ -44,9 +44,15 @@
     <bean id="velocityEngine" class="org.apache.velocity.app.VelocityEngine">
 
     </bean>
+
     <bean id="userManager"  class="com.skymobi.monitor.security.MongoUserManager" init-method="init">
         <property name="mongoTemplate" ref="mongoTemplate"/>
         <property name="systemAdmins" value="${security.systemAdmins}" />
           <property name="systemAdminInitPassword" value="${security.systemAdminInitPassword}"/>
     </bean>
+
+    <bean id="httpAlertNotifier" class="com.skymobi.monitor.service.HttpAlertNotifier">
+        <property name="level" value="ERROR"/>
+    </bean>
+
 </beans>

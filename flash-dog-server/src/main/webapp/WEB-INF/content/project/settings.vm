@@ -19,7 +19,32 @@
 
             }
         });
+        $("#delete_btn").click(function(){
+            if(confirm("你确认删除此设置吗?")) {
+                        window.location.href="#springUrl( "/projects/${project.name}/warnings/remove?dogName=")"
+                                +encodeURIComponent($("#dogs_form_name").val());
+                    }
+                });
+        $("#http_alert_test_btn").click(function(){
+              $("#http_alert_test_form").toggle();
+             return false;
+        });
+        $('#http_alert_test_form').submit(function() {
+            var data=$(this).serialize();
+            jQuery.ajax({
+                url:"#springUrl("/projects/${project.name}/notifier/http/test")",
+                data: data,
+                type:'get',
+                success : function(msg) {
+                    alert("发送结果："+msg);
 
+                }
+            });
+            return false;
+        });
+        $("#dogs_form_level").change(function(){
+           $("#dogs_form_times_div").toggle($("#dogs_form_level").val()=='WARN');
+        });
         drawDogsTable();
     });
 
@@ -28,11 +53,12 @@
 
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Name');
+        data.addColumn('string', '级别');
         data.addColumn('string', '时间段');
         data.addColumn('boolean', '状态');
 
         for (var key in dogs) {
-            data.addRow([  dogs[key].name , dogs[key].startTime +"-"+dogs[key].endTime, dogs[key].enable]);
+            data.addRow([  dogs[key].name ,  dogs[key].level , dogs[key].startTime +"-"+dogs[key].endTime, dogs[key].enable]);
         }
 
 
@@ -48,6 +74,8 @@
                         $('#dogs_form_metricName').val(dog.metricName);
                         $('#dogs_form_operator').val(dog.operator);
                         $('#dogs_form_targetValue').val(dog.targetValue);
+                        $('#dogs_form_level').val(dog.level);
+                        $('#dogs_form_times').val(dog.times);
                         $('#dogs_form_startTime').val(dog.startTime);
                         $('#dogs_form_endTime').val(dog.endTime);
                         $('#dogs_form_excludeTimeMode').attr('checked',dog.excludeTimeMode);
@@ -60,7 +88,7 @@
     <div class="contextual" style="position:absolute; right:10px;">
         #if($authz.hasProject($project))
             <a href="$link.setRelative("/projects/${project.name}/destroy")" onclick="return confirm('您确定？')"
-               class="icon icon-delete" >删除</a>
+               class="icon icon-delete" >删除项目</a>
         #end
     </div>
 	<h2>配置</h2>
@@ -117,13 +145,24 @@
                         <option value=">">大于</option>
                         </select>
                 目标值：<input id='dogs_form_targetValue' name="targetValue" value="0"><br/>
-
+                 级别:
+                <select id="dogs_form_level" name="level" >
+                    <option value="WARN">普通</option>
+                    <option value="ERROR">严重</option>
+                </select>普通级别只发邮件， 严重级别将通知所有监控平台 <br/>
+                <div id="dogs_form_times_div" >连续指定次后升级为严重:<select id="dogs_form_times" name="times" >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="100000">永远不</option>
+                </select>次</div>
                 开始时间:<input name="startTime" id='dogs_form_startTime'   class="{required:true,name:true,minlength:8}" value="00:00:00"/> <br/>
                 结束时间:<input name="endTime" id='dogs_form_endTime'  class="{required:true,name:true,minlength:8}" value="24:00:00"/> <br/>
                 是否为除了此时间段模式: <input name="excludeTimeMode" id='dogs_form_excludeTimeMode' type="checkbox" /> (在此时间段内不会告警)<br/>
                 <input type="submit" value="保存"/>
-##                <a href="" class="icon icon-delete">删除</a>
-
+                <input id="delete_btn" type="button" value="删除"/>
 
             </form>
 
@@ -158,5 +197,17 @@
                 </table>
 
                 <input type="submit" value="确定"/>
+
+               <a href=""  id="http_alert_test_btn">测试>></a>
+            </form>
+            <br/>
+            <form id="http_alert_test_form"   style="display: none;">
+                测试前需要先保存设置:<br/>
+                <input type="hidden" name="projectName" value="$project.name">
+                <input type="hidden" name="level" value="ERROR">
+                标题(title):<input name="title" value="测试信息，请忽略">    <br/>
+                内容(content): <input name="content" value="测试：收入>0">     <br/>
+                IP: <input name="ip" value="127.0.0.1">     <br/>
+                <input type="submit" value="发送">
             </form>
         </div>

@@ -15,6 +15,8 @@
  */
 package com.skymobi.monitor.model;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.MapMaker;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,16 +24,22 @@ import org.slf4j.LoggerFactory;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
-* @author hill.hu
- *
- * 度量监控
+ * @author hill.hu
+ *         <p/>
+ *         度量监控
  */
 @SuppressWarnings("unused")
 public class MetricDog {
     private static Logger logger = LoggerFactory.getLogger(MetricDog.class);
-
+    private final static ConcurrentMap<String, Object> hasFireMetrics = new MapMaker().expiration(1, TimeUnit.HOURS).makeMap();
+    private final static ConcurrentMap<String, AtomicInteger> metricFireTimes = new MapMaker().expiration(6, TimeUnit.HOURS).makeMap();
+    public static final String LEVEL_ERROR = "ERROR";
     private String name, desc;
     /**
      * 目标值
@@ -48,6 +56,19 @@ public class MetricDog {
     private boolean excludeTimeMode = false;
     private String startTime = "00:00:00";
     private String endTime = "24:00:00";
+    /**
+     * 告警级别,WARN,ERROR
+     */
+    private String level = "WARN";
+    private int times = 2;
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
+    }
 
     public String getName() {
         return name;
@@ -98,10 +119,18 @@ public class MetricDog {
         this.metricName = metricName;
     }
 
-    public Alert work(Project project) {
+    public List<Alert> work(Project project) {
+        List<Alert> alerts = Lists.newArrayList();
         for (String metric : project.findMetricNames()) {
             if (StringUtils.equals(metric, metricName)) {
                 MetricValue metricValue = project.findLastMetric(metricName);
+                String cacheKey = project.getName() + "_" + metricName + metricValue.getTimeStamp();
+
+                //这个值已经处理过了，忽略
+                if (hasFireMetrics.containsKey(cacheKey))
+                    continue;
+                else
+                    hasFireMetrics.put(cacheKey, true);
                 boolean fire = bite(metricValue.getValue());
                 if (fire) {
                     Alert alert = new Alert();
@@ -109,17 +138,44 @@ public class MetricDog {
 
                     String _desc = StringUtils.defaultIfEmpty(desc, "");
                     String _content = StringUtils.defaultIfEmpty(metricValue.getContent(), "");
-
+                    alert.setIp(metricValue.getIp() != null ? metricValue.getIp() : "127.0.0.1");
                     alert.setContent(String.format("%s:当前值=%s %s 阀值%s \n\n %s \n %s",
                             metricName, metricValue.getValue(), operator, targetValue, _desc, _content));
                     alert.setProjectName(project.getName());
-                    return alert;
+
+
+                    String _level = fixLevel(project, alert);
+                    alert.setLevel(_level);
+                    alerts.add(alert);
+
+                } else {
+                    //重新置0
+                    resetFireTimes(project.getName(), metricName);
                 }
             }
         }
-        return null;
+        return alerts;
     }
 
+    private String fixLevel(Project project, Alert alert) {
+        String _level=level;
+        int currentTime = incrementFireTimes(project.getName(), metricName);
+        if (!LEVEL_ERROR.equals(level) &&currentTime >= times) {
+            _level= LEVEL_ERROR;
+            logger.info("连续告警次数达到{}次，升级到[错误],alert={}", times, alert);
+        }
+        return _level;
+    }
+
+    private int incrementFireTimes(String projectName, String metricName) {
+        String metricNotifyKey = projectName+ "_" + metricName;
+       metricFireTimes.putIfAbsent(metricNotifyKey, new AtomicInteger(0));
+        return metricFireTimes.get(metricNotifyKey).incrementAndGet();
+    }
+    private void resetFireTimes(String projectName, String metricName) {
+        String metricNotifyKey = projectName+ "_" + metricName;
+        metricFireTimes.put(metricNotifyKey, new AtomicInteger(0));
+    }
     /**
      * 是否狂叫
      *
@@ -181,6 +237,7 @@ public class MetricDog {
                 ", excludeTimeMode=" + excludeTimeMode +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
+                ", level='" + level + '\'' +
                 '}';
     }
 
@@ -207,5 +264,13 @@ public class MetricDog {
             return now.after(start) && now.before(end);
         }
 
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

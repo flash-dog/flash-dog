@@ -27,6 +27,7 @@ public class MetricValue implements IdentifyObject {
     private Date createTime = new Date();
     private String name;
     private String content;
+    private String ip;
     private long timeStamp = new Date().getTime();
 
     public MetricValue(String name, double value, long timeStamp) {
@@ -83,5 +84,11 @@ public class MetricValue implements IdentifyObject {
         this.content = content;
     }
 
+    public String getIp() {
+        return ip;
+    }
 
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 }

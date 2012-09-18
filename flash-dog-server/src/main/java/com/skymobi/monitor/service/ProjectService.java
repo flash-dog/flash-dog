@@ -15,12 +15,14 @@
  */
 package com.skymobi.monitor.service;
 
+import com.skymobi.monitor.model.Constants;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.model.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.util.Assert;
 
@@ -44,8 +46,10 @@ public class ProjectService {
 
 
     public List<Project> findProjects() {
+        Query query = new Query();
+        query.sort().on("name", Order.ASCENDING);
         List<Project> projects = mongoTemplate.
-                find(new Query(), Project.class, collectionName);
+                find(query, Project.class, collectionName);
         return projects;
     }
 
