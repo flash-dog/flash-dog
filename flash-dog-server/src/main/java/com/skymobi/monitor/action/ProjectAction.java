@@ -75,8 +75,7 @@ public class ProjectAction {
     public String listProject(ModelMap map, HttpServletResponse response) throws IOException {
         List<Project> projects = projectService.findProjects();
         map.put("projects", projects);
-        List<String> warningProjectNames = alertService.findWarningProjects();
-        map.put("warningProjectNames", warningProjectNames);
+
         return "project/list";
     }
 

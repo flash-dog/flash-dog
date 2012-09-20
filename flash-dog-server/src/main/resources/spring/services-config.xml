@@ -54,5 +54,7 @@
     <bean id="httpAlertNotifier" class="com.skymobi.monitor.service.HttpAlertNotifier">
         <property name="level" value="ERROR"/>
     </bean>
+    <bean id="projectStatusService" class="com.skymobi.monitor.service.ProjectStatusService">
 
+    </bean>
 </beans>

@@ -38,6 +38,9 @@ public class Alert {
 
     private String ip;
 
+    /**
+     * @see  Status
+     */
     private String level="WARN";
 
     public String getContent() {

@@ -126,14 +126,19 @@ public class AlertService {
     }
 
     private void notify(Alert alert) {
-        logger.info("dog fire {}", alert);
+        logger.info("dog fire {},notify listener {}", alert,alertListeners);
         mongoTemplate.save(alert, collectionName);
-        for (AlertListener listener : alertListeners)
-            try {
-                listener.notify(alert);
-            } catch (Exception e) {
-                logger.error("notify listener fail ", e);
-            }
+        for (AlertListener listener : alertListeners){
+            notify(alert, listener);
+        }
+    }
+
+    private void notify(Alert alert, AlertListener listener) {
+        try {
+            listener.notify(alert);
+        } catch (Exception e) {
+            logger.error("notify listener fail ", e);
+        }
     }
 
     public List<Alert> findAlerts(String projectName) {
@@ -162,8 +167,4 @@ public class AlertService {
         this.limitMinutes = limitMinutes;
     }
 
-    @SuppressWarnings("unchecked")
-    public List<String> findWarningProjects() {
-        return mongoTemplate.getCollection(collectionName).distinct("projectName");
-    }
 }

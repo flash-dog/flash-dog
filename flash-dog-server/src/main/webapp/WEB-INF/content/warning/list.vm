@@ -9,6 +9,7 @@
     function drawAlerts() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', '事件');
+        data.addColumn('string', '级别');
         data.addColumn('string', '内容');
         data.addColumn('string', '时间');
 
@@ -16,7 +17,7 @@
             var content=  alerts[key].content;
             if(content && content.length > 100)
                 content=content.substring(0,100) +"...";
-            data.addRow([  alerts[key].title ,content  , alerts[key].createTime]);
+            data.addRow([  alerts[key].title ,alerts[key].level,content  , alerts[key].createTime]);
         }
 
 

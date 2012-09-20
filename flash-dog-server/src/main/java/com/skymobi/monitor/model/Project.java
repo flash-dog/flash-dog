@@ -77,6 +77,7 @@ public class Project {
      * 用于存储视图
      */
     private Map<String, String> views = new HashMap();
+    private Status status=Status.FINE;
 
     public String getName() {
         return name;
@@ -354,5 +355,13 @@ public class Project {
 
     public void setProperties(Properties properties) {
         this.properties = properties;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 }

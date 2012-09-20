@@ -89,6 +89,9 @@ background-image: url(../images/up.gif);
 .icon-delete {
 background: url(../images/delete.png);
 }
+.icon-edit {
+    background: url(../images/edit.png);
+}
 .icon {
 background-position: 0% 50%;
 background-repeat: no-repeat;

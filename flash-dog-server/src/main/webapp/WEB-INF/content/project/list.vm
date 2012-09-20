@@ -24,10 +24,12 @@
 
 
                 <td>
-                    #if($warningProjectNames.contains(${project.name}))
+                    #if(${project.status}=="ERROR")
                         <img class="icon24x24 "  src="#springUrl("/images/red.png")" alt="alert" title="清空告警，可以变蓝">
-                    #else
-                        <img class="icon24x24 "  src="#springUrl("/images/blue.png")" alt="fine" title="没有任何告警，真棒">
+                    #elseif(${project.status}=="WARN")
+                        <img class="icon24x24 "  src="#springUrl("/images/yellow.png")" alt="alert" title="清空告警，可以变蓝">
+                     #else
+                        <img class="icon24x24 "  src="#springUrl("/images/blue.png")" alt="alert" title="真棒">
                     #end
                 </td>
                 <td style="vertical-align: middle;">

@@ -8,6 +8,7 @@
         $("#tab-${module}").addClass("selected");
         $("#tab-content-${module}").removeClass("hidden");
         $("#dogs_form").validate();
+        $("#dogs_form_dialog").dialog({ autoOpen: false , width: 560});
         var params = jQuery.param({script:"return db.${project.logCollection}.stats()"});
         jQuery.ajax({
             url:"#springUrl( "/projects/${project.name}/mongo/console?format=json")",
@@ -18,6 +19,30 @@
                 $("#log_collection_stats").append("占用空间："+new Number(stats.storageSize/(1024*1024)).toFixed(2)+"m;记录条数:"+stats.count+";cap模式："+stats.capped);
 
             }
+        });
+        $("#log_collection_editor_btn").click(function(){
+             $("#log_collection_editor_div").toggle();
+            return false;
+        });
+        $("#log_collection_editor_div button").click(function(){
+            var size=1024 * 1024 * new Number($("#log_collection_editor_div input").val());
+            if($("log_collection_editor_div select").val()=="G")
+                size*=1024;
+            var script="db.${project.logCollection}.drop() ;db.createCollection('${project.logCollection}', {capped:true, size:"+size+"});db.flash_dog_log.ensureIndex({timestamp:1});";
+            console.log(script);
+            var params = jQuery.param({script:script});
+            jQuery.ajax({
+                url:"#springUrl( "/projects/${project.name}/mongo/console?format=json")",
+                async:false,
+                data: params,
+                type:'post',
+                success : function(msg) {
+                   window.location="";
+                }
+            });
+        });
+        $("#add_dog_btn").click(function(){
+            $("#dogs_form_dialog").dialog('open')                 ;
         });
         $("#delete_btn").click(function(){
             if(confirm("你确认删除此设置吗?")) {
@@ -79,6 +104,7 @@
                         $('#dogs_form_startTime').val(dog.startTime);
                         $('#dogs_form_endTime').val(dog.endTime);
                         $('#dogs_form_excludeTimeMode').attr('checked',dog.excludeTimeMode);
+                        $("#dogs_form_dialog").dialog('open')                 ;
                     }
                 });
         table.draw(data, {showRowNumber:false, 'allowHtml':true});
@@ -118,7 +144,14 @@
                     <tr ><td class="setting-name">数据库地址:</td><td class="setting-main"><input name="mongoUri"  class="setting-input"  value="$project.mongoUri"  /></td> </tr >
                     <tr ><td class="setting-name"></td><td class="setting-main"> mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]</td> </tr >
                     <tr ><td class="setting-name">度量表名:</td><td class="setting-main"><input name="metricCollection"  class="setting-input"  value="${project.metricCollection}"/></td> </tr >
-                    <tr ><td class="setting-name">原始日志表:</td><td class="setting-main"><input name="logCollection"  class="setting-input"  value="$!{project.logCollection}"/><div id="log_collection_stats"></div></td> </tr >
+                    <tr ><td class="setting-name">原始日志表:</td><td class="setting-main"><input name="logCollection"  class="setting-input"  value="$!{project.logCollection}"/>
+                        <div id="log_collection_stats"><a href="" id="log_collection_editor_btn" class="icon icon-edit"></a></div>
+                        <div id="log_collection_editor_div" style="display: none;">
+                            固定大小：<input name="size" value="1024">
+                            单位：<select name="unit" ><option value="M">M</option><option value="G">G</option></select>
+                            <button type="button">确定</button>
+                        </div>
+                    </td> </tr >
                     <tr ><td class="setting-name">邮件列表（逗号分隔）:</td><td class="setting-main"><input name="mailList"  class="setting-input" value="$!{project.mailList}"/></td> </tr >
                 </table>
                  <input type="submit" value="确定"/>
@@ -128,8 +161,11 @@
         </div>
 
         <div id="tab-content-warnings" class="box hidden">
-            <div id='dogs_table_div'></div><br/>
-            <form id="dogs_form" action="$link.setRelative("/projects/$project.name/warnings")" method="post">
+            <div id='dogs_table_div'></div>
+            <button id="add_dog_btn" type="button" value="添加">添加</button>
+            <br/>
+            <div id="dogs_form_dialog">
+                <form id="dogs_form" action="$link.setRelative("/projects/$project.name/warnings")" method="post">
 
                 名称:<input name="name" id='dogs_form_name'  class="{required:true,minlength:3}" value=""/> <br/>
                <label class="setting-name">描叙:</label> <input name="desc" id='dogs_form_desc'  style="width: 80%" value=""/><br/>
@@ -165,7 +201,7 @@
                 <input id="delete_btn" type="button" value="删除"/>
 
             </form>
-
+            </div>
         </div>
 
         <div id="tab-content-members" class="box hidden">
@@ -182,7 +218,9 @@
 
             <form id="ext_form" action="$link.setRelative("/projects/$project.name/ext")" method="post">
                 <table width="100%">
-                    <tr class="optional-block-start row-set-start"  ref="cb0"><td colspan="3"><input name="_httpNotifyConfig_enable" class=" " onclick="" type="checkbox" id="cb0"><label class="attach-previous">
+                    <tr  ><td  colspan="3">
+
+                        <label  >
                         HTTP告警通知(POST):
                     </label></td>
                         <td></td></tr>

@@ -16,6 +16,7 @@
 package com.skymobi.monitor.service;
 
 import com.skymobi.monitor.model.Project;
+import com.skymobi.monitor.model.Status;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,7 +30,7 @@ import static org.junit.Assert.*;
 /**
  * @author Hill.Hu
  */
-@ContextConfiguration(locations = {"classpath:spring/env-config.xml", "classpath:spring/mongo-config.xml", "classpath:/spring/email-notice.xml"})
+@ContextConfiguration(locations = {"classpath:spring/env-config.xml", "classpath:spring/services-config.xml", "classpath:/spring/email-notice.xml"})
 public class ProjectServiceTest extends AbstractJUnit4SpringContextTests {
     @Resource
     ProjectService projectService;
@@ -70,8 +71,12 @@ public class ProjectServiceTest extends AbstractJUnit4SpringContextTests {
         assertNotNull(projectService.findProject("test_project_db"));
         int count = projectService.findProjects().size();
         project.setAlias("测试");
+        project.setStatus(Status.WARN);
         projectService.saveProject(project);
-        assertNotNull(projectService.findProject("test_project_db"));
+        Project test_project_db = projectService.findProject("test_project_db");
+        assertNotNull(test_project_db);
+        assertEquals("测试",test_project_db.getAlias());
+        assertEquals(Status.WARN,test_project_db.getStatus());
         assertEquals(count, projectService.findProjects().size());
     }
 

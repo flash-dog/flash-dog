@@ -17,6 +17,7 @@ package com.skymobi.monitor.action;
 
 import com.skymobi.monitor.model.MetricDog;
 import com.skymobi.monitor.model.Project;
+import com.skymobi.monitor.model.Status;
 import com.skymobi.monitor.service.AlertService;
 import com.skymobi.monitor.service.ProjectService;
 import org.slf4j.Logger;
@@ -67,6 +68,9 @@ public class WarningAction {
     public String clear(ModelMap map, @PathVariable String projectName) throws IOException {
 
         alertService.removeAlerts(projectName);
+        Project project = projectService.findProject(projectName);
+        project.setStatus(Status.FINE);
+        projectService.saveProject(project);
         return "redirect:/projects/" + projectName + "/warnings";
     }
 

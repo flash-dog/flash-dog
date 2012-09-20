@@ -15,6 +15,7 @@ import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -37,6 +38,7 @@ public class HttpAlertNotifier extends AbstractAlertNotifier implements AlertLis
     public static final String HTTP_NOTIFY_CONFIG_URL = "httpNotifyConfig_url";
     public static final String HTTP_NOTIFY_CONFIG_TEMPLATE = "httpNotifyConfig_template";
     public static final String HTTP_NOTIFY_CONFIG_PROPERTIES = "httpNotifyConfig_properties";
+    public static final String HTTP_NOTIFY_CONFIG_ENABLE = "httpNotifyConfig_enable";
 
     private HttpClient httpClient = new HttpClient();
     @Resource
@@ -50,10 +52,12 @@ public class HttpAlertNotifier extends AbstractAlertNotifier implements AlertLis
         try {
             Project project = projectService.findProject(alert.getProjectName());
             Properties properties = project.getProperties();
-
+//            if (properties.getProperty(HTTP_NOTIFY_CONFIG_ENABLE, "false").equalsIgnoreCase("false"))
+//                return;
             String url = properties.getProperty(HTTP_NOTIFY_CONFIG_URL, null);
-            if (url == null)
+            if(url==null)
                 return;
+            Assert.hasLength(url, "notify url can't be null");
             Map templateVars = new HashMap();
             templateVars.putAll(properties);
             templateVars.put("title", alert.getTitle());
