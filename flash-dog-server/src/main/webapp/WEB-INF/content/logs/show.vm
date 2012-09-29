@@ -46,7 +46,16 @@
                  refresh_logs();
              }
         });
+        $("#download_btn").click(function(){
+            var params = jQuery.param({
+                start:$("#datepicker_start").val(),
+                end:$("#datepicker_end").val(),
+                keyWord:$("#key_word_input").val(),
+                level: $("#level").val()});
 
+            window.location  ="$link.setRelative("/projects/${project.name}/logs/download")?"+ params;
+
+        });
 
 		 
 	script_text = CodeMirror.fromTextArea(document.getElementById("script_text"), {
@@ -94,7 +103,7 @@
 
     <input type="button" id="search_btn"  value="查询"  />
     </div>
-
+    <input type="button" id="download_btn"  value="下载"  />
     <input type="checkbox" id="refresh_check_box"  /> 实时输出
     <input type="button" id="clear_btn" value="清空输出"/><br/>
 

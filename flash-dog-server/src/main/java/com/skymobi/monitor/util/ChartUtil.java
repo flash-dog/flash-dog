@@ -2,7 +2,6 @@ package com.skymobi.monitor.util;
 
 import com.google.common.collect.Lists;
 import com.skymobi.monitor.model.MetricValue;
-import com.skymobi.monitor.model.Project;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,13 +27,17 @@ public class ChartUtil {
      * @return
      */
     public static List<List> format(List<List<MetricValue>> metricList) {
-
+        ArrayList<List> rows = Lists.newArrayList();
+        if (metricList == null || metricList.isEmpty())
+            return rows;
         List<MetricValue> max = metricList.get(0);
-        for (List list : metricList) {
+        for (int i = 0; i < metricList.size(); i++) {
+            List list = metricList.get(i);
             if (list.size() > max.size())
                 max = list;
+            if (list.isEmpty())
+                metricList.remove(list);
         }
-        ArrayList<List> rows = Lists.newArrayList();
 
         rows.add(getColumnNames(metricList));
         for (MetricValue metricValue : max) {
@@ -74,63 +77,4 @@ public class ChartUtil {
         return value;
     }
 
-    /**
-     * @deprecated
-     * 计算合并所需的点
-     * @param metrics
-     * @param varData
-     * @param project
-     */
-    private void caculatePoints(String[] metrics,List<List> varData,Project project){
-        List<MetricValue>[] datalist = new ArrayList[metrics.length];
-        int[] cucors = new int[metrics.length];
-        for(int i=0;i<metrics.length;i++){
-            cucors[i]=0;
-            datalist[i]=project.findMetricData(metrics[i]);
-            //将坐标最多的放在数组的第一位，作为主坐标
-            if(i!=0&&datalist[i].size()>datalist[0].size()){
-                List<MetricValue> templ =datalist[i];
-                datalist[i]=datalist[0];
-                datalist[0]=templ;
-                String temp = metrics[i];
-                metrics[i] = metrics[0];
-                metrics[0] =temp;
-            }
-            varData.add(datalist[i]);
-        }
-        List<MetricValue> mainMetric=datalist[0];
-        for(MetricValue metric:mainMetric){
-            List formatResult = new ArrayList();
-            formatResult.add(sdf.format(new Date(metric.getTimeStamp())));
-            formatResult.add(metric.getValue());
-            for(int j=1;j<datalist.length;j++){
-                List<MetricValue> AdditionalMetric=datalist[j];
-                double v1 =0;
-                double v2 =0;
-                for(int i=cucors[j];i<AdditionalMetric.size()-1;i++){
-                    if(AdditionalMetric.get(i).getTimeStamp()>metric.getTimeStamp()) break;
-                    if(AdditionalMetric.get(i).getTimeStamp()<=metric.getTimeStamp()
-                            &&AdditionalMetric.get(i+1).getTimeStamp()>metric.getTimeStamp()){
-                        cucors[j]=i;
-                        v1 = AdditionalMetric.get(cucors[j]).getValue();
-                        v2 = AdditionalMetric.get(cucors[j]+1).getValue();
-                        break;
-                    }
-                }
-                Double result =null;
-                if(cucors[j]<AdditionalMetric.size()-1)
-                {
-                    //算出某个时间点的值
-                    double v3 = v2-v1;
-                    long s1 = AdditionalMetric.get(cucors[j]+1).getTimeStamp()-metric.getTimeStamp();
-                    long s2 = AdditionalMetric.get(cucors[j]+1).getTimeStamp()-AdditionalMetric.get(cucors[j]).getTimeStamp();
-                    result =v2-((double)s1/s2)*v3;
-                }
-                formatResult.add(result);
-            }
-            varData.add(formatResult);
-
-        }
-
-    }
 }

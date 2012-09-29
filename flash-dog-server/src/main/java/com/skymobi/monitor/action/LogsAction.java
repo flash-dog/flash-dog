@@ -31,7 +31,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -61,10 +60,30 @@ public class LogsAction {
     private LogsService logsService;
 
     @RequestMapping(value = "/projects/{projectName}/logs", method = RequestMethod.GET)
-    public String test(ModelMap map, @PathVariable String projectName){
+    public String test(ModelMap map, @PathVariable String projectName) {
         Project project = projectService.findProject(projectName);
         map.put("project", project);
         return "logs/show";
+    }
+
+    @RequestMapping(value = "/projects/{projectName}/logs/download", method = RequestMethod.GET)
+    public void download(final HttpServletResponse response, ModelMap map, @PathVariable String projectName, LogQuery logQuery) throws IOException, ParseException {
+        Project project = projectService.findProject(projectName);
+
+        final MongoConverter converter = project.fetchMongoTemplate().getConverter();
+        final DBCursor cursor = logsService.findLogs(projectName, logQuery, 100000);
+        response.setContentType("file/txt;charset=utf-8");
+        response.addHeader("content-disposition", String.format("attachment; filename=%s.txt", java.net.URLEncoder.encode("logs", "UTF-8")));
+        response.setStatus(HttpServletResponse.SC_OK);
+
+        while (cursor.hasNext()) {
+            Log log = converter.read(Log.class, cursor.next());
+
+            response.getWriter().println(log.toString());
+
+        }
+
+
     }
 
     @RequestMapping(value = "/projects/{projectName}/logs/more", method = RequestMethod.GET)
@@ -99,7 +118,6 @@ public class LogsAction {
             logger.error("查询超时 ", e);
             task.cancel(true);
         }
-
 
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(buf.toString());

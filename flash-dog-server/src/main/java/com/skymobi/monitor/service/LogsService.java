@@ -30,8 +30,9 @@ import javax.annotation.Resource;
 import java.text.ParseException;
 
 /**
+ * 日志分析服务
+ *
  * @author Hill.Hu
- *         日志分析服务
  */
 @Service
 public class LogsService {
@@ -45,6 +46,10 @@ public class LogsService {
 
 
     public DBCursor findLogs(String projectName, LogQuery logQuery) throws ParseException {
+        return findLogs(projectName, logQuery, max);
+    }
+
+    public DBCursor findLogs(String projectName, LogQuery logQuery, int max) throws ParseException {
         Project project = projectService.findProject(projectName);
         MongoTemplate template = project.fetchMongoTemplate();
 
