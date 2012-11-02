@@ -8,8 +8,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.log4mongo.contrib.JvmMonitor;
 
 import java.util.Date;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * Author: Hill.Hu
@@ -24,10 +23,15 @@ public class AsynMongoDbLayoutAppender extends MongoDbPatternLayoutAppender {
     private int threadCount=2;
     private String jvmMonitor     = "false";
     private String jvmMonitorPeriodSeconds = "60";
-
+    private LinkedBlockingQueue<Runnable> workQueue;
+    private int maxWorkSize = 1000;
     public void activateOptions() {
         super.activateOptions();
         initJvmMonitor();
+        workQueue = new LinkedBlockingQueue<Runnable>(2*maxWorkSize);
+        executorService = new ThreadPoolExecutor(threadCount, threadCount,
+                0L, TimeUnit.MILLISECONDS,
+                workQueue);
         executorService = Executors.newFixedThreadPool(threadCount);
     }
     private void initJvmMonitor() {
@@ -40,7 +44,9 @@ public class AsynMongoDbLayoutAppender extends MongoDbPatternLayoutAppender {
     }
     @Override
     protected void append(final LoggingEvent loggingEvent) {
-        executorService.execute(new Runnable() {
+        if (workQueue.size() < maxWorkSize) {
+
+            executorService.execute(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -50,6 +56,7 @@ public class AsynMongoDbLayoutAppender extends MongoDbPatternLayoutAppender {
                 }
             }
         });
+        }
     }
 
 
@@ -88,5 +95,9 @@ public class AsynMongoDbLayoutAppender extends MongoDbPatternLayoutAppender {
 
     public void setJvmMonitorPeriodSeconds(String jvmMonitorPeriodSeconds) {
         this.jvmMonitorPeriodSeconds = jvmMonitorPeriodSeconds;
+    }
+
+    public void setMaxWorkSize(int maxWorkSize) {
+        this.maxWorkSize = maxWorkSize;
     }
 }

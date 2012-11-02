@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AlertService {
     private static Logger logger = LoggerFactory.getLogger(AlertService.class);
 
-    private final static ScheduledExecutorService executor = Executors.newScheduledThreadPool(10);
+    private final static ScheduledExecutorService executor = Executors.newScheduledThreadPool(50);
     private static ConcurrentMap<String, AtomicInteger> notifyTimes;
     @Resource
     private List<AlertListener> alertListeners = Lists.newArrayList();
@@ -106,7 +106,7 @@ public class AlertService {
             if (isNeedNotify(alert)) {
                 notify(alert);
             } else {
-                logger.debug("out of limit times={} ,not notify this alert", limitTimes);
+                logger.info("out of limit times={} ,not notify this alert", limitTimes);
             }
         }
 

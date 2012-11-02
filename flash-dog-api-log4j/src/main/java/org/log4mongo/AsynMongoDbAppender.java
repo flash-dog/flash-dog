@@ -2,40 +2,51 @@ package org.log4mongo;
 
 import com.mongodb.DBObject;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Hill.Hu
-* @deprecated
+ *
  * @see AsynMongoDbLayoutAppender
+ * @deprecated
  */
 public class AsynMongoDbAppender extends MongoDbAppender {
-    private static ExecutorService executorService;
+    private static ThreadPoolExecutor executorService;
     /**
      * 后台写日志的线程个数
      */
-    private int threadCount=2;
+    private int threadCount = 2;
+
+    private LinkedBlockingQueue<Runnable> workQueue;
+    private int maxWorkSize = 1000;
 
     public void activateOptions() {
         super.activateOptions();
 
-        executorService = Executors.newFixedThreadPool(threadCount);
+        workQueue = new LinkedBlockingQueue<Runnable>(2*maxWorkSize);
+        executorService = new ThreadPoolExecutor(threadCount, threadCount,
+                0L, TimeUnit.MILLISECONDS,
+                workQueue);
+
     }
 
     @Override
     public void append(final DBObject bson) {
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    _append(bson);
-                } catch (Exception e) {
-                    //ingore errors
-                }
-            }
-        });
+        if (workQueue.size() < maxWorkSize) {
 
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        _append(bson);
+                    } catch (Exception e) {
+                        //ingore errors
+                    }
+                }
+            });
+        }
     }
 
     private void _append(final DBObject bson) {
@@ -44,5 +55,9 @@ public class AsynMongoDbAppender extends MongoDbAppender {
 
     public void setThreadCount(int threadCount) {
         this.threadCount = threadCount;
+    }
+
+    public void setMaxWorkSize(int maxWorkSize) {
+        this.maxWorkSize = maxWorkSize;
     }
 }
