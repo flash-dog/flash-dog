@@ -28,12 +28,16 @@ public class AsynMongoDbLayoutAppender extends MongoDbPatternLayoutAppender {
     public void activateOptions() {
         super.activateOptions();
         initJvmMonitor();
+        initThreadPoolExecutor();
+    }
+    /** 初始化线程池 */
+    public void initThreadPoolExecutor(){
         workQueue = new LinkedBlockingQueue<Runnable>(2*maxWorkSize);
         executorService = new ThreadPoolExecutor(threadCount, threadCount,
                 0L, TimeUnit.MILLISECONDS,
                 workQueue);
-        executorService = Executors.newFixedThreadPool(threadCount);
     }
+    /**  性能监控初始化*/
     private void initJvmMonitor() {
         if(!jvmMonitor.equals("true")) return;
         if(jvmMonitorPeriodSeconds!=null&&!jvmMonitorPeriodSeconds.equals("")&&jvmMonitorPeriodSeconds.matches("[0-9]*"))
@@ -45,7 +49,6 @@ public class AsynMongoDbLayoutAppender extends MongoDbPatternLayoutAppender {
     @Override
     protected void append(final LoggingEvent loggingEvent) {
         if (workQueue.size() < maxWorkSize) {
-
             executorService.execute(new Runnable() {
             @Override
             public void run() {

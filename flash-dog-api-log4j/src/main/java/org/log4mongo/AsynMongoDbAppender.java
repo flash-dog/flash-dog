@@ -35,7 +35,6 @@ public class AsynMongoDbAppender extends MongoDbAppender {
     @Override
     public void append(final DBObject bson) {
         if (workQueue.size() < maxWorkSize) {
-
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
