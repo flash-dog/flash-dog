@@ -28,7 +28,7 @@
             var size=1024 * 1024 * new Number($("#log_collection_editor_div input").val());
             if($("log_collection_editor_div select").val()=="G")
                 size*=1024;
-            var script="db.${project.logCollection}.drop() ;db.createCollection('${project.logCollection}', {capped:true, size:"+size+"});db.flash_dog_log.ensureIndex({timestamp:1});";
+            var script="db.${project.logCollection}.drop() ;db.createCollection('${project.logCollection}', {capped:true, size:"+size+"});db.${project.logCollection}.ensureIndex({timestamp:1});";
             console.log(script);
             var params = jQuery.param({script:script});
             jQuery.ajax({
