@@ -98,7 +98,7 @@
         <option value="WARN">WARN</option>
         <option value="ERROR">ERROR</option>
     </select>
-  Date: <input type="text" id="datepicker_start"  onClick="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:false})")">
+  Date: <input type="text" id="datepicker_start"  onClick="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})")">
   to: <input type="text" id="datepicker_end"      onClick="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:false})">
 
     <input type="button" id="search_btn"  value="查询"  />
