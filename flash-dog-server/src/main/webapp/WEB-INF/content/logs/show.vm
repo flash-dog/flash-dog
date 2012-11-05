@@ -62,6 +62,9 @@
 	lineNumbers: true,
 	electricChars: false
   });
+		var now = new Date();
+        var today =now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+" 00:00:00";
+        $("#datepicker_start").val(today);
 
     });
     function refresh_logs(){
