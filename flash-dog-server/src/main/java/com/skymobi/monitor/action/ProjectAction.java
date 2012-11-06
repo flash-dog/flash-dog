@@ -17,8 +17,10 @@ package com.skymobi.monitor.action;
 
 import com.google.common.collect.Lists;
 import com.skymobi.monitor.model.Project;
+import com.skymobi.monitor.model.View;
 import com.skymobi.monitor.security.SimpleAuthz;
 import com.skymobi.monitor.service.AlertService;
+import com.skymobi.monitor.service.ViewService;
 import com.skymobi.monitor.service.ProjectService;
 import com.skymobi.monitor.util.SystemConstants;
 import org.slf4j.Logger;
@@ -57,6 +59,9 @@ public class ProjectAction {
     @Resource
     private AlertService alertService;
 
+    @Resource
+    private ViewService viewService;
+
     @RequestMapping({"/index", "/"})
     public String index(ModelMap map, HttpServletResponse response) throws IOException {
 
@@ -75,7 +80,8 @@ public class ProjectAction {
     public String listProject(ModelMap map, HttpServletResponse response) throws IOException {
         List<Project> projects = projectService.findProjects();
         map.put("projects", projects);
-
+        List<View> views = viewService.findAll();
+        map.put("views",views);
         return "project/list";
     }
 
