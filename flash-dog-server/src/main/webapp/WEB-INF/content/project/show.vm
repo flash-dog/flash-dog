@@ -85,7 +85,8 @@
     <div id="tabs" style="text-align:center">
     	<ul>
     	#foreach($key in ${views.keySet()})
-			<li><a href="#tabs-$velocityCount">$key</a><span class="ui-icon ui-icon-close">Remove Tab</span></li>
+			<li><a href="#tabs-$velocityCount">$key</a>
+			<span class="ui-icon ui-icon-close">Remove Tab</span></li>
 		#end
 		</ul>
         #foreach($key in ${views.keySet()})

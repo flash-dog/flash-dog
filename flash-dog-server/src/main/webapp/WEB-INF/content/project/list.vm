@@ -40,9 +40,6 @@
 
     });
 </script>
-<div id="add_dialog" title="add view">
-
-</div>
 <div id="content">
 
     <div id="tabs">
