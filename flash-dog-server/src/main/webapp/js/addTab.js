@@ -30,8 +30,9 @@ var $tab_title_input = $( "#tab_title"),
 			modal: true,
 			buttons: {
 				Add: function() {
-					addTab();
-					$( this ).dialog( "close" );
+					if(addTab()){
+					    $( this ).dialog( "close" );
+                    }
 				},
 				Cancel: function() {
 					$( this ).dialog( "close" );
@@ -54,10 +55,21 @@ var $tab_title_input = $( "#tab_title"),
 
 		// actual addTab function: adds new tab using the title input from the form above
 		function addTab() {
+
 			var tab_title = $tab_title_input.val() || "Tab " + tab_counter;
+            if(hasTab(tab_title)){
+                alert("图表名称不能重复");
+                return false;
+            }
 			$tabs.tabs( "add", "#newtabs-" + tab_counter, tab_title );
 			tab_counter++;
+            return true;
 		}
+
+       function hasTab(title){
+            var o = $( "#tabs").has("#metric_"+title)
+            return o.length > 0
+       }
 
 		// addTab button: just opens the dialog
 		$( "#add_tab" )
