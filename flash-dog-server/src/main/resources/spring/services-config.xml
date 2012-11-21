@@ -27,9 +27,16 @@
     </bean>
 
     <bean id="taskService" class="com.skymobi.monitor.service.TaskService">
-
+        <property name="executor" ref="concurrentTaskScheduler"/>
     </bean>
-     <bean id="projectCreator" class="com.skymobi.monitor.util.ProjectCreator" init-method="createSelf">
+    <bean id="concurrentTaskScheduler" class="org.springframework.scheduling.concurrent.ConcurrentTaskScheduler">
+        <constructor-arg ref="taskSchedulerService"/>
+    </bean>
+    <bean id="taskSchedulerService" class="java.util.concurrent.Executors"
+          factory-method="newScheduledThreadPool">
+        <constructor-arg value="100" />
+    </bean>
+    <bean id="projectCreator" class="com.skymobi.monitor.util.ProjectCreator" init-method="createSelf">
          <property name="initTasks">
               <list>
                   <ref bean="logTask"/>
