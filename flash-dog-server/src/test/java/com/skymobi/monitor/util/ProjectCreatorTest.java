@@ -1,25 +1,21 @@
 package com.skymobi.monitor.util;
 
-import com.google.common.collect.Lists;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.model.Task;
 import com.skymobi.monitor.service.ProjectService;
-import junit.framework.TestCase;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * author: Hill.Hu
  */
-@ContextConfiguration(locations = {"classpath:spring/env-config.xml", "classpath:spring/mongo-config.xml", "classpath:/spring/email-notice.xml"})
+@ContextConfiguration(locations = {"classpath:spring/env-config.xml", "classpath:spring/services-config.xml", "classpath:/spring/email-notice.xml"})
 public class ProjectCreatorTest extends AbstractJUnit4SpringContextTests {
     public static final String SCRIPT = "   //统计错误日志占比\n" +
             "                            err=db.$project.logCollection.find({'level':'ERROR',timestamp:{$gt:new Date(new Date - 300000)}}).count()\n" +

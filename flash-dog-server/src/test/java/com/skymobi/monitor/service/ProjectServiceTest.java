@@ -84,7 +84,7 @@ public class ProjectServiceTest extends AbstractJUnit4SpringContextTests {
     public void test_create() throws Exception {
         Project project = new Project();
         project.setName("test_project_1222");
-        project.setMongoUri("mongodb://172.16.3.47:9999/mongolog");
+        project.setMongoUri("mongodb://172.16.3.82:9999/mongolog");
         try {
             projectService.create(project);
         } catch (IllegalArgumentException e) {

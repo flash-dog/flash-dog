@@ -27,7 +27,7 @@ public class ProjectTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-        project.setMongoUri("mongodb://172.16.3.47/monitor_test");
+        project.setMongoUri("mongodb://172.16.3.82/monitor_test");
         project.setName("test");
         project.setMetricCollection(METRIC_COLLECTION);
 

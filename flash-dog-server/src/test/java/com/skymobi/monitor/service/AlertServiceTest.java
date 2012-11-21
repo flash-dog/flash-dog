@@ -21,9 +21,7 @@ public class AlertServiceTest extends TestCase {
     public void test_is_need_notify() throws Exception {
         assertFalse(alertService.isNeedNotify(null));
         assertTrue(alertService.isNeedNotify(alert));
-        assertTrue(alertService.isNeedNotify(alert));
-        assertTrue(alertService.isNeedNotify(alert));
-        assertFalse(alertService.isNeedNotify(alert));
+
         alert.setTitle("alert2");
         assertTrue(alertService.isNeedNotify(alert));
         alert.setTitle("alert1");
