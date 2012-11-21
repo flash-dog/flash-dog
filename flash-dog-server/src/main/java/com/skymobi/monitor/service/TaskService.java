@@ -34,8 +34,12 @@ import java.util.concurrent.*;
 @SuppressWarnings("unchecked")
 public class TaskService {
     private static Logger logger = LoggerFactory.getLogger(TaskService.class);
-
-    private final static ConcurrentTaskScheduler executor = new ConcurrentTaskScheduler();
+    private final static ScheduledExecutorService scheduledExecutor;
+    private final static ConcurrentTaskScheduler executor;
+    static{
+    	 scheduledExecutor = Executors.newScheduledThreadPool(100);
+    	executor=new ConcurrentTaskScheduler();
+    }
 
 
     private final static Map<String, ScheduledFuture> futures = Maps.newHashMap();
