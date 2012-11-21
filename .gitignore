@@ -7,3 +7,4 @@ target
 *.log.*
 *.log
 *.db
+flash-dog-server/src/main/resources/conf/develop/app.properties
