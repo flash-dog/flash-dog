@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AlertService {
     private static Logger logger = LoggerFactory.getLogger(AlertService.class);
 
-    private final static ScheduledExecutorService executor = Executors.newScheduledThreadPool(50);
+    private final static ScheduledExecutorService executor = Executors.newScheduledThreadPool(100);
     private static ConcurrentMap<String, AtomicInteger> notifyTimes;
     @Resource
     private List<AlertListener> alertListeners = Lists.newArrayList();
@@ -57,10 +57,11 @@ public class AlertService {
         this.checkSeconds = checkSeconds;
     }
 
-    private int checkSeconds = 60;
+    private int checkSeconds = 90;
 
 
     public void init() {
+
         executor.scheduleWithFixedDelay(
                 new Runnable() {
                     @Override
@@ -85,24 +86,26 @@ public class AlertService {
     }
 
     private void startDog(final Project project, final MetricDog dog) {
-        try {
-            logger.debug("start dog {}", dog);
-            executor.execute(
-                    new Runnable() {
-                        @Override
-                        public void run() {
+        //为了避免同时执行，使用了随机数延迟执行
+        executor.schedule(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            logger.debug("start dog {}", dog);
                             List<Alert> alerts = dog.work(project);
                             notifyAlerts(alerts);
+                        } catch (Exception e) {
+                            logger.error("start dog fail ", e);
                         }
                     }
-            );
-        } catch (Exception e) {
-            logger.error("start dog fail ", e);
-        }
+                }, ((int) (Math.random() * 1000)) % 30, TimeUnit.SECONDS
+        );
+
     }
 
     private void notifyAlerts(List<Alert> alerts) {
-        for(Alert alert:alerts){
+        for (Alert alert : alerts) {
             if (isNeedNotify(alert)) {
                 notify(alert);
             } else {
@@ -126,9 +129,9 @@ public class AlertService {
     }
 
     private void notify(Alert alert) {
-        logger.info("dog fire {},notify listener {}", alert,alertListeners);
+        logger.info("dog fire {},notify listener {}", alert, alertListeners);
         mongoTemplate.save(alert, collectionName);
-        for (AlertListener listener : alertListeners){
+        for (AlertListener listener : alertListeners) {
             notify(alert, listener);
         }
     }
