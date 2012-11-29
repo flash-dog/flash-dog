@@ -15,6 +15,7 @@
  */
 package com.skymobi.monitor.action;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.CommandResult;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.service.ProjectService;
@@ -50,12 +51,19 @@ public class MongoAction {
     private TaskService taskService;
 
     @RequestMapping(value = "/projects/{projectName}/mongo/console", method = RequestMethod.POST)
-    public @ResponseBody CommandResult  test(ModelMap map, @PathVariable String projectName, String script) throws IOException, ExecutionException, TimeoutException, InterruptedException {
+    public @ResponseBody    BasicDBObject test(ModelMap map, @PathVariable String projectName, String script,Integer timeout) throws IOException, ExecutionException, TimeoutException, InterruptedException {
 
         Project project = projectService.findProject(projectName);
         FutureTask<CommandResult> futureTask = taskService.runScript(script, project);
 
-        CommandResult result = futureTask.get(20, TimeUnit.SECONDS);
+        BasicDBObject result = null;
+        timeout=timeout!=null?timeout:60;
+        try {
+            result = futureTask.get(timeout, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            logger.error("execute task fail "+script,e);
+            result=new BasicDBObject("err",e.toString());
+        }
         logger.debug("run mongo script =[{}] ,result=[{}]", script,result);
 
          return result;

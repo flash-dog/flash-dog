@@ -34,7 +34,7 @@
     </bean>
     <bean id="taskSchedulerService" class="java.util.concurrent.Executors"
           factory-method="newScheduledThreadPool">
-        <constructor-arg value="100" />
+        <constructor-arg value="50" />
     </bean>
     <bean id="projectCreator" class="com.skymobi.monitor.util.ProjectCreator" init-method="createSelf">
          <property name="initTasks">

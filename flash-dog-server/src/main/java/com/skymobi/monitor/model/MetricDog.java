@@ -21,7 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -124,13 +124,15 @@ public class MetricDog {
         for (String metric : project.findMetricNames()) {
             if (StringUtils.equals(metric, metricName)) {
                 MetricValue metricValue = project.findLastMetric(metricName);
-                String cacheKey = project.getName() + "_" + metricName + metricValue.getTimeStamp();
-
+                String cacheKey = project.getName() + "_" + this.getName() + "_" + metricName + metricValue.getTimeStamp();
+                logger.debug("current value={} ,dog={}", metricValue.getValue(), this);
                 //这个值已经处理过了，忽略
-                if (hasFireMetrics.containsKey(cacheKey))
+                if (hasFireMetrics.containsKey(cacheKey)) {
+                    logger.debug("this value has fire,just ignore {}", cacheKey);
                     continue;
-                else
+                } else {
                     hasFireMetrics.put(cacheKey, true);
+                }
                 boolean fire = bite(metricValue.getValue());
                 if (fire) {
                     Alert alert = new Alert();
@@ -158,24 +160,26 @@ public class MetricDog {
     }
 
     private String fixLevel(Project project, Alert alert) {
-        String _level=level;
+        String _level = level;
         int currentTime = incrementFireTimes(project.getName(), metricName);
-        if (!LEVEL_ERROR.equals(level) &&currentTime >= times) {
-            _level= LEVEL_ERROR;
+        if (!LEVEL_ERROR.equals(level) && currentTime >= times) {
+            _level = LEVEL_ERROR;
             logger.info("连续告警次数达到{}次，升级到[错误],alert={}", times, alert);
         }
         return _level;
     }
 
     private int incrementFireTimes(String projectName, String metricName) {
-        String metricNotifyKey = projectName+ "_" + metricName;
-       metricFireTimes.putIfAbsent(metricNotifyKey, new AtomicInteger(0));
+        String metricNotifyKey = projectName + "_" + metricName;
+        metricFireTimes.putIfAbsent(metricNotifyKey, new AtomicInteger(0));
         return metricFireTimes.get(metricNotifyKey).incrementAndGet();
     }
+
     private void resetFireTimes(String projectName, String metricName) {
-        String metricNotifyKey = projectName+ "_" + metricName;
+        String metricNotifyKey = projectName + "_" + metricName;
         metricFireTimes.put(metricNotifyKey, new AtomicInteger(0));
     }
+
     /**
      * 是否狂叫
      *
@@ -241,7 +245,7 @@ public class MetricDog {
                 '}';
     }
 
-    private static SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+    private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
     /**
      * 是否正在工作
@@ -254,14 +258,20 @@ public class MetricDog {
     }
 
     protected boolean inWorkTime(Date current) {
-        Time now = Time.valueOf(sdf.format(current));
-        Time start = Time.valueOf(startTime);
-        Time end = Time.valueOf(endTime);
-        //如果为"除了某时间段"模式
-        if (excludeTimeMode) {
-            return !(now.after(start) && now.before(end));
-        } else {
-            return now.after(start) && now.before(end);
+        Date now = null;
+        try {
+            now = sdf.parse(sdf.format(current));
+
+            Date start = sdf.parse(startTime) ;
+            Date end = sdf.parse(endTime );
+            //如果为"除了某时间段"模式
+            if (excludeTimeMode) {
+                return !(now.after(start) && now.before(end));
+            } else {
+                return now.after(start) && now.before(end);
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
 
     }

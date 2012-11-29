@@ -17,8 +17,8 @@ package com.skymobi.monitor.model;
 
 import junit.framework.TestCase;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 
-import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -52,11 +52,18 @@ public class MetricDogTest extends TestCase {
     }
 
     public void test_is_work() throws Exception {
-        Date now = Time.valueOf("09:00:00");
-        assertTrue(now.after(Time.valueOf("00:00:00")));
-        assertTrue(now.before(Time.valueOf("24:00:00")));
+        Date now = DateUtils.parseDate("09:00:00", new String[]{"HH:mm:ss"});
+
         dog.setStartTime("08:00:00");
         dog.setEndTime("10:00:00");
+        assertTrue(dog.inWorkTime(now));
+        dog.setExcludeTimeMode(true);
+        assertFalse(dog.inWorkTime(now));
+
+        now = DateUtils.parseDate("13:00:00", new String[]{"HH:mm:ss"});
+        dog.setExcludeTimeMode(false);
+        dog.setStartTime("08:00:00");
+        dog.setEndTime("14:00:00");
         assertTrue(dog.inWorkTime(now));
         dog.setExcludeTimeMode(true);
         assertFalse(dog.inWorkTime(now));

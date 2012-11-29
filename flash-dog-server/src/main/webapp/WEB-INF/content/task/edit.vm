@@ -19,7 +19,7 @@
 	
         $("#add_form").validate();
         $("#run_btn").click(function() {
-            var params = jQuery.param({script:script_text.getValue()});
+            var params = jQuery.param({script:script_text.getValue(),"timeout":$("#time_out").val()});
 
             jQuery.ajax({
                 url:"$link.setRelative( "/projects/${project.name}/mongo/console?format=json")",
@@ -37,7 +37,7 @@
         });
 
         $("#err_log_btn").click(function() {
-            $("#task_name").val('log_stats');
+
             $("#cron_text").val('40 */5 * * * *');
             script_text.setValue(
                     "//统计错误日志占比\n"+
@@ -49,7 +49,7 @@
                             "return value;");
         });
         $("#key_word_btn").click(function() {
-            $("#task_name").val('key_word_stats');
+
             $("#cron_text").val('20 */5 * * * *');
             script_text.setValue(
 
@@ -58,7 +58,7 @@
         });
 
         $("#money_stats_btn").click(function() {
-            $("#task_name").val('money_stats');
+
             $("#cron_text").val('40 */5 * * * *');
             script_text.setValue(
 
@@ -67,7 +67,7 @@
         });
 
         $("#system_btn").click(function() {
-            $("#task_name").val('system_stats');
+
             $("#cron_text").val('40 */3 * * * *');
             script_text.setValue('var now = new Date;\n var o=db.${project.logCollection}.findOne({"className":"org.log4mongo.contrib.JvmMonitor",timestamp:{$gt:new Date(now - 3*60*1000)}});\n if(o){\n	result = o.message.match(".*memoryUsed=(\\\\d+).*cpuUsed=(\\\\d+).*threadCount=(\\\\d+)");\n   var memoryUsed = result[1]/1024;\n   var cpuUsed = result[2];\n   var threadCount = result[3];\n   db.${project.metricCollection}.save({name:"memoryUsed (M)",value:memoryUsed,timeStamp:now.getTime()});  \n   db.${project.metricCollection}.save({name:"cpuUsed",value:cpuUsed,timeStamp:now.getTime()});  \n   db.${project.metricCollection}.save({name:"threadCount",value:threadCount,timeStamp:now.getTime()});  \n  return "cpuUsed="+ cpuUsed  +" memoryUsed="+memoryUsed  +" threadCount="+threadCount;\n  }\n return "无记录";');
         });
@@ -81,7 +81,7 @@
     <form id="add_form" action="$link.setRelative("/projects/$project.name/tasks")" method="post">
         名      称:<input name="name" id="task_name"  class="{required:true,name:true,minlength:2}" value="$!task.name"/> <br/>
         频率(秒):<input name="cron" id="cron_text" class="{required:true,cron:true,minlength:6}" value="$!task.cron"/>秒 分 时 天 月 年<br/>
-        超时(秒):<input name="timeout" value="$!task.timeout"/><br/>
+        超时(秒):<input name="timeout" id="time_out" value="$!task.timeout"/><br/>
         脚本 模板:<input type="button" id="err_log_btn" value="日志监控"/>
         <input type="button" id="money_stats_btn" value="指标监控"/>
         <input type="button" id="key_word_btn" value="关键字监控"/>
