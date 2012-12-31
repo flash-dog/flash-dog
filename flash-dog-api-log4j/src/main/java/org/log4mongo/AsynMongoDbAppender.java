@@ -1,15 +1,14 @@
 package org.log4mongo;
 
 import com.mongodb.DBObject;
-
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Hill.Hu
- *
- * @see AsynMongoDbLayoutAppender
+ * 有众多问题，不再维护
+ * @see AsynMongoURILayoutAppender
  * @deprecated
  */
 public class AsynMongoDbAppender extends MongoDbAppender {
@@ -59,4 +58,5 @@ public class AsynMongoDbAppender extends MongoDbAppender {
     public void setMaxWorkSize(int maxWorkSize) {
         this.maxWorkSize = maxWorkSize;
     }
+    
 }

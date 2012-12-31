@@ -13,6 +13,9 @@ import java.util.concurrent.*;
 /**
  * Author: Hill.Hu
  * 异步可定义的写入日志方式
+ * mongodb的配置过于死板，强烈建议使用MongoDbPatternLayoutAppender
+ * @see AsynMongoURILayoutAppender
+ * @deprecated
  * @see MongoDbPatternLayoutAppender
  */
 public class AsynMongoDbLayoutAppender extends MongoDbPatternLayoutAppender {
@@ -44,7 +47,7 @@ public class AsynMongoDbLayoutAppender extends MongoDbPatternLayoutAppender {
             JvmMonitor.getInstance(Integer.parseInt(jvmMonitorPeriodSeconds));
         else
             JvmMonitor.getInstance();
-
+        
     }
     @Override
     protected void append(final LoggingEvent loggingEvent) {
