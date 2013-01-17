@@ -246,7 +246,7 @@ public class Project {
 
             MongoURI uri = new MongoURI(mongoUri);
             return new MongoTemplate(new SimpleMongoDbFactory(mongo, uri.getDatabase(),
-                    new UserCredentials(uri.getUsername(), SimpleMongoDbFactory.parseChars(uri.getPassword()))));
+                    new UserCredentials(uri.getUsername(), parseChars(uri.getPassword()))));
 
         } catch (Exception e) {
             logger.error("mongo db error ,uri={}", mongoUri, e);
@@ -254,6 +254,10 @@ public class Project {
         }
 
     }
+    
+	private static String parseChars(char[] chars) {
+		return chars == null ? null : String.valueOf(chars);
+	}
 
     public List<String> findMetricNames() {
 

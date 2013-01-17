@@ -49,15 +49,20 @@ public class TaskService {
         ScheduledFuture<?> future = executor.schedule(new Runnable() {
             @Override
             public void run() {
+            	long startTime = System.currentTimeMillis();
                 try {
                     FutureTask _fuFutureTask = TaskService.this.runScript(task.getScript(), project);
-
                     _fuFutureTask.get(task.getTimeout(), TimeUnit.SECONDS);
                 } catch (TimeoutException e) {
-                    logger.error("execute task timeout , project={} , script={}",projectName, task);
+                    logger.error("execute task timeout,use  {} (second), project={} , script={}",
+                    		new Object[]{(System.currentTimeMillis()-startTime)/1000, projectName,task});
                 } catch (Exception e) {
+                	logger.error("execute task ERROR,use  {} (second), project={} , script={}",
+                    		new Object[]{(System.currentTimeMillis()-startTime)/1000, projectName,task});
                     logger.error("execute task fail", e);
                 }
+                logger.info("execute task success,use {} (second) , project={} , taskName={}",
+                		new Object[]{(System.currentTimeMillis()-startTime)/1000, projectName,task.getName()});
             }
         }, new CronTrigger(task.getCron()));
         logger.info("add a new task {}", taskKey);

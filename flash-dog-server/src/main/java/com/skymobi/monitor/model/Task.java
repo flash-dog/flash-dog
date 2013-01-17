@@ -100,11 +100,11 @@ public class Task implements Callable, IdentifyObject {
     @Override
     public String toString() {
         return "Task{" +
+        		", name='" + name + '\'' +
+        		", cron='" + cron + '\'' +
                 "script='" + script + '\'' +
-                ", name='" + name + '\'' +
                 ", interval=" + interval +
                 ", timeout=" + timeout +
-                ", cron='" + cron + '\'' +
                 '}';
     }
 }
