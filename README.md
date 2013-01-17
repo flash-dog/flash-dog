@@ -21,21 +21,19 @@
 
  3. log4j配置说明
 * log4j.properties
+
 <pre><code>
-log4j.appender.MongoDB=org.log4mongo.AsynMongoDbLayoutAppender
+log4j.appender.MongoDB=org.log4mongo.AsynMongoURILayoutAppender
 log4j.appender.MongoDB.layout=org.log4mongo.contrib.HostInfoPatternLayout
 #pid表示进程号，ip为当前服务器ip
 log4j.appender.MongoDB.layout.ConversionPattern={"timestamp":"%d","level":"%p","className":"%c","message":"%m","pid":"%V","ip":"%I"}
-#后台插入日志使用的线程数
-log4j.appender.MongoDB.threadCount=2
-#是否自动打印jvm信息，如cpu，memory，threadcount，
+#mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+log4j.appender.MongoDB.mongoURI=mongodb://mongolog:123456@192.168.173.207:5281,192.168.173.238:5281/test?slaveOk=true
 log4j.appender.MongoDB.jvmMonitor=true
-log4j.appender.MongoDB.databaseName=test
 log4j.appender.MongoDB.collectionName=flash_dog_log
-log4j.appender.MongoDB.hostname=172.16.3.47
-log4j.appender.MongoDB.port=27017 
 log4j.rootLogger=info,stdout,logfile,MongoDB
 </code></pre>
+
 
  4. 监控示例
 * 在闪电狗里面新建监控项目后，点击[定时任务]->[新建任务]。假设业务会打印出：
