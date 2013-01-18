@@ -2,6 +2,7 @@ package org.log4mongo;
 
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -10,6 +11,7 @@ import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
 import org.log4mongo.contrib.JvmMonitor;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
@@ -113,6 +115,7 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
 
     @Override
     protected void append(final LoggingEvent loggingEvent) {
+        Map MDCdata = loggingEvent.getProperties();
     	 if (workQueue.size() < maxWorkSize) {
              executorService.execute(new Runnable() {
              @Override
@@ -137,6 +140,8 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
                 Object obj = JSON.parse(json);
                 if (obj instanceof DBObject) {
                     bson = (DBObject) obj;
+                  //将MDC中的属性赋值给mongodb数据对象
+                    bson.putAll(loggingEvent.getProperties());
                 }
             }
 
