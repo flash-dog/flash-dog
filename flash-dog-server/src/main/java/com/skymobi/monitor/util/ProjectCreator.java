@@ -1,10 +1,12 @@
 package com.skymobi.monitor.util;
 
 import com.google.common.collect.Lists;
+import com.mongodb.MongoURI;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.model.Task;
 import com.skymobi.monitor.service.ProjectService;
 import org.apache.log4j.Logger;
+import org.log4mongo.AsynMongoURILayoutAppender;
 import org.log4mongo.MongoDbAppender;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -27,12 +29,7 @@ public class ProjectCreator {
         Project project = new Project();
         project.setAlias("闪电狗");
         project.setName("flash_dog");
-        MongoDbAppender appender = findMongoAppender();
-        Assert.notNull(appender, "can't find a MongoDbAppender ,please config one in log4j.properties");
-        project.setLogCollection(appender.getCollectionName());
-        project.setMongoUri(String.format("mongodb://%s:%s/%s",
-                appender.getHostname(), appender.getPort(), appender.getDatabaseName()));
-
+        setMongoInfoByLog4j(project);
         logger.debug("try create a monitor project for flash-dog {}", project);
         if (projectService.findProject(project.getName()) == null) {
             for (Task task : initTasks)
@@ -42,16 +39,26 @@ public class ProjectCreator {
             logger.debug("projectName={} has exist ,skip create ", project.getName());
         }
     }
-
-    private MongoDbAppender findMongoAppender() {
+    /**
+     * 通过log4jProperties的配置来设置mongodb信息
+     * @param project
+     */
+    private void setMongoInfoByLog4j(Project project) {
         Enumeration appenders = Logger.getRootLogger().getAllAppenders();
         while (appenders.hasMoreElements()) {
             Object appender = appenders.nextElement();
             if (appender instanceof MongoDbAppender) {
-                return (MongoDbAppender) appender;
+            	MongoDbAppender ref = (MongoDbAppender) appender;
+                project.setLogCollection(ref.getCollectionName());
+                project.setMongoUri(String.format("mongodb://%s:%s/%s",
+                		ref.getHostname(), ref.getPort(), ref.getDatabaseName()));
+            }
+            if (appender instanceof AsynMongoURILayoutAppender) {
+            	AsynMongoURILayoutAppender ref = (AsynMongoURILayoutAppender) appender;
+                project.setLogCollection(ref.getCollectionName());
+                project.setMongoUri(ref.getMongoURI());
             }
         }
-        return null;
     }
 
     public void setProjectService(ProjectService projectService) {

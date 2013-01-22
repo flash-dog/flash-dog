@@ -61,8 +61,6 @@ public class ProjectService {
     }
 
     public Project findProject(String projectName) {
-
-
         return mongoTemplate.findOne(new Query(Criteria.where("name").is(projectName)),
                 Project.class, collectionName);
     }
