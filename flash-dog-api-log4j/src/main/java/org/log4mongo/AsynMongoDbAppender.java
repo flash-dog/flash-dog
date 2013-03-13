@@ -16,7 +16,7 @@ public class AsynMongoDbAppender extends MongoDbAppender {
     /**
      * 后台写日志的线程个数
      */
-    private int threadCount = 2;
+    private int threadCount = 1;
 
     private LinkedBlockingQueue<Runnable> workQueue;
     private int maxWorkSize = 1000;

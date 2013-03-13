@@ -17,6 +17,8 @@ package com.skymobi.monitor.service;
 
 import com.skymobi.monitor.model.Alert;
 import com.skymobi.monitor.model.Project;
+
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
@@ -53,8 +55,10 @@ public class EmailService extends AbstractAlertNotifier implements AlertListener
         sm.setText(alert.getContent());
         sm.setSubject(alert.getTitle());
         sm.setFrom(from);
-        String mailList = project.getMailList();
-        if (mailList != null)
+        String mailList=alert.getMetricDog().getMailList();
+        if(StringUtils.isBlank(mailList))
+        	mailList = project.getMailList();
+        if (StringUtils.isNotBlank(mailList))
             sm.setTo(mailList.split(","));
         else
             logger.error("send mail fail ,because mail list is null");
@@ -71,9 +75,10 @@ public class EmailService extends AbstractAlertNotifier implements AlertListener
             @Override
             public void run() {
                 try {
+                	logger.debug("send mail 2 {}", msg);
                     mailSender.send(msg);
                 } catch (MailException e) {
-                    logger.error("send msg fail {}", e.getMessage());
+                    logger.error("send msg fail ", e);
                 }
             }
         });

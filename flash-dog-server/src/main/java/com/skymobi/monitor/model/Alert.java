@@ -37,6 +37,9 @@ public class Alert {
     private Date createTime = new Date();
 
     private String ip;
+    
+    private  MetricDog metricDog;
+    
 
     /**
      * @see  Status
@@ -68,8 +71,18 @@ public class Alert {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+    
+    
 
-    @Override
+    public MetricDog getMetricDog() {
+		return metricDog;
+	}
+
+	public void setMetricDog(MetricDog metricDog) {
+		this.metricDog = metricDog;
+	}
+
+	@Override
     public String toString() {
         return "Alert{" +
                 "content='" + content + '\'' +

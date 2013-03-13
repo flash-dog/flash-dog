@@ -34,10 +34,7 @@ import java.util.concurrent.*;
 @SuppressWarnings("unchecked")
 public class TaskService {
     private static Logger logger = LoggerFactory.getLogger(TaskService.class);
-
     private ConcurrentTaskScheduler executor = new ConcurrentTaskScheduler();
-
-
     private final static Map<String, ScheduledFuture> futures = Maps.newHashMap();
 
     public void scheduledTask(final Project project, final Task task) {
@@ -45,7 +42,6 @@ public class TaskService {
         //先取消老的任务
         removeScheduled(projectName, task);
         String taskKey = getTaskKey(projectName, task);
-
         ScheduledFuture<?> future = executor.schedule(new Runnable() {
             @Override
             public void run() {

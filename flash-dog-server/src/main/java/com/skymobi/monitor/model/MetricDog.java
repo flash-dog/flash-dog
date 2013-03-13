@@ -56,6 +56,8 @@ public class MetricDog {
     private boolean excludeTimeMode = false;
     private String startTime = "00:00:00";
     private String endTime = "24:00:00";
+    //通知人邮件列表
+    private String mailList;
     /**
      * 告警级别,WARN,ERROR
      */
@@ -118,6 +120,14 @@ public class MetricDog {
     public void setMetricName(String metricName) {
         this.metricName = metricName;
     }
+    
+    public String getMailList() {
+        return mailList;
+    }
+
+    public void setMailList(String mailList) {
+        this.mailList = mailList;
+    }
 
     public List<Alert> work(Project project) {
         List<Alert> alerts = Lists.newArrayList();
@@ -144,8 +154,7 @@ public class MetricDog {
                     alert.setContent(String.format("%s:当前值=%s %s 阀值%s \n\n %s \n %s",
                             metricName, metricValue.getValue(), operator, targetValue, _desc, _content));
                     alert.setProjectName(project.getName());
-
-
+                    alert.setMetricDog(this);
                     String _level = fixLevel(project, alert);
                     alert.setLevel(_level);
                     alerts.add(alert);
