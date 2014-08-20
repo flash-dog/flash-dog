@@ -27,6 +27,9 @@ public class ChartUtil {
      * @return
      */
     public static List<List> format(List<List<MetricValue>> metricList) {
+        return format(metricList,true);
+    }
+    public static List<List> format(List<List<MetricValue>> metricList,boolean timeAsStr) {
         ArrayList<List> rows = Lists.newArrayList();
         if (metricList == null || metricList.isEmpty())
             return rows;
@@ -41,7 +44,12 @@ public class ChartUtil {
 
         rows.add(getColumnNames(metricList));
         for (MetricValue metricValue : max) {
-            List row = Lists.newArrayList(sdf.format(new Date(metricValue.getTimeStamp())));
+            Object time = metricValue.getTimeStamp();
+            if(timeAsStr){
+                time = sdf.format(new Date(metricValue.getTimeStamp()));
+            }
+
+            List row = Lists.newArrayList(time);
             for (List<MetricValue> list : metricList) {
                 row.add(findValue(metricValue.getTimeStamp(), list));
             }
@@ -49,7 +57,6 @@ public class ChartUtil {
         }
         return rows;
     }
-
     private static List getColumnNames(List<List<MetricValue>> metricList) {
         List columns = Lists.newArrayList("time");
         for (List<MetricValue> list : metricList) {

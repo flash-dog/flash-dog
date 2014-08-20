@@ -63,6 +63,7 @@ public class Project {
      * mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
      */
     private String mongoUri;
+    @Deprecated
     private List<Chart> charts = Lists.newArrayList();
     private List<Task> tasks = Lists.newArrayList();
 
@@ -75,8 +76,14 @@ public class Project {
     private Properties properties = new Properties();
     /**
      * 用于存储视图
+     * @see  #chartViews
      */
+    @Deprecated
     private Map<String, String> views = new HashMap();
+    /**
+     * 图表视图
+     */
+    private List<ChartView> chartViews=Lists.newArrayList();
     private Status status=Status.FINE;
 
     public String getName() {
@@ -88,6 +95,13 @@ public class Project {
         this.name = name;
     }
 
+    public List<ChartView> getChartViews() {
+        return chartViews;
+    }
+
+    public void setChartViews(List<ChartView> chartViews) {
+        this.chartViews = chartViews;
+    }
 
     public String getAlias() {
         if (alias == null)
@@ -311,10 +325,16 @@ public class Project {
 
 
     public void removeDog(String dogName) {
-        MetricDog dog = findDog(dogName);
-        if (dog != null) {
-            metricDogs.remove(dog);
+        for(int i=0;i<metricDogs.size();i++){
+            if(metricDogs.get(i).getName().equals(dogName))  {
+                logger.debug("delete dog [{}] from [{}]",dogName,name);
+                metricDogs.remove(i);
+                return;
+            }
         }
+
+       logger.warn("delete fail,can't find dog [{}] from [{}]",dogName,name);
+
 
     }
 

@@ -1,0 +1,12 @@
+<div class="top-nav">
+<ul class="nav nav-pills ">
+    <li ng-class="{active:$route.current.activeTab=='show'}"><a href="#/show/{{project.name}}">监控</a></li>
+    <li  ng-class="{active:$route.current.activeTab=='warning'}"><a href="#/show/{{project.name}}/warning">告警</a></li>
+    <li ng-show="auth.hasProject(project)" ng-class="{active:$route.current.activeTab=='task'}"><a href="#/show/{{project.name}}/task">定时任务</a></li>
+    <li   ng-show="auth.hasProject(project)" ng-class="{active:$route.current.activeTab=='log'}"><a href="#/show/{{project.name}}/log">日志分析</a></li>
+    <li  ng-show="auth.hasProject(project)" ng-class="{active:$route.current.activeTab=='mongodb'}"> <a href="#/show/{{project.name}}/mongodb">Mongodb</a></li>
+    <li  ng-show="auth.hasProject(project)" ng-class="{active:$route.current.activeTab=='setting'}"> <a href="#/show/{{project.name}}/setting">设置</a></li>
+
+</ul>
+
+</div>

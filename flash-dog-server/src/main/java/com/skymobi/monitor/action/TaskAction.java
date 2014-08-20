@@ -18,14 +18,17 @@ package com.skymobi.monitor.action;
 import com.google.gson.Gson;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.model.Task;
+import com.skymobi.monitor.model.WebResult;
 import com.skymobi.monitor.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -97,6 +100,16 @@ public class TaskAction {
         return "task/edit";
     }
 
+    @RequestMapping(value = "/projects/{projectName}/tasks/update", method = RequestMethod.POST)
+    public @ResponseBody
+    WebResult updateTask(ModelMap map, @PathVariable String projectName, HttpEntity<Task> entity) {
+        Task task=entity.getBody();
+        logger.debug("update task {}", new Gson().toJson(task));
+        projectService.saveTask(projectName, task);
+
+        return new WebResult();
+    }
+
     /**
      * 更新任务
      *
@@ -112,12 +125,12 @@ public class TaskAction {
 
         return String.format("redirect:/projects/%s/tasks", projectName);
     }
-
     @RequestMapping(value = "/projects/{projectName}/tasks/{taskName}/destroy")
-    public String delete(ModelMap map, @PathVariable String projectName, @PathVariable String taskName) throws IOException {
+    public @ResponseBody WebResult deleteTask(ModelMap map, @PathVariable String projectName, @PathVariable String taskName) throws IOException {
         projectService.removeTask(projectName, taskName);
 
-        return String.format("redirect:/projects/%s/tasks", projectName);
+        return new WebResult();
 
     }
+
 }

@@ -15,6 +15,8 @@
  */
 package com.skymobi.monitor.service;
 
+import com.google.common.collect.Lists;
+import com.skymobi.monitor.model.ChartView;
 import com.skymobi.monitor.model.Constants;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.model.Task;
@@ -28,6 +30,7 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hill.hu
@@ -61,8 +64,39 @@ public class ProjectService {
     }
 
     public Project findProject(String projectName) {
-        return mongoTemplate.findOne(new Query(Criteria.where("name").is(projectName)),
+        Project project = mongoTemplate.findOne(new Query(Criteria.where("name").is(projectName)),
                 Project.class, collectionName);
+
+        if(project!=null)
+            checkChartView(project);
+        return project;
+    }
+
+    /**
+     * 从老版本的view兼容新的chartView
+     * @param project
+     */
+    private void checkChartView(Project project) {
+        List<ChartView> chartViews = project.getChartViews();
+        Map<String, String> views = project.getViews();
+
+        if (chartViews.isEmpty() && !views.isEmpty()) {
+            for (String metricName : views.keySet()) {
+                ChartView view=new ChartView();
+                view.setTitle(metricName);
+                view.setMetricNames(Lists.newArrayList(views.get(metricName).split(",")));
+                chartViews.add(view);
+            }
+
+        }
+        if (chartViews.isEmpty()) {
+            for (String metricName : project.findMetricNames())  {
+                ChartView view=new ChartView();
+                view.setTitle(metricName);
+                view.setMetricNames(Lists.newArrayList(metricName));
+                chartViews.add(view);
+            }
+        }
     }
 
     public void init() {
@@ -123,7 +157,6 @@ public class ProjectService {
         MongoTemplate template = project.fetchMongoTemplate();
         Assert.notNull(template, "mongo uri is not access");
         Assert.notNull(template.getDb(), "mongo uri is not access");
-        Assert.isTrue(template.collectionExists(project.getLogCollection()), "log collection [" + project.getLogCollection() + "] not exist ");
 
         saveProject(project);
     }

@@ -1,0 +1,100 @@
+<div ng-controller="SettingDogCtrl">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr class="active">
+            <th>Name</th>
+            <th>级别</th>
+            <th>时间段</th>
+            <th>状态</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr  ng-repeat="dog in project.metricDogs"   ng-click="editDog(dog)" ng-class="{success:dog==activeDog}">
+
+            <td  >{{dog.name}}</td>
+            <td>{{dog.level}}</td>
+            <td>{{dog.startTime}}-{{dog.endTime}}</td>
+            <td>{{dog.enable}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button  ng-hide="activeDog"  class="btn btn-primary"  ng-click="addDog()">添加</button>
+
+    <form class="form-horizontal  edit-form" role="form"  ng-show="activeDog" ng-submit="updateDog()">
+
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label">名称</label>
+            <div class="col-sm-10">
+                <input  name="name"  type="text" ng-model="activeDog.name"   class="form-control"  >
+            </div>
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label">描叙</label>
+            <div class="col-sm-10">
+                <input  name="name"  type="text" ng-model="activeDog.desc"   class="form-control"  >
+            </div>
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label">是否开启</label>
+            <div class="col-sm-10">
+                <input type="checkbox" ng-model="activeDog.enable" > 状态正常
+
+            </div>
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label">条件</label>
+            <div class="col-sm-10">
+                如果：  <select   ng-model="activeDog.metricName"   >
+                <option ng-repeat="metric in metricNames">{{metric}}</option>
+            </select>
+
+                <select id="dogs_form_operator" ng-model="activeDog.operator" >
+
+                    <option  value="<">小于</option>
+                    <option value="=">等于</option>
+                    <option value=">">大于</option>
+                </select>
+                 <input id='dogs_form_targetValue' ng-model="activeDog.targetValue" name="targetValue" placeholder="目标值" value="0">
+            </div>
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label"> 告警级别</label>
+            <div class="col-sm-10">
+
+                <select    ng-model="activeDog.level">
+                    <option value="WARN">普通</option>
+                    <option value="ERROR">严重</option>
+                </select>
+                连续指定次后升级为严重:<select   ng-model="activeDog.times" >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="100000">永远不</option>
+                </select>次 (普通级别只发邮件， 严重级别将通知所有监控平台)
+            </div>
+
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label">时间段</label>
+            <div class="col-sm-10">
+                开始时间:<input name="startTime" ng-model="activeDog.startTime"   class="{required:true,name:true,minlength:8}" />
+                结束时间:<input name="endTime"  ng-model="activeDog.endTime" class="{required:true,name:true,minlength:8}"  />
+                 <input  ng-model="activeDog.excludeTimeMode" id='dogs_form_excludeTimeMode' type="checkbox" /> 在此时间段内不会告警
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button   type="submit" class="btn btn-primary">确定</button>
+                <a     ng-click="removeDog()"  class="btn btn-danger pull-right">删除</a>
+                <a  ng-click="editDog()" class="btn btn-default">取消</a>
+            </div>
+        </div>
+
+    </form>
+
+</div>

@@ -1,0 +1,78 @@
+#set($layout="/WEB-INF/content/layout/none.vm")
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>闪电狗</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="/flash-dog/app/js/vender/util/html5shiv.min.js"></script>
+    <script src="/flash-dog/app/js/vender/respond/respond.min.js"></script>
+    <![endif]-->
+    <link href="/flash-dog/app/styles/style.css" rel="stylesheet">
+
+    <link href="/flash-dog/app/js/vender/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="/flash-dog/app/js/vender/jquery/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/flash-dog/app/js/vender/jquery/jquery.validate.min.js"></script>
+
+    <script type="text/javascript" src="/flash-dog/app/js/vender/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/flash-dog/app/js/vender/angular/1.2.22/angular.min.js"></script>
+    <script type="text/javascript" src="/flash-dog/app/js/vender/angular/1.2.22/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/flash-dog/app/js/vender/angular/1.2.22/angular-route.min.js"></script>
+
+    <script type='text/javascript' src="/flash-dog/app/js/vender/highcharts/highcharts.js"></script>
+
+
+    <script type="text/javascript" src="/flash-dog/app/js/script/project.js"></script>
+    <script type="text/javascript" src="/flash-dog/app/js/script/setting.js"></script>
+    <script type="text/javascript" src="/flash-dog/app/js/script/user.js"></script>
+    <script type="text/javascript" src="/flash-dog/app/js/script/app.js"></script>
+   <script>
+         _auth={
+           username:"$authz.principal"
+           ,isAdmin:$authz.admin,
+           isAuthenticated:$authz.isAuthenticated()
+
+       };
+   </script>
+</head>
+<body ng-app="app" >
+<div ng-controller="MainController" >
+<div id="header">
+    <a class="btn header-title " href="#/" title="">
+        <span  >{{pageTitle}}</span> </a>
+    <a href="#/list" class="btn pull-left" style="margin-right: 20px">
+
+        <img class=" mini-logo " src="#springUrl('/app/images/logo.png')" >
+    </a>
+    <div class="pull-right">
+        <div class="btn-group">
+            <a class="btn btn-sm   dropdown-toggle" data-toggle="dropdown">{{auth.username}}<span class="caret"></span></a>
+
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="$link.setRelative("/j_spring_security_logout")">退出</a></li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</div>
+
+    <div class="container" >
+      <div class="" ng-view></div>
+
+    </div>
+
+    <div class="fd-message" >
+        <div class="message"   ng-repeat="message in messages"   ng-class="['bg-'+message.level]">{{message.content}}</div>
+    </div>
+</div>
+
+</body>
+</html>

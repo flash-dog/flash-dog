@@ -26,14 +26,14 @@ import java.util.Date;
 public class TimeRange {
 
     private transient Date now = new Date();
-    private int last;
+    private int last=1;
     /**
      * 时间单位，参见Calendar
      * hour =10
      * MINUTE=12
      * DATE = 5
      */
-    private int unit;
+    private int unit=5;
     private transient Date start, end;
 
     public TimeRange(int last, int unit) {

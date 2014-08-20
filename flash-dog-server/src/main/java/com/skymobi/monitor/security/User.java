@@ -46,7 +46,7 @@ public class User implements UserDetails {
     private boolean enabled;
     private String email;
     private String phone;
-    private Date registerTime;
+    private Date registerTime=new Date();
 
     public User() {
 

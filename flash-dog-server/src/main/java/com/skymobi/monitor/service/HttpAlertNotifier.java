@@ -55,7 +55,7 @@ public class HttpAlertNotifier extends AbstractAlertNotifier implements AlertLis
 //            if (properties.getProperty(HTTP_NOTIFY_CONFIG_ENABLE, "false").equalsIgnoreCase("false"))
 //                return;
             String url = properties.getProperty(HTTP_NOTIFY_CONFIG_URL, null);
-            if(url==null)
+            if(url==null || url.length()<3)
                 return;
             Assert.hasLength(url, "notify url can't be null");
             Map templateVars = new HashMap();

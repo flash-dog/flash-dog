@@ -15,19 +15,24 @@
  */
 package com.skymobi.monitor.action;
 
+import com.skymobi.monitor.model.WebResult;
 import com.skymobi.monitor.security.RegisterException;
 import com.skymobi.monitor.security.User;
 import com.skymobi.monitor.security.UserManager;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -48,11 +53,18 @@ public class UserAction {
         map.put("users", users);
         return "";
     }
+    @RequestMapping(value = "/user/list", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResult listAll(ModelMap map) {
+        List<User> users = userManager.listUsers();
+        WebResult result=new WebResult(users);
 
+        return result;
+    }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(ModelMap map) {
-
-        return "user/login";
+    public String login(ModelMap map,HttpServletResponse response) {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        return "app/login";
     }
 
     @RequestMapping(value = "/check")
@@ -97,7 +109,34 @@ public class UserAction {
         }
 
     }
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
+    public @ResponseBody WebResult   update(HttpEntity<User> entity, HttpServletRequest request,ModelMap mm) throws UnsupportedEncodingException {
+       User user=entity.getBody();
+        WebResult result=new WebResult();
 
+        try {
+            if(userManager.loadUserByUsername(user.getUsername())==null){
+                userManager.registerUser(user);
+            }else{
+                userManager.monitorUser(user);
+            }
+
+
+        } catch (IllegalArgumentException e) {
+            result.setSuccess(false);
+
+            result.setMessage(e.getMessage());
+        }
+       return result;
+    }
+    @RequestMapping(value = "/user/destroy", method = RequestMethod.POST)
+    public @ResponseBody WebResult   delete(HttpEntity<User> entity) throws UnsupportedEncodingException {
+        User user=entity.getBody();
+        WebResult result=new WebResult();
+
+        userManager.removeUser(user.getUsername());
+        return result;
+    }
     @RequestMapping(value = "/user/wait", method = RequestMethod.GET)
     public String wait(User user, ModelMap mm) {
         mm.put("user", user);

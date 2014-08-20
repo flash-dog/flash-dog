@@ -1,0 +1,66 @@
+#set($layout="/WEB-INF/content/layout/none.vm")
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>闪电狗监控</title>
+    <link href="/flash-dog/app/styles/style.css" rel="stylesheet">
+    <link href="/flash-dog/app/js/vender/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="/flash-dog/app/js/vender/jquery/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/flash-dog/app/js/vender/jquery/jquery.validate.min.js"></script>
+
+    <script type="text/javascript" src="/flash-dog/app/js/vender/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .form-signin {
+            max-width: 320px;
+            padding: 19px 29px 29px;
+            margin: 30px auto 20px auto;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+            -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+        }
+        .form-signin input[type="text"], .form-signin input[type="password"] {
+            font-size: 16px;
+            height: auto;
+            margin-bottom: 15px;
+            padding: 7px 9px;
+        }
+    </style>
+</head>
+<body style="width: 100%;">
+
+<form class="form-signin"  id="login_form"   action="#springUrl('/j_spring_security_check')" method="post">
+    <div data-role="content">
+        <div style=" text-align:center" data-controltype="image" >
+            <img  src="#springUrl('/app/images/logo.png')" >
+
+        </div>
+        <div class="setting-input">
+            <label for="username" class="setting-name">
+                用户名
+            </label>
+            <input name="j_username" id="username" class="setting-main {required:true}" type="text">
+        </div>
+        <div class="setting-input">
+            <label for="password" class="setting-name">
+                密码
+            </label>
+            <input name="j_password" id="password" class="setting-main {required:true}" type="password">
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" style="display:  none">
+            <label for="autologin" class="setting-name">
+                记住我
+            </label>
+            <input name="_spring_security_remember_me" id="autologin" type="checkbox" checked="checked">
+        </div>
+        <div>
+            <input id="login_btn" class="btn btn-primary btn-lg btn-block" type="submit" value="登录">  </input></div>
+    </div>
+</form>
+</body>
+</html>

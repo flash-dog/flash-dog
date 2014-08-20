@@ -1,0 +1,100 @@
+/* Copyright 2008 Google Inc. All Rights Reserved. */
+
+.google-visualization-table-table {
+  font-family: arial, helvetica;
+  font-size: 10pt;
+  cursor: default;
+  margin: 0;
+  background: white;
+  border-spacing: 0;
+}
+
+.google-visualization-table-table tbody {
+  background: transparent;
+}
+
+.google-visualization-table-table * {
+  margin: 0;
+  vertical-align: middle;
+  padding: 2px;
+}
+
+.google-visualization-table-tr-head, .google-visualization-table-tr-head td, .google-visualization-table-tr-head-nonstrict {
+  font-weight: bold;
+  background: #fff url(title-bg.gif) repeat-x left bottom;
+  text-align: center;
+}
+
+.google-visualization-table-tr-even, .google-visualization-table-tr-even td, .google-visualization-table-tr-even-nonstrict {
+  background-color: #fff;
+}
+
+.google-visualization-table-tr-odd, .google-visualization-table-tr-odd td, .google-visualization-table-tr-odd-nonstrict {
+  background-color: #fafafa;
+}
+
+.google-visualization-table-tr-sel, .google-visualization-table-tr-sel td, .google-visualization-table-tr-sel-nonstrict {
+  background-color: #d6e9f8;
+}
+
+.google-visualization-table-tr-over, .google-visualization-table-tr-over td, .google-visualization-table-tr-over-nonstrict {
+  background-color: #e7e9f9;
+}
+
+.google-visualization-table-sorthdr {
+  cursor: pointer;
+}
+
+.google-visualization-table-sortind {
+  color: #ccc;
+  font-size: 9px;
+  padding-left: 6px; /* do not chage - see table.js */
+}
+
+.google-visualization-table-th {
+  border: 1px solid #eee;
+  padding: 6px;
+}
+
+.google-visualization-table-th-webkit td, .google-visualization-table-th-webkit-nonstrict {
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 6px;
+}
+
+.google-visualization-table-td-freeze-rightmost {
+  border-right-width: 4px;
+}
+
+.google-visualization-table-td {
+  border: 1px solid #eee;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.google-visualization-table-td-bool {
+  text-align: center;
+  font-family: Arial Unicode MS, Arial, Helvetica;
+}
+
+.google-visualization-table-td-center {
+  text-align: center;
+}
+
+.google-visualization-table-td-number {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.google-visualization-table-seq {
+  text-align: right;
+  color: #666;
+}
+
+.google-visualization-table-div-page {
+  margin: 2px 0 0 0;
+  padding: 0;
+}
+

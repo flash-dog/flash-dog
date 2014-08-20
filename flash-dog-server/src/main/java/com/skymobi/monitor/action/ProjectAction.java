@@ -16,8 +16,10 @@
 package com.skymobi.monitor.action;
 
 import com.google.common.collect.Lists;
+import com.skymobi.monitor.model.ChartView;
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.model.View;
+import com.skymobi.monitor.model.WebResult;
 import com.skymobi.monitor.security.SimpleAuthz;
 import com.skymobi.monitor.service.AlertService;
 import com.skymobi.monitor.service.ViewService;
@@ -25,12 +27,15 @@ import com.skymobi.monitor.service.ProjectService;
 import com.skymobi.monitor.util.SystemConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import javax.annotation.Resource;
@@ -65,7 +70,7 @@ public class ProjectAction {
     @RequestMapping({"/index", "/"})
     public String index(ModelMap map, HttpServletResponse response) throws IOException {
 
-        return "redirect:/projects";
+        return "app/index";
     }
 
     /**
@@ -83,6 +88,15 @@ public class ProjectAction {
         List<View> views = viewService.findAll();
         map.put("views",views);
         return "project/list";
+    }
+    @RequestMapping(value = "/project/list", method = RequestMethod.GET)
+    public @ResponseBody
+    ModelMap list(ModelMap map, HttpServletResponse response) throws IOException {
+        List<Project> projects = projectService.findProjects();
+        map.put("projects", projects);
+        List<View> views = viewService.findAll();
+        map.put("views",views);
+        return map;
     }
 
     /**
@@ -124,7 +138,30 @@ public class ProjectAction {
         }
 
     }
+    /**
+     * 创建项目
+     *
 
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/projects/add", method = RequestMethod.POST)
+    public @ResponseBody WebResult add( HttpEntity<Project> entity) throws IOException {
+        Project project =entity.getBody();
+        String userName = simpleAuthz.getPrincipal();
+        project.setAdmins(Lists.newArrayList(userName));
+        WebResult result=new WebResult();
+        project.setMetricCollection(project.getMetricCollection());
+        try {
+            projectService.create(project);
+
+        } catch (IllegalArgumentException e) {
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+
+        }
+        return result;
+    }
     /**
      * 查看项目
      *
@@ -146,7 +183,15 @@ public class ProjectAction {
         map.put("views", project.getViews());
         return "project/show";
     }
+    @RequestMapping(value = "/project/{name}", method = RequestMethod.GET)
+    public  @ResponseBody
+    ModelMap showProject(ModelMap map, @PathVariable String name) throws IOException {
+        Project project = projectService.findProject(name);
+        map.put("project", project);
+        map.put("metricNames", project.findMetricNames());
 
+        return map;
+    }
     /**
      * 进入设置项目页面
      *
@@ -197,7 +242,27 @@ public class ProjectAction {
 
         return "redirect:/projects/" + name + "/settings/info";
     }
+    /**
+     * 更新指定项目
+     *
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/projects/{name}/basic", method = RequestMethod.POST)
+    public @ResponseBody
+    WebResult updateBasic(@PathVariable String name, HttpEntity<Project> entity) throws IOException {
+        Project project = entity.getBody();
+        Project dbProject = projectService.findProject(name);
+        dbProject.setMailList(project.getMailList());
+        dbProject.setLogCollection(project.getLogCollection());
+        dbProject.setMongoUri(project.getMongoUri());
+        dbProject.setAlias(project.getAlias());
+        dbProject.setMetricCollection(project.getMetricCollection());
+        dbProject.setAdmins(project.getAdmins());
+        projectService.saveProject(dbProject);
 
+        return new WebResult();
+    }
     @RequestMapping(value = "/projects/{name}/members", method = RequestMethod.POST)
     public String update(ModelMap map, @PathVariable String name, String admins) throws IOException {
         Project dbProject = projectService.findProject(name);
@@ -209,21 +274,23 @@ public class ProjectAction {
     }
 
     @RequestMapping(value = "/projects/{name}/ext", method = RequestMethod.POST)
-    public String updateExt(ModelMap map, @PathVariable String name, HttpServletRequest request) throws IOException {
+    public @ResponseBody
+    WebResult updateNotify(  @PathVariable String name, HttpServletRequest request,HttpEntity<Map> httpEntity) throws IOException {
+
+        Map map = httpEntity.getBody();
         Project dbProject = projectService.findProject(name);
-        Map<String, Object> extProperties = WebUtils.getParametersStartingWith(request, SystemConstants.CONFIG_PREFIX);
-        logger.debug("update project ext properties {}", extProperties);
-        dbProject.getProperties().putAll(extProperties);
+        dbProject.getProperties().putAll(map);
+        logger.debug("update project ext properties {}", map);
+
         projectService.saveProject(dbProject);
 
-        return "redirect:/projects/" + name + "/settings/ext";
+        return new WebResult();
     }
-
     @RequestMapping(value = "/projects/{projectName}/destroy")
-    public String delete(@PathVariable String projectName) throws IOException {
+    public @ResponseBody WebResult  delete(@PathVariable String projectName) throws IOException {
         projectService.remove(projectName);
 
-        return "redirect:/projects";
+        return new WebResult();
 
     }
 

@@ -1,0 +1,37 @@
+<div  ng-controller="TaskControl">
+
+    <div ng-include="'/flash-dog/app/partial/project/_project_nav.html'" ></div>
+
+
+    <div class=" tool-bar pull-right ">
+
+        <div class="btn-group visible-lg-inline">
+
+            <a href="#/show/{{project.name}}/task/new"  class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>添加</a>
+        </div>
+
+    </div>
+     <div>
+
+         <div id="warning_tab_div">
+             <table class="table table-bordered table-hover">
+                 <thead>
+                 <tr class="active">
+                     <th>名称</th>
+                     <th>执行周期(cron)</th>
+                     <th>操作</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+
+                 <tr ng-repeat="task in project.tasks"    >
+
+                     <td    ><a href="#/show/{{project.name}}/task/{{task.name}}">{{task.name}}</a></td>
+                     <td>{{task.cron}}</td>
+                     <td><a class="" href="javascript:void (0)" ng-click="removeTask(task)"><i class="glyphicon glyphicon-remove"></i></a> </td>
+                 </tr>
+                 </tbody>
+             </table>
+         </div>
+     </div>
+</div>

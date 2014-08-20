@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="/flash-dog/app/js/vender/My97DatePicker/skin/WdatePicker.css">
+<link rel="stylesheet" href="/flash-dog/app/js/vender/jsEditor/codemirror.css">
+<link rel="stylesheet" href="/flash-dog/app/js/vender/jsEditor/model/javascript.css">
+<script src="/flash-dog/app/js/vender/jsEditor/codemirror.js" type="text/javascript"></script>
+<script src="/flash-dog/app/js/vender/jsEditor/model/javascript.js" type="text/javascript"></script>
+<script src="/flash-dog/app/js/vender/jquery/jquery.stream-1.2.js" type="text/javascript"></script>
+<script src="/flash-dog/app/js/vender/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+
+<style type="text/css">
+    .CodeMirror-scroll {
+        height:400px;
+    }
+</style>
+<script type="text/javascript">
+    var lastDate=0;
+    function appendLogs(log){
+        script_text.setValue(log);
+    }
+</script>
+
+<div  ng-controller="LogCtrl">
+
+    <div ng-include="'/flash-dog/app/partial/project/_project_nav.html'" ></div>
+
+
+     <div>
+
+         <div id="content">
+
+             <div style="display: inline;"  id="query_div">
+                 关键字:<input type="text" id="key_word_input"  />
+                 日志级别:<select id="level" >
+                 <option value="">ALL</option>
+                 <option value="DEBUG">DEBUG</option>
+                 <option value="INFO">INFO</option>
+                 <option value="WARN">WARN</option>
+                 <option value="ERROR">ERROR</option>
+             </select>
+                 Date: <input type="text" id="datepicker_start"  ng-click="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})">
+                 to: <input type="text" id="datepicker_end"      ng-click="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:false})">
+
+                 <input type="button" id="search_btn" ng-click="loadLog()" value="查询"  />
+             </div>
+             <input type="button" ng-click="downloadLog()"  value="下载"  />
+             <input type="checkbox" ng-click="loadLog()" ng-model="autoLoad" id="refresh_check_box"  /> 实时输出
+             <input type="button" ng-click=" clearLog()" value="清空输出"/><br/>
+
+         </div>
+
+         <textarea id="script_text" style="width:90%">正在加载</textarea>
+
+     </div>
+</div>

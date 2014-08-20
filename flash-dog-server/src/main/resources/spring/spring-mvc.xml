@@ -10,6 +10,8 @@
     <mvc:resources location="/styles/" mapping="/styles/**"/>
     <mvc:resources location="/images/" mapping="/images/**"/>
     <mvc:resources location="/js/" mapping="/js/**"/>
+
+    <mvc:resources location="/app/" mapping="/app/**"/>
     <mvc:resources location="/jsEditor/" mapping="/jsEditor//**"/>
     <import resource="env-config.xml" />
 

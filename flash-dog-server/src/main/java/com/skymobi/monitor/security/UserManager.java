@@ -35,4 +35,6 @@ public interface UserManager {
     boolean isSystemAdmin(String username);
 
     void monitorUser(User user);
+
+    void removeUser(String username);
 }

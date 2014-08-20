@@ -15,9 +15,7 @@
  */
 package com.skymobi.monitor.action;
 
-import com.skymobi.monitor.model.MetricDog;
-import com.skymobi.monitor.model.Project;
-import com.skymobi.monitor.model.Status;
+import com.skymobi.monitor.model.*;
 import com.skymobi.monitor.service.AlertService;
 import com.skymobi.monitor.service.ProjectService;
 import org.slf4j.Logger;
@@ -27,9 +25,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 
 /**
 * @author hill.hu
@@ -45,6 +45,15 @@ public class WarningAction {
     @Resource
     AlertService alertService;
 
+    @RequestMapping(value = "/projects/{projectName}/warning/list", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResult list(ModelMap map, @PathVariable String projectName) throws IOException {
+
+        List<Alert> alerts = alertService.findAlerts(projectName);
+
+        WebResult result=new WebResult(alerts);
+        return  result;
+    }
 
     @RequestMapping(value = "/projects/{projectName}/warnings", method = RequestMethod.GET)
     public String listWarnings(ModelMap map, @PathVariable String projectName) throws IOException {
@@ -64,14 +73,14 @@ public class WarningAction {
         return "redirect:/projects/" + projectName + "/settings/warnings";
     }
 
-    @RequestMapping(value = "/projects/{projectName}/warnings/clear", method = RequestMethod.GET)
-    public String clear(ModelMap map, @PathVariable String projectName) throws IOException {
+    @RequestMapping(value = "/projects/{projectName}/warning/clear", method = RequestMethod.GET)
+    public @ResponseBody String clear(ModelMap map, @PathVariable String projectName) throws IOException {
 
         alertService.removeAlerts(projectName);
         Project project = projectService.findProject(projectName);
         project.setStatus(Status.FINE);
         projectService.saveProject(project);
-        return "redirect:/projects/" + projectName + "/warnings";
+        return "true";
     }
 
     @RequestMapping(value = "/projects/{projectName}/warnings/remove")

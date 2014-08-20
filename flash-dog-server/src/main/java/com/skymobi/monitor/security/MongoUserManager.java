@@ -124,6 +124,10 @@ public class MongoUserManager implements UserManager, UserDetailsService {
         if (dbUser.isEnabled() != user.isEnabled()) {
             logger.info("change user enabled  {}", user);
             dbUser.setEnabled(user.isEnabled());
+            dbUser.setPassword(user.getPassword());
+            dbUser.setEmail(user.getEmail());
+            dbUser.setPhone(user.getPhone());
+
             saveUser(dbUser);
 
         }

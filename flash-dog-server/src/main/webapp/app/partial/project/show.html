@@ -1,0 +1,73 @@
+<div ng-controller="ProjectShowCtrl">
+<div  >
+
+    <div ng-include="'/flash-dog/app/partial/project/_project_nav.html'" ></div>
+
+
+    <div class=" tool-bar">
+        <div class="btn-group">
+            <a href="javascript:void(0)"  class="btn btn-default"  ng-repeat="chartView in project.chartViews"
+               ng-class="{active:chartView.title==chartTitle}"  ng-click="drawChartView(chartView.title)">{{chartView.title}}</a>
+
+        </div>
+        <div class="btn-group pull-right visible-lg-inline">
+            <a class="btn btn-sm btn-default" data-toggle="modal" data-target="#metricsViewDialog">
+                <i class="glyphicon glyphicon-plus"></i>添加</a>
+            <a   ng-click="removeChartView()" class="btn btn-sm btn-default"><i class="glyphicon glyphicon-remove"></i>删除</a>
+        </div>
+
+    </div>
+     <div>
+
+         <div class="MonitorToolbar" >
+             <form  method="post" ng-submit="updateTimeRange()">
+             显示范围：<select  ng-model="project.timeRange.last"  name="last" id="last_selector" class="FilterFormText"  ng-init="numbers=[1,2,4,8,12,24,48]">
+             <option  ng-value="n"  ng-repeat="n in numbers">{{n}}</option>
+
+         </select>
+             <select name="unit" ng-model="project.timeRange.unit" id="unit_selector" class="FilterFormText" >
+                 <option value="12">Minutes</option>
+                 <option value="10">Hours</option>
+                 <option value="5">Days</option>
+             </select>
+             <button   type="submit">刷新</button>
+             </form>
+
+         </div>
+         <div class="chart-view"></div>
+     </div>
+</div>
+<div class="modal fade" id="metricsViewDialog" tabindex="-1"  aria-hidden="true">
+    <div class="modal-dialog" ng-init="chartView={title:'',metricNames:[]}">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">添加图表</h4>
+            </div>
+            <div class="modal-body">
+
+                    <div class="tab-pane active" id="metricsViewAddTab">
+                        <form  id="metricsViewForm" name="chartViewForm">
+                         <label>图表名称<input name="title" ng-model="chartView.title"  ng-required="true"></label>
+                            <span class="error" ng-show="chartViewForm.title.$error.required">Required!</span>
+
+                            <div  ng-repeat="metric in metricNames">
+                                <label class="control-label"  ><input name="metricName"
+                                       type="checkbox" ng-value="metric"
+                                        >{{metric}}</label>
+
+                            </div>
+                        </form>
+                    </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button"  ng-click="addChartView(chartView)" class="btn btn-default" data-dismiss="modal">确定</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
