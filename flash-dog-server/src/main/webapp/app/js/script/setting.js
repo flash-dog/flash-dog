@@ -120,6 +120,8 @@ angular.module('fd.setting', ["fd.project"]).
     controller('SettingViewCtrl', function($scope,$http,Project,$location) {
 
         $scope.addView=function(view){
+            if(view.name==$scope.ALL_VIEW_NAME)
+                return;
             var projectNames=[];
             $("#viewDialog").find("input:checked").each(function(index,item){
                 projectNames.push($(item).val());
