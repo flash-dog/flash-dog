@@ -46,9 +46,16 @@ angular.module('fd.project', [])  .
         };
         $scope.addProject=function(){
             $http.post("/flash-dog/projects/add", $scope.project).success(function(result){
-                if(result.success)
-                    $location.path("/show/"+$scope.project.name) ;
-                $scope.renderResult(result);
+
+                if(result.success) {
+                    $location.path("/show/"+$scope.project.name+"/task/new") ;
+                    $scope.addMessage("创建成功，从模板开始，先添加几个测试任务吧") ;
+                }else{
+                    $scope.renderResult(result);
+                }
+
+
+
             });
 
 
@@ -153,7 +160,7 @@ angular.module('fd.project', [])  .
             });
             console.log(metricNames) ;
             chartView.metricNames=metricNames;
-            $http.post("/flash-dog/projects/"+$scope.project.name+"/metrics/add?",chartView)
+            $http.post("/flash-dog/projects/"+$scope.project.name+"/metrics/save?",chartView)
                 .success(function(data){
                  $scope.project.chartViews.push(chartView);
             });

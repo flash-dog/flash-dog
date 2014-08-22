@@ -34,10 +34,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * 项目,包括4个方面
@@ -85,6 +82,15 @@ public class Project {
      */
     private List<ChartView> chartViews=Lists.newArrayList();
     private Status status=Status.FINE;
+    private Date createTime=new Date();
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public String getName() {
         return name;

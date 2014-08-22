@@ -387,6 +387,9 @@ background-color: #fcf8e3;
         opacity: 0.5;
     }
 }
+.un-auth{
+    display: none !important;
+}
 .CodeMirror pre {
     color:#ffffff;
 }

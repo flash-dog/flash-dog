@@ -73,37 +73,29 @@ public class AdminAction {
         return "redirect:/projects";
     }
 
-    @RequestMapping(value = "/admin/views/destroy")
-    public @ResponseBody  WebResult deleteView(String name, ModelMap map) {
+    @RequestMapping(value = "/admin/views/destroy" )
+    public @ResponseBody  WebResult deleteView(String name,  ModelMap map) {
 
         viewService.delete(name);
 
         return new WebResult();
     }
-    @RequestMapping(value = "/admin/views/edit")
-    public String editView(String name, ModelMap map) {
-        List<Project> projects = projectService.findProjects();
-        View view = viewService.find(name);
-        map.put("projects",projects);
-        map.put("view", view);
-        return "view/edit";
-    }
-    @RequestMapping(value = "/admin/views/new")
-    public String newView(  ModelMap map) {
-        List<Project> projects = projectService.findProjects();
 
-        map.put("projects",projects);
 
-        return "view/new";
-    }
-    @RequestMapping(value = "/admin/views/add")
+    @RequestMapping(value = "/admin/views/save")
     public @ResponseBody
     WebResult createView(HttpEntity<View> entity,  ModelMap map) {
         WebResult result=new WebResult();
-        View view=entity.getBody();
-        Assert.isTrue(view.getName().length() > 0);
-        logger.debug("save view ={}",view);
-        viewService.saveView(view);
+        try{
+            View view=entity.getBody();
+            Assert.isTrue(view.getName().length() > 0,"name should not be null");
+            logger.debug("save view ={}",view);
+            viewService.saveView(view);
+        } catch (Exception e){
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+        }
+
 
 
         return result;

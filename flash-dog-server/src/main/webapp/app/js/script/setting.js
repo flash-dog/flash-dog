@@ -31,7 +31,7 @@ angular.module('fd.setting', ["fd.project"]).
 
           };
          $scope.initMode={capped:true,unit:1024*1024,size:10,success:false};
-        $scope.dbMode={capped:false,unit:1024*1024,size:1024,success:false};
+        $scope.dbMode={capped:false,unit:1024*1024,size:1024,success:false,count:0};
         $scope.startReset=false;
         var project=$scope.project;
           $scope.updateDbSize=function(){
@@ -57,6 +57,7 @@ angular.module('fd.setting', ["fd.project"]).
                 var size=  dbResponse.retval.size;
                 $scope.dbMode.size =size/(1024*1024);
                 $scope.dbMode. unit=(1024*1024);
+                $scope.dbMode. count=dbResponse.retval.count;
             }) ;
         };
         $scope.queryDb();
@@ -90,13 +91,14 @@ angular.module('fd.setting', ["fd.project"]).
     controller('SettingDogCtrl', function($scope,$http,Project,$location) {
 
         $scope.addDog=function(){
-            $scope.activeDog={startTime:"00:00:00",endTime:"24:00:00"};
+            $scope.activeDog={startTime:"00:00:00",endTime:"24:00:00",mailList:$scope.project.mailList};
         };
         $scope.updateDog=function(){
           $http.post("/flash-dog/projects/"+$scope.project.name+"/dog/",$scope.activeDog).success(
               function(result){
                   $scope.project.metricDogs= result.list;
                   $scope.renderResult(result);
+                  $scope.activeDog=null;
               }
           );
         };
@@ -114,21 +116,28 @@ angular.module('fd.setting', ["fd.project"]).
         }
     }).
     controller('SettingViewCtrl', function($scope,$http,Project,$location) {
-        $scope.view={name:'',projectNames:[]} ;
+
         $scope.addView=function(view){
             var projectNames=[];
             $("#viewDialog").find("input:checked").each(function(index,item){
                 projectNames.push($(item).val());
             });
             view.projectNames=projectNames;
-            $http.post("/flash-dog/admin/views/add",view).success(function(){
-                $scope.loadProjects();
+            $http.post("/flash-dog/admin/views/save",view).success(function(result){
+                if(result.success) {
+                    $scope.loadProjects();
+                }
+                $scope.renderResult(result);
             });
         };
+        $scope.editView=function(view){
+           if(view){
+               $scope.selectedView=view;
+           }else{
+               $scope.selectedView={name:'',projectNames:[]} ;
+           }
+        } ;
         $scope.removeView=function(view){
-            if(view.name==$scope.ALL_VIEW_NAME){
-                return;
-            }
 
             $http.get("/flash-dog/admin/views/destroy?name="+encodeURIComponent(view.name)).success(function(){
                 $scope.loadProjects();

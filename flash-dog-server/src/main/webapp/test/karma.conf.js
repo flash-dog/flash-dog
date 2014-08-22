@@ -7,13 +7,13 @@ module.exports = function(config){
       },
 
       files : [
-        ,"app/js/vender/jquery/jquery-1.7.2.min.js"
-        ,"app/js/vender/angular/angular.js"
-        , "app/js/vender/angular/angular-animate.js"
-       , "app/js/vender/angular/angular-route.js"
+         "app/js/vender/jquery/jquery-1.7.2.min.js"
+        ,"app/js/vender/angular/1.2.22/angular.min.js"
+        , "app/js/vender/angular/1.2.22/angular-animate.min.js"
+       , "app/js/vender/angular/1.2.22/angular-route.min.js"
         , "app/js/vender/angular/angular-mocks.js"
-
-        , "test/unit/**/*.js"
+          , "app/js/script/util/directives.js"
+        , "test/unit/**/*Spec.js"
     ],
       ngHtml2JsPreprocessor: {
           // strip this from the file path

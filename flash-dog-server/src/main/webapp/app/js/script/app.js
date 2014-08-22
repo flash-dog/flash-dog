@@ -3,7 +3,7 @@
  * @author hill.hu.
  */
 var  _auth;
-angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'])
+angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate',"fd.directives"])
 
 .controller('MainController', function($scope, $route, $routeParams, $location,$rootScope) {
     $scope.$route = $route;
@@ -17,7 +17,8 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
          if(!project)
              return false;
          return  this.isAdmin  || project.admins.indexOf(this.username)>-1;
-     }};
+     }
+    };
         $scope.setPageTitle=function(pageTitle){
             $scope.pageTitle=pageTitle;
 

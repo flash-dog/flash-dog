@@ -25,8 +25,8 @@ public class ViewService {
     }
 
     public void saveView(View view) {
-        mongoTemplate.upsert(new Query(Criteria.where("name").is(view.getName())),
-                new BasicUpdate(new Gson().toJson(view)), collectionName);
+
+        mongoTemplate.save(view,collectionName);
     }
 
     public List<View> findAll() {

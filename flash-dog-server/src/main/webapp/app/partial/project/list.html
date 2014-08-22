@@ -1,10 +1,11 @@
+<div  ng-controller="SettingViewCtrl">
 <div>
     <div class="top-nav visible-lg">
         <div class="btn-toolbar" ng-show="auth.isAdmin">
             <div class=" pull-right" >
                 <a href="#/new" class="btn " > <i class="glyphicon glyphicon-plus"></i>添加项目</a>
-                <a  class="btn " data-target="#viewDialog" data-toggle="modal" > <i class="glyphicon glyphicon-eye-open"></i>添加分类</a>
-                <a   class="btn "  data-target="#deleteViewDialog" data-toggle="modal" > <i class="glyphicon glyphicon-eye-close"></i>删除分类</a>
+                <a  class="btn " data-target="#viewDialog" data-toggle="modal" ng-click="editView()" > <i class="glyphicon glyphicon-eye-open"></i>添加分类</a>
+                <a   class="btn "  data-target="#viewDialog" data-toggle="modal" ng-click="editView(activeView)"> <i class="glyphicon glyphicon-eye-close"></i>管理分类</a>
                 <a href="#/user/list" class="btn" > <i class="glyphicon glyphicon-user"></i>用户管理</a>
 
             </div>
@@ -32,28 +33,8 @@
 
     </div>
 </div>
-<div class="modal fade" id="deleteViewDialog" tabindex="-1"  aria-hidden="true" ng-controller="SettingViewCtrl">
-    <div class="modal-dialog" ng-init="">
-        <div class="modal-content">
-            <div class="modal-header">
 
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">确认</h4>
-            </div>
-            <div class="modal-body">
-              您确定要删除此分类吗？(并不会删除项目)
-
-            </div>
-            <div class="modal-footer">
-                <button type="button"  ng-click="removeView(activeView)" class="btn btn-primary" data-dismiss="modal">确定</button>
-                <button type="button"    class="btn btn-default" data-dismiss="modal">取消</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="viewDialog" tabindex="-1"  aria-hidden="true" ng-controller="SettingViewCtrl">
+<div class="modal fade" id="viewDialog" tabindex="-1"  aria-hidden="true">
     <div class="modal-dialog" ng-init="">
         <div class="modal-content">
             <div class="modal-header">
@@ -65,13 +46,14 @@
 
                 <div class="tab-pane active" id="metricsViewAddTab">
                     <form  id="metricsViewForm" name="chartViewForm">
-                        <label>名称<input name="title" ng-model="view.name"  ng-required="true"></label>
+                        <label>名称<input name="title" ng-model="selectedView.name"  ng-required="true"></label>
 
                         <div  ng-repeat="project in projects">
 
-                            <label class="control-label"  ><input
-                                                                  type="checkbox" ng-value="project.name"
-                                    >{{project.alias}}</label>
+                            <label class="control-label"  >
+                                <input    type="checkbox" ng-value="project.name"
+                                          ng-checked="selectedView.projectNames.indexOf(project.name)>-1"   >
+                                                              {{project.alias}}</label>
 
                         </div>
                     </form>
@@ -80,9 +62,10 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button"  ng-click="addView(view)" class="btn btn-default" data-dismiss="modal">确定</button>
-
+                <button type="button"  ng-click="addView(selectedView)" class="btn btn-default" data-dismiss="modal">确定</button>
+                <button ng-show="selectedView.createTime" type="button"  ng-click="removeView(selectedView)" class="btn btn-danger" data-dismiss="modal">删除</button>
             </div>
         </div>
     </div>
+</div>
 </div>

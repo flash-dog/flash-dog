@@ -66,10 +66,10 @@
                     <option value="WARN">普通</option>
                     <option value="ERROR">严重</option>
                 </select>
-                连续指定次后升级为严重:<select   ng-model="activeDog.times" >
+                连续指定次后升级为严重:<select   ng-model="activeDog.times"  >
                     <option value="1">1</option>
                     <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option selected="selected" value="3">3</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="100000">永远不</option>
@@ -86,7 +86,14 @@
 
             </div>
         </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label">邮件地址</label>
+            <div class="col-sm-10">
 
+               <input   ng-model="activeDog.mailList"   class="form-control" />
+
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button   type="submit" class="btn btn-primary">确定</button>
