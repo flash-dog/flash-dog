@@ -7,14 +7,14 @@
 
         <div class="btn-group ">
 
-            <a href="javascript:void(0)" ng-click="clearAlerts()" class="btn btn-primary"><i class="glyphicon glyphicon-remove"></i>删除</a>
+            <a href="javascript:void(0)" ng-click="clearAlerts()" class="btn btn-primary"><i class="glyphicon glyphicon-remove"></i>清空</a>
         </div>
 
     </div>
      <div>
 
          <div id="warning_tab_div">
-             <table class="table table-bordered">
+             <table class="table table-bordered table-hover">
                  <thead>
                  <tr class="active">
                      <th>事件</th>
@@ -25,11 +25,11 @@
                  </thead>
                  <tbody>
 
-                 <tr ng-repeat="alert in alerts" ng-class-even="'success'">
+                 <tr ng-repeat="alert in alerts"  >
                      <td>{{alert.title}}</td>
                      <td>{{alert.level}}</td>
                      <td>{{alert.content}}</td>
-                     <td>{{alert.createTime}}</td>
+                     <td>{{alert.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
                  </tr>
                  </tbody>
              </table>

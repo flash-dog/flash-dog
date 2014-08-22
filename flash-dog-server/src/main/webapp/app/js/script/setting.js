@@ -31,8 +31,8 @@ angular.module('fd.setting', ["fd.project"]).
 
           };
          $scope.initMode={capped:true,unit:1024*1024,size:10,success:false};
-        $scope.dbMode={capped:false,unit:1024*1024,size:1024,success:false,count:0};
-        $scope.startReset=false;
+        $scope.dbMode={capped:false,unit:1024*1024,size:1024,success:false,count:0,dbEditing:false};
+
         var project=$scope.project;
           $scope.updateDbSize=function(){
               var size=$scope.initMode.size*$scope.initMode.unit;
@@ -44,11 +44,12 @@ angular.module('fd.setting', ["fd.project"]).
               var params = jQuery.param({script:script});
               $http.post("/flash-dog/projects/"+project.name+"/mongo/console?format=json&"+params) .success(function(msg) {
                   $scope.renderResult({success:true});
-                  $scope.startReset=false;
+
                   $scope.queryDb();
               }) ;
 
           };
+
         $scope.queryDb=function(){
             var script="db."+ project.logCollection+".stats()" ;
             var params = jQuery.param({script:script});
@@ -58,6 +59,7 @@ angular.module('fd.setting', ["fd.project"]).
                 $scope.dbMode.size =size/(1024*1024);
                 $scope.dbMode. unit=(1024*1024);
                 $scope.dbMode. count=dbResponse.retval.count;
+                $scope.dbMode.dbEditing=false;
             }) ;
         };
         $scope.queryDb();

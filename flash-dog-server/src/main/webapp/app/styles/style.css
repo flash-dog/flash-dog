@@ -393,6 +393,9 @@ background-color: #fcf8e3;
 .CodeMirror pre {
     color:#ffffff;
 }
+.CodeMirror-cursor{
+    height: 1em;
+}
 .animate-repeat {
     list-style:none;
     box-sizing:border-box;

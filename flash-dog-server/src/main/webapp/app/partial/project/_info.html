@@ -26,7 +26,19 @@
     <div class="col-sm-10">
         <div input-tip="日志源，与log4j配置表名相同" >
         <input  name="logCollection" ng-model="project.logCollection" class="required valid setting-input form-control"   minlength="3"  >
-    </div>         </div>
+    </div>
+        <b> {{dbMode.count}}</b> 条,
+        <span ng-class="{danger:!dbMode.capped}">{{dbMode.size|number:4}}M({{dbMode.capped?"仓库模式":"非仓库模式"}})</span>
+        <button type="button"  ng-click="dbMode.dbEditing=true" ng-show="!dbMode.dbEditing">重置</button>
+        <div ng-show="dbMode.dbEditing">
+
+            仓库模式<input type="checkbox" ng-model="initMode.capped"/>
+            <div style="display: inline" ng-show="initMode.capped">
+            <input   ng-model="initMode.size" value="">
+
+            单位<select name="unit" ng-model="initMode.unit"><option value="1048576">M</option><option value="1024">G</option></select>
+        </div><button type="button" class="btn btn-primary" ng-click="updateDbSize();" >确定</button>  </div>
+    </div>
 </div>
 <div class="form-group">
     <label  class="col-sm-2 control-label">度量表名	</label>
