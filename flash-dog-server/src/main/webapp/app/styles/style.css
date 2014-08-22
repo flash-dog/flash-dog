@@ -64,12 +64,12 @@ font-weight: bold;
     margin-left: -40px;
    }
 .mini-logo{
-    background-size: 33px 41px;
-    background-image:url(../images/logo.png);
-    width: 33px;
+    /*background-size: 33px 41px;*/
+    /*background-image:url(../images/logo.png);*/
+    width: 40px;
     position: absolute;
     height: 40px;
-    top: 2px;
+    top: 5px;
 }
 .tool-bar{
     padding: 5px;

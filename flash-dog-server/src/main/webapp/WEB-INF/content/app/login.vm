@@ -3,6 +3,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>闪电狗监控</title>
     <link href="/flash-dog/app/styles/style.css" rel="stylesheet">
     <link href="/flash-dog/app/js/vender/bootstrap/css/bootstrap.css" rel="stylesheet">

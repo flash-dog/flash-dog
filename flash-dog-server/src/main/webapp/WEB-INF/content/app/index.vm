@@ -52,7 +52,7 @@
 <div id="header">
     <a class="btn header-title " href="#/" title="">
         <span  >{{pageTitle}}</span> </a>
-    <a href="#/list" class="btn pull-left" style="margin-right: 20px">
+    <a href="#/list" class="btn pull-left" >
 
         <img class=" mini-logo " src="#springUrl('/app/images/logo.png')" >
     </a>
