@@ -3,7 +3,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-	<link rel="shortcut icon" type="image/x-icon" href="#springUrl('/app/images/logo.png')"/>
     <title>闪电狗监控</title>
     <script type="text/javascript" src="$link.setRelative('/js/jquery-1.7.2.min.js')"></script>
     <script type="text/javascript" src="$link.setRelative('/js/jquery.metadata.js')"></script>

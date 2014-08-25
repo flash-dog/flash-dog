@@ -74,21 +74,14 @@ public class ProjectAction {
     }
 
     /**
-     * 查看项目列表
-     *
-     * @param map
-     * @param response
-     * @return
-     * @throws IOException
+     * @deprecated
      */
-    @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    public String listProject(ModelMap map, HttpServletResponse response) throws IOException {
-        List<Project> projects = projectService.findProjects();
-        map.put("projects", projects);
-        List<View> views = viewService.findAll();
-        map.put("views",views);
-        return "project/list";
+    @RequestMapping({"/projects"})
+    public String projects(ModelMap map, HttpServletResponse response) throws IOException {
+
+        return "redirect:/";
     }
+
     @RequestMapping(value = "/project/list", method = RequestMethod.GET)
     public @ResponseBody
     ModelMap list(ModelMap map, HttpServletResponse response) throws IOException {

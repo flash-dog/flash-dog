@@ -5,7 +5,7 @@
 angular.module('fd.user', ["fd.project"]).
     controller('UserListCtrl', function($scope,$http,Project,$location) {
         $scope.loadUsers=function(){
-            $http.get("/flash-dog/user/list").success(function(webResult){
+            $http.get("./user/list").success(function(webResult){
                 $scope.webResult=webResult;
                 $scope.selectedUser=null;
             });
@@ -18,14 +18,14 @@ angular.module('fd.user', ["fd.project"]).
             $scope.selectedUser=user;
         } ;
         $scope.updateUser=function(){
-            $http.post("/flash-dog/user/update",$scope.selectedUser).success(function(webResult){
+            $http.post("./user/update",$scope.selectedUser).success(function(webResult){
                 $scope.renderResult(webResult);
                 $scope.loadUsers();
             });
         };
         $scope.removeUser=function(user){
             if(confirm("您确定要删除此用户吗？"))  {
-                $http.post("/flash-dog/user/destroy",user).success(function(result){
+                $http.post("./user/destroy",user).success(function(result){
                     $scope.loadUsers();
                     $scope.renderResult(result);
                 });

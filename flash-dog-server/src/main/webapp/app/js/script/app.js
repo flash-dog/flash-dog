@@ -30,42 +30,42 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
     config(function($routeProvider,$httpProvider){
         $routeProvider.when("/list",{
             controller:"ProjectListCtrl",
-            templateUrl:"/flash-dog/app/partial/project/list.html"
+            templateUrl:"app/partial/project/list.html"
 
         }).when("/show/:name",{
             controller:"ProjectCtrl",
-            templateUrl:"/flash-dog/app/partial/project/show.html" ,
+            templateUrl:"app/partial/project/show.html" ,
             activeTab: 'show'
         }).when("/new",{
             controller:"ProjectNewCtrl",
-            templateUrl:"/flash-dog/app/partial/project/new.html"
+            templateUrl:"app/partial/project/new.html"
         }).when("/show/:name/warning",{
             controller:"ProjectCtrl",
-            templateUrl:"/flash-dog/app/partial/project/warning.html" ,
+            templateUrl:"app/partial/project/warning.html" ,
             activeTab: 'warning'
         }).when("/show/:name/log",{
             controller:"ProjectCtrl",
-            templateUrl:"/flash-dog/app/partial/project/log.html" ,
+            templateUrl:"app/partial/project/log.html" ,
             activeTab: 'log'
         }).when("/show/:name/setting",{
             controller:"ProjectCtrl",
-            templateUrl:"/flash-dog/app/partial/setting/setting.html" ,
+            templateUrl:"app/partial/setting/setting.html" ,
             activeTab: 'setting'
         }).when("/show/:name/task",{
             controller:"ProjectCtrl",
-            templateUrl:"/flash-dog/app/partial/project/task.html" ,
+            templateUrl:"app/partial/project/task.html" ,
             activeTab: 'task'
         }).when("/show/:name/task/:taskName",{
             controller:"ProjectCtrl",
-            templateUrl:"/flash-dog/app/partial/project/task_edit.html" ,
+            templateUrl:"app/partial/project/task_edit.html" ,
             activeTab: 'task'
         }).when("/show/:name/mongodb",{
             controller:"ProjectCtrl",
-            templateUrl:"/flash-dog/app/partial/project/mongodb.html" ,
+            templateUrl:"app/partial/project/mongodb.html" ,
             activeTab: 'mongodb'
         })  .when("/user/list",{
             controller:"UserListCtrl",
-            templateUrl:"/flash-dog/app/partial/admin/user.html"
+            templateUrl:"app/partial/admin/user.html"
         })
             .otherwise({redirectTo:"/list"});
 
@@ -78,7 +78,7 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
             function error(response) {
 
                 if(response.status === 401) {
-                    window.location.href="/flash-dog";
+                    window.location.href=".";
                     return $q.reject(response);
                 }
                 else {

@@ -7,7 +7,7 @@ angular.module('fd.project', [])  .
         $scope.setPageTitle("首页");
         $scope. ALL_VIEW_NAME="全部";
         $scope.loadProjects=function(){
-            $http.get("/flash-dog/project/list").success(function(data,status){
+            $http.get("project/list").success(function(data,status){
                 $scope.projects=data.projects;
                 $scope.views=data.views;
 
@@ -45,7 +45,7 @@ angular.module('fd.project', [])  .
             $scope.project.metricCollection=name+"_metrics"
         };
         $scope.addProject=function(){
-            $http.post("/flash-dog/projects/add", $scope.project).success(function(result){
+            $http.post("projects/add", $scope.project).success(function(result){
 
                 if(result.success) {
                     $location.path("/show/"+$scope.project.name+"/task/new") ;
@@ -63,13 +63,13 @@ angular.module('fd.project', [])  .
 
     }).
     controller("ProjectWarningsCtrl",function($scope,$http,$routeParams){
-        $http.get("/flash-dog/projects/"+$routeParams.name+"/warning/list").success(
+        $http.get("projects/"+$routeParams.name+"/warning/list").success(
           function(data){
               $scope.alerts=data.list;
           }
         );
         $scope.clearAlerts=function(){
-            $http.get("/flash-dog/projects/"+$routeParams.name+"/warning/clear").success(
+            $http.get("projects/"+$routeParams.name+"/warning/clear").success(
                 function(data){
                     $scope.alerts=[];
                 }
@@ -81,7 +81,7 @@ angular.module('fd.project', [])  .
     controller('ProjectCtrl', function($scope,$http,$routeParams,$rootScope) {
         jQuery.ajax({
             async:false,
-            url: "/flash-dog/project/"+$routeParams.name,
+            url: "project/"+$routeParams.name,
             data:'format=json',
             dataType:"json",
             headers: { "Accept": "application/json" },
@@ -95,7 +95,7 @@ angular.module('fd.project', [])  .
     controller('TaskControl', function($scope,$http,$routeParams,$location) {
         $scope.removeTask=function(task){
             if(confirm("您确定要删除此任务["+task.name +"]?"))  {
-                $http.post("/flash-dog/projects/"+$scope.project.name+"/tasks/"+task.name+"/destroy",{}).success(function(result) {
+                $http.post("projects/"+$scope.project.name+"/tasks/"+task.name+"/destroy",{}).success(function(result) {
                     angular.forEach( $scope.project.tasks, function(item,index) {
                         if( item.name== task.name ) {
                             $scope.project.tasks.splice(index,1);
@@ -121,7 +121,7 @@ angular.module('fd.project', [])  .
 
         $scope.updateTask=function(){
             $scope.task.script=$scope.script_text.getValue();
-            $http.post("/flash-dog/projects/"+$scope.project.name+"/tasks/update",$scope.task).success(function(result) {
+            $http.post("projects/"+$scope.project.name+"/tasks/update",$scope.task).success(function(result) {
                 $scope.renderResult(result);
                 $location.path("/show/"+$scope.project.name+"/task") ;
             });
@@ -142,7 +142,7 @@ angular.module('fd.project', [])  .
         $scope.drawChartView=function(chartTitle){
             if(chartTitle)
                 $scope.chartTitle=chartTitle;
-            var url=    "/flash-dog/projects/"+$scope.project.name+"/metrics/show"+"?title="+encodeURIComponent($scope.chartTitle) ;
+            var url=    "projects/"+$scope.project.name+"/metrics/show"+"?title="+encodeURIComponent($scope.chartTitle) ;
             $http.get(url).success(
                 function(response) {
                     $scope.chartData={chartTitle:chartTitle,data:response.data};
@@ -160,7 +160,7 @@ angular.module('fd.project', [])  .
             });
             console.log(metricNames) ;
             chartView.metricNames=metricNames;
-            $http.post("/flash-dog/projects/"+$scope.project.name+"/metrics/save?",chartView)
+            $http.post("projects/"+$scope.project.name+"/metrics/save?",chartView)
                 .success(function(data){
                  $scope.project.chartViews.push(chartView);
             });
@@ -170,7 +170,7 @@ angular.module('fd.project', [])  .
             if(!title)
                 return;
             if(confirm("您确定要删除视图["+title+"]吗")){
-                $http.get("/flash-dog/projects/"+ $scope.project.name+"/metrics/destroy?title="+encodeURIComponent(title)).success(function(){
+                $http.get("projects/"+ $scope.project.name+"/metrics/destroy?title="+encodeURIComponent(title)).success(function(){
                     var chartViews = $scope.project.chartViews;
                     angular.forEach(chartViews, function(item,index) {
                         if( item.title== $scope.chartTitle ) {
@@ -185,7 +185,7 @@ angular.module('fd.project', [])  .
             }
         };
         $scope.updateTimeRange=function(){
-            $http.post("/flash-dog/projects/"+$scope.project.name+"/setting/timeRange",$scope.project.timeRange).success(function(){
+            $http.post("projects/"+$scope.project.name+"/setting/timeRange",$scope.project.timeRange).success(function(){
                 $scope.drawChartView();
             });
         } ;
@@ -227,7 +227,7 @@ angular.module('fd.project', [])  .
                 keyWord:$("#key_word_input").val(),
                 level: $("#level").val()});
 
-            window.location  ="/flash-dog/projects/"+$scope.project.name+"/logs/download?"+ params;
+            window.location  ="projects/"+$scope.project.name+"/logs/download?"+ params;
         }  ;
         $scope.loadLog=function(){
             var params = jQuery.param({
@@ -238,7 +238,7 @@ angular.module('fd.project', [])  .
             $("#search_btn").attr("disabled",true);
             $("#search_btn").val("请等待");
             jQuery.ajax({
-                url:"/flash-dog/projects/"+$scope.project.name+"/logs/more?format=json",
+                url:"projects/"+$scope.project.name+"/logs/more?format=json",
                 data: params,
                 type:'get',
                 success : function(msg) {
@@ -264,14 +264,14 @@ angular.module('fd.project', [])  .
                     lineNumbers: true
                 });
                 if($scope.initScript){
-                    $scope.script_text.setValue($scope.initScript.trim());
+                    $scope.script_text.setValue($scope.initScript);
                 }
                 $scope.clearConsole=function(){
                     script_console.setValue('');
                 }  ;
                 $scope.runScript=function(){
                     var params = jQuery.param({script:$scope.script_text.getValue()});
-                    $http.post("/flash-dog/projects/"+$scope.project.name+"/mongo/console?format=json&"+params).success(function(msg) {
+                    $http.post("projects/"+$scope.project.name+"/mongo/console?format=json&"+params).success(function(msg) {
                         if(script_console){
                             script_console.setValue(script_console.getValue()+ JSON.stringify(msg) +"\n");}
                     });
@@ -281,7 +281,7 @@ angular.module('fd.project', [])  .
                     var template=$("#"+$(this).attr("data-target"));
                     var cron=template.attr("data-cron");
 
-                    $scope.script_text.setValue(template.html().trim());
+                    $scope.script_text.setValue(template.html());
                 });
             }
         };
