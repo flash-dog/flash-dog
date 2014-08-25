@@ -309,6 +309,11 @@ angular.module('fd.project', [])  .
                                 day: '%Y/%m/%d %H:%M'
                             }
                         },
+                        yAxis: {
+                            title: {
+                                text: ''
+                            }
+                        },
                         chart: {
                             renderTo: 'container',
                             type: 'spline'
@@ -338,7 +343,12 @@ angular.module('fd.project', [])  .
                     var columns = chartData.data[0];
                     angular.forEach(columns,function(column,index){
                         if(index>0)
-                            series.push({name:column,data:[]});
+                            series.push({name:column,data:[], marker: {
+                                enabled: true,
+                                symbol: 'circle',
+                                radius: 0
+
+                            }});
                     }) ;
                     angular.forEach(chartData.data,function(row,rowIndex){
                         if(rowIndex>0)  {

@@ -28,7 +28,7 @@
                  <tr ng-repeat="alert in alerts"  >
                      <td>{{alert.title}}</td>
                      <td>{{alert.level}}</td>
-                     <td>{{alert.content}}</td>
+                     <td>{{alert.content|limitTo:50}}</td>
                      <td>{{alert.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
                  </tr>
                  </tbody>
