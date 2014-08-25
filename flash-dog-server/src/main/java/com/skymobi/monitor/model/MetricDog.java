@@ -149,7 +149,7 @@ public class MetricDog {
                     alert.setTitle(String.format("【%s】->%s", project.getAlias(), name));
 
                     String _desc = StringUtils.defaultIfEmpty(desc, "");
-                    String _content = StringUtils.defaultIfEmpty(metricValue.getContent(), "");
+                    String _content = fetchContent(metricValue.getContent());
                     alert.setIp(metricValue.getIp() != null ? metricValue.getIp() : "127.0.0.1");
                     alert.setContent(String.format("%s:当前值=%s %s 阀值%s \n\n %s \n %s",
                             metricName, metricValue.getValue(), operator, targetValue, _desc, _content));
@@ -166,6 +166,15 @@ public class MetricDog {
             }
         }
         return alerts;
+    }
+
+    protected String fetchContent(String content) {
+        String s = StringUtils.defaultIfEmpty(content, "");
+        int MAX_LENGTH = 100;
+        if(s.length()> MAX_LENGTH){
+            return s.substring(0, MAX_LENGTH);
+        }
+        return s;
     }
 
     private String fixLevel(Project project, Alert alert) {

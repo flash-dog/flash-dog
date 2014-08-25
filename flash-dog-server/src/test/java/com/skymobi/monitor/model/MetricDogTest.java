@@ -15,6 +15,7 @@
  */
 package com.skymobi.monitor.model;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -71,5 +72,11 @@ public class MetricDogTest extends TestCase {
 
     public void test_make_alert() throws Exception {
         assertEquals("", StringUtils.defaultIfEmpty(null,""));
+    }
+
+    public void test_fetch_content() throws Exception {
+        String content = dog.fetchContent("thread count > 0 ,fffffffffffffffffffffffffffffffffffffffffff");
+        assertEquals(content.length(), 100);
+
     }
 }
