@@ -35,20 +35,20 @@
             <!--script template-->
             <div style="display: none">
                 <div  id="db_init_template">
-                    //检查表是否为仓库模式，并设定大小为1G
-                    if(!db.{{project.logCollection}}.isCapped()){
-                    size=1 * 1024 * 1024 ;
-                    db.{{project.logCollection}}.drop() ;
-                    db.createCollection("{{project.logCollection}}", {capped:true, size:size});
-                    db.{{project.logCollection}}.ensureIndex({timestamp:1});
-                    return db.{{project.logCollection}}.stats()
-                    }
+//检查表是否为仓库模式，并设定大小为1G
+if(!db.{{project.logCollection}}.isCapped()){
+	size=1 * 1024 * 1024 ;
+	db.{{project.logCollection}}.drop() ;
+	db.createCollection("{{project.logCollection}}", {capped:true, size:size});
+	db.{{project.logCollection}}.ensureIndex({timestamp:1});
+	return db.{{project.logCollection}}.stats()
+}
                 </div>
                 <div  id="remove_metrics_template">
-                    //删除指定度量
-                    var name='错误日志占比';
-                    db.{{project.metricCollection}}.remove({name:name});
-                    return db.{{project.metricCollection}}.findOne({name:name});
+//删除指定度量
+var name='错误日志占比';
+db.{{project.metricCollection}}.remove({name:name});
+return db.{{project.metricCollection}}.findOne({name:name});
                 </div>
 
             </div>

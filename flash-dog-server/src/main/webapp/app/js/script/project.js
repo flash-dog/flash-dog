@@ -264,7 +264,7 @@ angular.module('fd.project', [])  .
                     lineNumbers: true
                 });
                 if($scope.initScript){
-                    $scope.script_text.setValue($scope.initScript);
+                    $scope.script_text.setValue($scope.initScript.trim());
                 }
                 $scope.clearConsole=function(){
                     script_console.setValue('');
@@ -281,7 +281,7 @@ angular.module('fd.project', [])  .
                     var template=$("#"+$(this).attr("data-target"));
                     var cron=template.attr("data-cron");
 
-                    $scope.script_text.setValue(template.html());
+                    $scope.script_text.setValue(template.html().trim());
                 });
             }
         };
