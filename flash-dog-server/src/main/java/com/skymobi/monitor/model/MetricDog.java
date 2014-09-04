@@ -170,7 +170,7 @@ public class MetricDog {
 
     protected String fetchContent(String content) {
         String s = StringUtils.defaultIfEmpty(content, "");
-        int MAX_LENGTH = 100;
+        int MAX_LENGTH = 1000;
         if(s.length()> MAX_LENGTH){
             return s.substring(0, MAX_LENGTH);
         }
