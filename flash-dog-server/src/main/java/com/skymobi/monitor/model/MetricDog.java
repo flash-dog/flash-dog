@@ -15,12 +15,6 @@
  */
 package com.skymobi.monitor.model;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.MapMaker;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,12 +23,18 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.MapMaker;
+
 /**
  * @author hill.hu
  *         <p/>
  *         度量监控
  */
-@SuppressWarnings("unused")
 public class MetricDog {
     private static Logger logger = LoggerFactory.getLogger(MetricDog.class);
     private final static ConcurrentMap<String, Object> hasFireMetrics = new MapMaker().expiration(1, TimeUnit.HOURS).makeMap();
@@ -149,7 +149,7 @@ public class MetricDog {
                     alert.setTitle(String.format("【%s】->%s", project.getAlias(), name));
 
                     String _desc = StringUtils.defaultIfEmpty(desc, "");
-                    String _content = fetchContent(metricValue.getContent());
+                    String _content = StringUtils.defaultIfEmpty(metricValue.getContent(), "");
                     alert.setIp(metricValue.getIp() != null ? metricValue.getIp() : "127.0.0.1");
                     alert.setContent(String.format("%s:当前值=%s %s 阀值%s \n\n %s \n %s",
                             metricName, metricValue.getValue(), operator, targetValue, _desc, _content));
@@ -166,15 +166,6 @@ public class MetricDog {
             }
         }
         return alerts;
-    }
-
-    protected String fetchContent(String content) {
-        String s = StringUtils.defaultIfEmpty(content, "");
-        int MAX_LENGTH = 1000;
-        if(s.length()> MAX_LENGTH){
-            return s.substring(0, MAX_LENGTH);
-        }
-        return s;
     }
 
     private String fixLevel(Project project, Alert alert) {

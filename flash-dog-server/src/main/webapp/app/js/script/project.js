@@ -265,7 +265,7 @@ angular.module('fd.project', [])  .
 
                $scope.$watch('initScript',function(nv){
                    if(nv){
-                       $scope.script_text.setValue(nv);
+                       $scope.script_text.setValue(nv.trim());
                        $scope.script_text.scrollTo(1,1);
                    }
 
@@ -285,7 +285,7 @@ angular.module('fd.project', [])  .
                     var template=$("#"+$(this).attr("data-target"));
                     var cron=template.attr("data-cron");
 
-                    $scope.script_text.setValue(template.html());
+                    $scope.script_text.setValue(template.html().trim());
                 });
             }
         };
