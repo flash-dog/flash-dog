@@ -323,11 +323,14 @@ background-color: #fcf8e3;
 .fd-projects .ERROR{
     background-color: #f2dede;
 }
-
+.fd-projects {
+    margin-right: 0;
+    margin-left: 0;
+}
 .fd-projects li {
     float: left;
-    width: 50%;
-    font-size: 16px;
+    width: 20%;
+    font-size: 18px;
     line-height: 1.4;
     text-align: center;
     background-color: #f9f9f9;
@@ -335,7 +338,7 @@ background-color: #fcf8e3;
     font-weight: bolder;
 }
 .fd-projects a {
-    height: 65px;
+    height: 85px;
     padding: 10px;
 }
 .fd-projects a:hover {
@@ -349,7 +352,9 @@ background-color: #fcf8e3;
     word-wrap: break-word;
 }
 .fd-projects .author {
-    display: none;
+    display: block;
+    opacity: 0.5;
+
 }
 .fd-message{
 
@@ -371,20 +376,27 @@ background-color: #fcf8e3;
     font-weight: bolder;
 }
 @media (min-width: 768px){
-    .fd-projects {
-        margin-right: 0;
-        margin-left: 0;
-    }
-    .fd-projects li {
-        width: 20%;
-        font-size: 18px;
-    }
+
+
     .fd-projects a {
         height: 85px;
     }
     .fd-projects .author {
          display: block;
         opacity: 0.5;
+    }
+}
+@media (max-width: 768px){
+    .fd-projects li {
+        width: 50%;
+        font-size: 16px;
+
+    }
+    .fd-projects a {
+        height: 65px;
+    }
+    .fd-projects .author {
+        display: none;
     }
 }
 .un-auth{
