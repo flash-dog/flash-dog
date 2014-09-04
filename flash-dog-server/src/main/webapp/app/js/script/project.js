@@ -111,13 +111,12 @@ angular.module('fd.project', [])  .
     controller('TaskEditControl', function($scope,$http,$routeParams,$location) {
 
         $scope.task={name:"task",cron:"40 */5 * * * *",timeout:40};
-          angular.forEach($scope.project.tasks,function(task){
-                 if($routeParams.taskName==task.name){
-                     $scope.task=task;
-                     $scope.initScript=($scope.task.script);
-                 }
-           });
-
+        angular.forEach($scope.project.tasks,function(task){
+            if($routeParams.taskName==task.name){
+                $scope.task=task;
+                $scope.initScript=($scope.task.script);
+            }
+        });
 
         $scope.updateTask=function(){
             $scope.task.script=$scope.script_text.getValue();
@@ -263,9 +262,14 @@ angular.module('fd.project', [])  .
                 var script_console = CodeMirror.fromTextArea(element.find(".script-console")[0], {
                     lineNumbers: true
                 });
-                if($scope.initScript){
-                    $scope.script_text.setValue($scope.initScript.trim());
-                }
+
+               $scope.$watch('initScript',function(nv){
+                   if(nv){
+                       $scope.script_text.setValue(nv.trim());
+                       $scope.script_text.scrollTo(1,1);
+                   }
+
+               });
                 $scope.clearConsole=function(){
                     script_console.setValue('');
                 }  ;
