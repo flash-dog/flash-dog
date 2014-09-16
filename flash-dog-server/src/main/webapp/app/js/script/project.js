@@ -159,7 +159,7 @@ angular.module('fd.project', [])  .
             });
             console.log(metricNames) ;
             chartView.metricNames=metricNames;
-            $http.post("projects/"+$scope.project.name+"/metrics/save?",chartView)
+            $http.post("projects/"+$scope.project.name+"/metrics/add?",chartView)
                 .success(function(data){
                  $scope.project.chartViews.push(chartView);
             });
