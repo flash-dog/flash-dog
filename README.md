@@ -80,6 +80,8 @@ m=function () {
    mongdob的collection的一种模式，仓库模式，有固定大小，空间会重复利用，如设置成1G，数据超过1G，新数据会替老数据，非仓库模式会持续增加，所以对日志表，强烈推荐使用仓库模式。
 * 为什么添加的新项目没有看到图表
    大部分问题都是数据库链接问题，可在项目设置和日志里面查看数据链接是否正常。遵守命名约定可以减少低级错误
+
+
 **扩展**   
   如果您的项目没有使用log4j，也可以使用logback.
 * 下载安装 [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
