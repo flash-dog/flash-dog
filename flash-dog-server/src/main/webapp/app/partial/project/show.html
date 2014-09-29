@@ -11,7 +11,7 @@
 
         </div>
         <div class="btn-group pull-right visible-lg-inline">
-            <a class="btn btn-sm btn-default" data-toggle="modal" data-target="#metricsViewDialog">
+            <a class="btn btn-sm btn-default" ng-click="addChartView()" data-toggle="modal" data-target="#metricsViewDialog">
                 <i class="glyphicon glyphicon-plus"></i>添加</a>
             <a   ng-click="removeChartView()" class="btn btn-sm btn-default"><i class="glyphicon glyphicon-remove"></i>删除</a>
         </div>
@@ -38,7 +38,7 @@
      </div>
 </div>
 <div class="modal fade" id="metricsViewDialog" tabindex="-1"  aria-hidden="true">
-    <div class="modal-dialog" ng-init="chartView={title:'',metricNames:[]}">
+    <div class="modal-dialog"  >
         <div class="modal-content">
             <div class="modal-header">
 
@@ -54,7 +54,7 @@
 
                             <div  ng-repeat="metric in metricNames">
                                 <label class="control-label"  ><input name="metricName"
-                                       type="checkbox" ng-value="metric"
+                                       type="checkbox" ng-click="addMetric(metric)" ng-value="metric"
                                         >{{metric}}</label>
 
                             </div>
@@ -64,7 +64,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button"  ng-click="addChartView(chartView)" class="btn btn-default" data-dismiss="modal">确定</button>
+                <button type="button"  ng-click="saveChartView(chartView)" class="btn btn-default" data-dismiss="modal">确定</button>
 
             </div>
         </div>

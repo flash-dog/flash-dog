@@ -151,8 +151,15 @@ angular.module('fd.project', [])  .
             });
 
         };
-
-        $scope.addChartView=function(chartView){
+        $scope.addChartView=function(){
+            $scope.chartView= {title:'',metricNames:[]} ;
+        } ;
+        $scope.addMetric=function(metric){
+           if(!$scope.chartView.title){
+               $scope.chartView.title= metric;
+           }
+        };
+        $scope.saveChartView=function(chartView){
             var metricNames=[];
                 $("#metricsViewForm").find("input[name='metricName']:checked").each(function(index,item){
                     metricNames.push($(item).val());
@@ -334,7 +341,7 @@ angular.module('fd.project', [])  .
                                     Highcharts.dateFormat('%Y-%m-%d %H:%M', this.x) + ':<br/>' +
                                     Highcharts.numberFormat(this.y, 2);
                         }},
-
+                        turboThreshold:50000,
                         series: series
                     });
                 };

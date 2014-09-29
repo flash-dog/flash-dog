@@ -60,8 +60,11 @@ public class ChartUtil {
     private static List getColumnNames(List<List<MetricValue>> metricList) {
         List columns = Lists.newArrayList("time");
         for (List<MetricValue> list : metricList) {
-            String metricName = list.get(0).getName();
-            columns.add(metricName);
+            if(list.size()>0){
+                String metricName = list.get(0).getName();
+                columns.add(metricName);
+            }
+
         }
         return columns;
     }

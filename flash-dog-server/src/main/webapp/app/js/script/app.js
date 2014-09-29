@@ -82,7 +82,7 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
                     return $q.reject(response);
                 }
                 else {
-                    $scope.addMessage("系统错误","danger");
+
                     return $q.reject(response);
                 }
             }
