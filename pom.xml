@@ -28,6 +28,18 @@
             <email>hill.hu@skymobi.com</email>
         </developer>
     </developers>
+    <repositories>
+        <repository>
+            <id>activiti</id>
+            <name>Activiti</name>
+            <url>https://maven.alfresco.com/nexus/content/repositories/activiti/</url>
+        </repository>
+        <repository>
+            <id>oschina</id>
+            <name>oschina</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
+        </repository>
+    </repositories>
     <modules>
         <module>flash-dog-api-log4j</module>
         <module>flash-dog-server</module>
