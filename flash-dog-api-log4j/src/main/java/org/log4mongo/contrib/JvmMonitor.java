@@ -2,8 +2,8 @@ package org.log4mongo.contrib;
 
 import com.sun.management.OperatingSystemMXBean;
 import org.apache.log4j.Logger;
-import sun.management.ManagementFactory;
 
+import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

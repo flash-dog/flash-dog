@@ -1,26 +1,6 @@
-
-<script src="app/js/vender/jquery/jquery.stream-1.2.js" type="text/javascript"></script>
-
-<style type="text/css">
-    .CodeMirror-scroll {
-        height:500px;
-    }
-</style>
-<script type="text/javascript">
-
-    $( document ).ready(function () {
-
-
-    }) ;
-</script>
-
 <div  ng-controller="LogCtrl">
-
     <div ng-include="'app/partial/project/_project_nav.html'" ></div>
-
-
      <div>
-
          <div id="content">
 
              <div style="display: inline;"  id="query_div">
@@ -46,26 +26,31 @@
 
          </div>
 
-         <!--<textarea id="script_text" style="width:90%">正在加载</textarea>-->
-         <div id="warning_tab_div">
-             <table class="table table-bordered table-hover">
-                 <thead>
-                 <tr class="active">
-                     <th>名称</th>
-                     <th>执行周期(cron)</th>
-                     <th>操作</th>
-                 </tr>
-                 </thead>
-                 <tbody>
+         <div>
+             <div id="warning_tab_div">
+                 <table class="table table-bordered table-hover table-condensed">
+                     <thead>
+                     <tr class="active">
+                         <th width="5">日志名称</th>
+                         <th>日志</th>
+                         <th>日期</th>
+                         <th>操作</th>
+                     </tr>
+                     </thead>
+                     <tbody>
 
-                 <tr ng-repeat="task in project.tasks"    >
+                     <tr ng-repeat="log in logs"    >
 
-                     <td    ><a href="#/show/{{project.name}}/task/{{task.name}}">{{task.name}}</a></td>
-                     <td>{{task.cron}}</td>
-                     <td><a class="" href="javascript:void (0)" ng-click="removeTask(task)"><i class="glyphicon glyphicon-remove"></i></a> </td>
-                 </tr>
-                 </tbody>
-             </table>
+                         <td width="5">{{log.className}}</a></td>
+                         <td>{{log.message}}</td>
+                         <td>{{log.timestamp}}</td>
+                         <td><a href="#/show/{{project.name}}/logmodel"  class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>修改模型</a></td>
+                     </tr>
+                     </tbody>
+                 </table>
+             </div>
          </div>
+
      </div>
 </div>
+
