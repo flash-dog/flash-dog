@@ -22,6 +22,8 @@ import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.service.LogsService;
 import com.skymobi.monitor.service.ProjectService;
 import com.skymobi.monitor.service.TaskService;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.ListUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,11 +33,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.*;
 
 /**
@@ -82,14 +88,51 @@ public class LogsAction {
             response.getWriter().println(log.toString());
 
         }
-
-
     }
+
+    @RequestMapping(value = "/projects/{projectName}/logs/list", method = RequestMethod.GET)
+    @ResponseBody
+    public List loglist(final HttpServletResponse response, ModelMap map, @PathVariable String projectName, LogQuery logQuery) throws IOException, ParseException {
+        Project project = projectService.findProject(projectName);
+        final MongoConverter converter = project.fetchMongoTemplate().getConverter();
+        final DBCursor cursor = logsService.findLogs(projectName, logQuery);
+
+        @SuppressWarnings("unchecked")
+        FutureTask<List> task = new FutureTask(new Callable<List>() {
+            @Override
+            public List call() throws Exception {
+                List<Log> logs = new ArrayList();
+                long startTime = System.currentTimeMillis();
+                //遍历游标，最长不能超过20秒
+                logger.debug("游标遍历结果:");
+                while (cursor.hasNext()) {
+                    Log log = converter.read(Log.class, cursor.next());
+                    logs.add(log);
+                    long current = System.currentTimeMillis();
+                    if ((current - startTime) / 1000 >= mongWaitSeconds) break;
+                }
+                return logs;
+            }
+        });
+        executor.execute(task);
+        List l = null;
+        try {
+            l = task.get(mongWaitSeconds + 5, TimeUnit.SECONDS);
+            map.put("logs",l);
+        } catch (Exception e) {
+            logger.error("查询超时 ", e);
+            task.cancel(true);
+        }finally {
+            cursor.close();
+        }
+        return l;
+    }
+
+
 
     @RequestMapping(value = "/projects/{projectName}/logs/more", method = RequestMethod.GET)
     public void console(final HttpServletResponse response, ModelMap map, @PathVariable String projectName, LogQuery logQuery) throws IOException, ParseException {
         Project project = projectService.findProject(projectName);
-        map.put("project", project);
         final MongoConverter converter = project.fetchMongoTemplate().getConverter();
         final DBCursor cursor = logsService.findLogs(projectName, logQuery);
         final StringBuffer buf = new StringBuffer();

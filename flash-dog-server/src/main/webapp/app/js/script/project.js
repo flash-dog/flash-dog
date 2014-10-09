@@ -130,6 +130,28 @@ angular.module('fd.project', [])  .
     controller('MongodbCtrl', function($scope,$http,$routeParams) {
 
     }).
+    controller('LogModelCtrl', function($scope,$http,$routeParams) {
+        $scope.separatLog=function(){
+            $scope.separateArray=[];
+            var temp_log = $("#templog").val();
+            var match_str = $("#matchstr").val();
+            var result = temp_log.match(match_str);
+            angular.forEach(result, function(item,index) {
+                if(index!=0)
+                    $scope.separateArray.push({key:index,value:item});
+            });
+        };
+        $scope.submitLogModel=function(){
+            var relationMap = {};
+            $(".dimension").each(function(key, value) {
+                relationMap.dimensionName=$(this).val();
+                relationMap.index=$(this).attr('index');
+            });
+            var log_name = $("#logname").val();
+            var temp_log = $("#templog").val();
+            var match_str = $("#matchstr").val();
+        };
+    }).
     controller('ProjectShowCtrl', function($scope,$http,$routeParams) {
        console.log("1");
       $scope.$watch("project",function(){
@@ -214,18 +236,13 @@ angular.module('fd.project', [])  .
         return {
 
         };
-    }]).   controller('LogCtrl', function($scope,$http,$routeParams) {
+    }]).
+    controller('LogCtrl', function($scope,$http,$routeParams) {
         var now = new Date();
         var today =now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+" 00:00:00";
         $("#datepicker_start").val(today);
-       var script_text = CodeMirror.fromTextArea(document.getElementById("script_text"), {
-            lineNumbers: true,
-            electricChars: false
-        });
+        $scope.logs = [];
         $scope.autoLoad=false;
-        $scope.clearLog=function(){
-            script_text.setValue("");
-        } ;
         $scope.downloadLog=function(){
             var params = jQuery.param({
                 start:$("#datepicker_start").val(),
@@ -234,7 +251,7 @@ angular.module('fd.project', [])  .
                 level: $("#level").val()});
 
             window.location  ="projects/"+$scope.project.name+"/logs/download?"+ params;
-        }  ;
+        };
         $scope.loadLog=function(){
             var params = jQuery.param({
                 start:$("#datepicker_start").val(),
@@ -242,21 +259,17 @@ angular.module('fd.project', [])  .
                 keyWord:$("#key_word_input").val(),
                 level: $("#level").val()});
             $("#search_btn").attr("disabled",true);
-            $("#search_btn").val("请等待");
-            jQuery.ajax({
-                url:"projects/"+$scope.project.name+"/logs/more?format=json",
-                data: params,
-                type:'get',
-                success : function(msg) {
-                    $("#search_btn").val("查询");
-                    $("#search_btn").attr("disabled",false);
-                    script_text.setValue(msg);
-                    if($scope.autoLoad){
-                        setTimeout($scope.loadLog,5000);
-                    }
+            $("#search_btn").val("稍等");
+            $http.get("projects/"+$scope.project.name+"/logs/list?format=json"+params).success(function(logs) {
+                $("#search_btn").val("查询");
+                $("#search_btn").attr("disabled",false);
+                $scope.logs=logs;
+                if($scope.autoLoad){
+                    setTimeout($scope.loadLog,5000);
                 }
             });
-        }
+        };
+        $scope.loadLog();
     }).directive('jsConsole', ["$http", function ($http) {
         return {
             restrict: 'EA',

@@ -50,8 +50,10 @@ public class Log {
         this.level = level;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public String getTimestamp() {
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String fdate = dateformat.format(timestamp);
+        return fdate;
     }
 
     public void setTimestamp(Date timestamp) {

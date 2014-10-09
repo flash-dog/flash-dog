@@ -1,0 +1,57 @@
+<div ng-controller="LogModelCtrl">
+    <div class="panel panel-default">
+        <div class="panel-heading">日志切割</div>
+        <div class="panel-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">日志名称:</label>
+                    <div class="col-sm-11 ">
+                        <input id="logname" class="required valid setting-input form-control" minlength="1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">日志样本:</label>
+
+                    <div class="col-sm-11 ">
+                        <input id="templog" class="required valid setting-input form-control" minlength="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">正则匹配:</label>
+
+                    <div class="col-sm-11">
+                        <div class="input-group">
+                            <input id="matchstr" type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="separatLog();">切割</button>
+                          </span>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table">
+                    <thead>
+                    <tr class="active">
+                        <th>分词序号</th>
+                        <th>分词内容</th>
+                        <th>维度名称(空值则不入库)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="content in separateArray">
+                        <td>{{content.key}}</a></td>
+                        <td>{{content.value}}</td>
+                        <td>
+                            <input index="{{content.key}}" class="dimension required valid setting-input form-control"
+                                   minlength="1">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" type="button" ng-click="submitLogModel();">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

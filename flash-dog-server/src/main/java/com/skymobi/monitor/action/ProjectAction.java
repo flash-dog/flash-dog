@@ -177,8 +177,8 @@ public class ProjectAction {
         return "project/show";
     }
     @RequestMapping(value = "/project/{name}", method = RequestMethod.GET)
-    public  @ResponseBody
-    ModelMap showProject(ModelMap map, @PathVariable String name) throws IOException {
+    @ResponseBody
+    public ModelMap showProject(ModelMap map, @PathVariable String name) throws IOException {
         Project project = projectService.findProject(name);
         map.put("project", project);
         map.put("metricNames", project.findMetricNames());

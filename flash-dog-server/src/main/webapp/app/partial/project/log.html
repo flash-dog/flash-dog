@@ -1,26 +1,6 @@
-
-<script src="app/js/vender/jquery/jquery.stream-1.2.js" type="text/javascript"></script>
-
-<style type="text/css">
-    .CodeMirror-scroll {
-        height:500px;
-    }
-</style>
-<script type="text/javascript">
-
-    $( document ).ready(function () {
-
-
-    }) ;
-</script>
-
 <div  ng-controller="LogCtrl">
-
     <div ng-include="'app/partial/project/_project_nav.html'" ></div>
-
-
      <div>
-
          <div id="content">
 
              <div style="display: inline;"  id="query_div">
@@ -46,7 +26,31 @@
 
          </div>
 
-         <textarea id="script_text" style="width:90%">正在加载</textarea>
+         <div>
+             <div id="warning_tab_div">
+                 <table class="table table-bordered table-hover table-condensed">
+                     <thead>
+                     <tr class="active">
+                         <th width="5">日志名称</th>
+                         <th>日志</th>
+                         <th>日期</th>
+                         <th>操作</th>
+                     </tr>
+                     </thead>
+                     <tbody>
+
+                     <tr ng-repeat="log in logs"    >
+
+                         <td width="5">{{log.className}}</a></td>
+                         <td>{{log.message}}</td>
+                         <td>{{log.timestamp}}</td>
+                         <a href="#/show/{{project.name}}/log/new"  class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>添加</a>
+                     </tr>
+                     </tbody>
+                 </table>
+             </div>
+         </div>
 
      </div>
 </div>
+

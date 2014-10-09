@@ -47,6 +47,9 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
             controller:"ProjectCtrl",
             templateUrl:"app/partial/project/log.html" ,
             activeTab: 'log'
+        }).when("/show/:name/logmodel",{
+            controller:"ProjectCtrl",
+            templateUrl:"app/partial/project/logmodel.html"
         }).when("/show/:name/setting",{
             controller:"ProjectCtrl",
             templateUrl:"app/partial/setting/setting.html" ,
