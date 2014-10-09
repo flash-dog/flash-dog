@@ -46,7 +46,26 @@
 
          </div>
 
-         <textarea id="script_text" style="width:90%">正在加载</textarea>
+         <!--<textarea id="script_text" style="width:90%">正在加载</textarea>-->
+         <div id="warning_tab_div">
+             <table class="table table-bordered table-hover">
+                 <thead>
+                 <tr class="active">
+                     <th>名称</th>
+                     <th>执行周期(cron)</th>
+                     <th>操作</th>
+                 </tr>
+                 </thead>
+                 <tbody>
 
+                 <tr ng-repeat="task in project.tasks"    >
+
+                     <td    ><a href="#/show/{{project.name}}/task/{{task.name}}">{{task.name}}</a></td>
+                     <td>{{task.cron}}</td>
+                     <td><a class="" href="javascript:void (0)" ng-click="removeTask(task)"><i class="glyphicon glyphicon-remove"></i></a> </td>
+                 </tr>
+                 </tbody>
+             </table>
+         </div>
      </div>
 </div>
