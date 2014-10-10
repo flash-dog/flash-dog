@@ -183,10 +183,6 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
 
             if (bson != null) {
                 try {
-                    if(!bson.get("className").equals("org.log4mongo.contrib.JvmMonitor")){
-                        System.out.println("error:className="+bson.get("className"));
-                    }
-
                     if(logmodelid!=null){
                         bson.put(KEY_LOGMODEL_ID,logmodelid);
                     }
