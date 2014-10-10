@@ -130,7 +130,10 @@ angular.module('fd.project', [])  .
     controller('MongodbCtrl', function($scope,$http,$routeParams) {
 
     }).
-    controller('LogModelCtrl', function($scope,$http,$routeParams) {
+    controller('LogModelCtrl', function($scope,$http,$location,$routeParams,$rootScope) {
+        if(!$rootScope.logForConfig){
+            $location.path("/show/"+$scope.project.name+"/log") ;
+        }
         $scope.separatLog=function(){
             $scope.separateArray=[];
             var temp_log = $("#templog").val();
@@ -145,18 +148,19 @@ angular.module('fd.project', [])  .
             var relationMap = "{";
             $(".dimension").each(function(key, value) {
                 if($(this).val().trim()!=''){
-                    relationMap+=$(this).val()+":"+$(this).attr('index')+",";
+                    relationMap+='field'+$(this).attr('index')+":'"+$(this).val()+"',";
                 }
             });
             relationMap+="}";
             var param = {
-                relationMap:relationMap,
+                relation:relationMap,
                 logname:$("#logname").val(),
                 matchstr:$("#matchstr").val()
-            }
-            $http.post("projects/"+$scope.project.name+"/logs/list?format=json",param).success(
+            };
+            $http.post("projects/"+$scope.project.name+"/logs/submitLogModel?format=json",param).success(
                 function(response) {
-                    $scope.chartData={chartTitle:chartTitle,data:response.data};
+                    $scope.addMessage("添加日志模型成功");
+                    $location.path("/show/"+$scope.project.name+"/log") ;
                 });
         };
     }).
@@ -241,7 +245,7 @@ angular.module('fd.project', [])  .
 
         };
     }]).
-    controller('LogCtrl', function($scope,$http,$routeParams) {
+    controller('LogCtrl', function($scope,$http,$location,$routeParams,$rootScope) {
         var now = new Date();
         var today =now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+" 00:00:00";
         $("#datepicker_start").val(today);
@@ -272,6 +276,10 @@ angular.module('fd.project', [])  .
                     setTimeout($scope.loadLog,5000);
                 }
             });
+        };
+        $scope.configLogModel=function(log){
+            $rootScope.logForConfig=log;
+            $location.path("/show/"+$scope.project.name+"/logmodel") ;
         };
         $scope.loadLog();
     }).directive('jsConsole', ["$http", function ($http) {

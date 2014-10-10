@@ -49,7 +49,8 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
             activeTab: 'log'
         }).when("/show/:name/logmodel",{
             controller:"ProjectCtrl",
-            templateUrl:"app/partial/project/logmodel.html"
+            templateUrl:"app/partial/project/logmodel.html",
+            activeTab: 'log'
         }).when("/show/:name/setting",{
             controller:"ProjectCtrl",
             templateUrl:"app/partial/setting/setting.html" ,
@@ -95,6 +96,16 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
             }
         }];
 
+        $httpProvider.defaults.transformRequest = function(obj){
+            var str = [];
+            for(var p in obj){
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
+        };
+        $httpProvider.defaults.headers.post = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        };
         $httpProvider.responseInterceptors.push(interceptor);
     }).directive('fdMessage', function () {
         return {

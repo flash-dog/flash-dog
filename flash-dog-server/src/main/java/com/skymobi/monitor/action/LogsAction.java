@@ -60,9 +60,6 @@ public class LogsAction {
     private ProjectService projectService;
 
     @Resource
-    private TaskService taskService;
-
-    @Resource
     private LogsService logsService;
 
     @RequestMapping(value = "/projects/{projectName}/logs", method = RequestMethod.GET)
@@ -89,10 +86,18 @@ public class LogsAction {
 
         }
     }
-    @RequestMapping(value = "/projects/{projectName}/logs/list", method = RequestMethod.GET)
-    @ResponseBody
-    public void logModelConfig(ModelMap map, @PathVariable String projectName){
 
+    /**
+     * 保存日志模型
+     * @param projectName
+     * @param relation 维度映射关系
+     * @param logname 日志名称
+     * @param matchstr 匹配正则
+     */
+    @RequestMapping(value = "/projects/{projectName}/logs/submitLogModel", method = RequestMethod.POST)
+    @ResponseBody
+    public void submitLogModel(@PathVariable String projectName,String relation,String logname,String matchstr){
+        logsService.saveLogModel(projectName,relation,logname,matchstr);
     }
 
     @RequestMapping(value = "/projects/{projectName}/logs/list", method = RequestMethod.GET)
@@ -109,7 +114,6 @@ public class LogsAction {
                 List<Log> logs = new ArrayList();
                 long startTime = System.currentTimeMillis();
                 //遍历游标，最长不能超过20秒
-                logger.debug("游标遍历结果:");
                 while (cursor.hasNext()) {
                     Log log = converter.read(Log.class, cursor.next());
                     logs.add(log);

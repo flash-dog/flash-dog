@@ -15,9 +15,11 @@
  */
 package com.skymobi.monitor.service;
 
-import com.mongodb.DBCursor;
+import com.mongodb.*;
+import com.mongodb.util.JSON;
 import com.skymobi.monitor.model.LogQuery;
 import com.skymobi.monitor.model.Project;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -42,6 +44,10 @@ public class LogsService {
     ProjectService projectService;
     @Resource
     TaskService taskService;
+
+    //--todo 目前存储在日志提供者的mongodb中，未来版本统一管理
+    private static final String collectionName = "flash_dog_log_model";
+
     private int max = 100;
 
 
@@ -70,4 +76,31 @@ public class LogsService {
         this.max = max;
     }
 
+    public void saveLogModel(String projectName,String relation,String logname,String matchstr){
+        if(StringUtils.isBlank(relation)
+                ||StringUtils.isBlank(logname)
+                ||StringUtils.isBlank(matchstr)){
+            return;
+        }
+        Project project = projectService.findProject(projectName);
+        MongoTemplate mongoTemplate = project.fetchMongoTemplate();
+        //已存在的日志模型
+        if(isModleLogExist(mongoTemplate,logname,matchstr)){
+            return;
+        }
+        DBObject dbObject = new BasicDBObject();
+        DBObject relationObj = (DBObject) JSON.parse(relation);
+        dbObject.put("relation",relationObj);
+        dbObject.put("logname",logname);
+        dbObject.put("matchstr",matchstr);
+        mongoTemplate.getCollection(collectionName).insert(dbObject);
+    }
+
+    public boolean isModleLogExist(MongoTemplate mongoTemplate,String logname,String matchstr){
+        DBObject dbObject = new BasicDBObject();
+        dbObject.put("logname",logname);
+        dbObject.put("matchstr",matchstr);
+        DBObject result=mongoTemplate.getCollection(collectionName).findOne(dbObject);
+        return result!=null;
+    }
 }

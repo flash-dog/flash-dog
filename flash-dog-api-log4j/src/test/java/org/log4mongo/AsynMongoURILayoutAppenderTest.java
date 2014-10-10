@@ -15,14 +15,15 @@ import java.util.regex.Pattern;
  * @date 2013-1-18
  */
 public class AsynMongoURILayoutAppenderTest {
-	Logger logger = Logger.getLogger(AsynMongoURILayoutAppenderTest.class);
+	Logger logger = Logger.getLogger("org.log4mongo.contrib.JvmMonitor");
 
 	@Test
 	public final void test() throws InterruptedException {
 		MDC.put("p1", 1);
 		MDC.put("p2", "tttt");
-		logger.info("testMCD");
-		Thread.sleep(1000);
+        while(true) {
+            logger.info("memoryUsed=121538k cpuUsed=0.0 threadCount=80");
+        }
 	}
 
     @Test

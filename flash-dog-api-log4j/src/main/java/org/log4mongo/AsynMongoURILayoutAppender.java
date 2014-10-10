@@ -7,17 +7,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import com.mongodb.*;
+import com.sun.xml.internal.ws.util.StringUtils;
 import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
 import org.log4mongo.contrib.JvmMonitor;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
-import com.mongodb.MongoException;
-import com.mongodb.MongoURI;
 import com.mongodb.util.JSON;
+import org.log4mongo.model.LogModel;
+import org.log4mongo.mongo.MongoDBClient;
+import org.log4mongo.statistics.LogModelWatcher;
+
 /**
  * 通过mongURI参数配置mongdb的参数
  * @author Steven.Zheng
@@ -26,14 +26,16 @@ import com.mongodb.util.JSON;
 public class AsynMongoURILayoutAppender extends BsonAppender {
 	
     private final static String DEFAULT_MONGO_DB_COLLECTION_NAME = "logevents";
+    private final static String STATISTIC_COLLECTION_NAME = "flash_dog_statistics";
     
     private String mongoURI;
     private String collectionName = DEFAULT_MONGO_DB_COLLECTION_NAME;
     private String jvmMonitor     = "false";
     private String jvmMonitorPeriodSeconds = "60";
     
-    private Mongo mongo = null;
-    private DBCollection collection = null;
+//    private Mongo mongo = null;
+    private DBCollection collection;
+    private DBCollection statisticCollection;
     private boolean initialized = false;
     
     /**
@@ -68,10 +70,13 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
     }
     /** mongodb初始化*/
     private void initMongodb() throws MongoException, UnknownHostException{
-    	 if (mongo != null)  close();
+
+    	 if (MongoDBClient.getInstance().getMongoDB() != null)  close();
          MongoURI uri = new MongoURI(mongoURI);
-         mongo = new Mongo(uri);
-         setCollection(mongo.getDB(uri.getDatabase()).getCollection(collectionName));
+         Mongo mongo = new Mongo(uri);
+         MongoDBClient.getInstance().init(mongo.getDB(uri.getDatabase()));
+         setCollection(MongoDBClient.getInstance().getMongoDB().getCollection(collectionName));
+        setStatisticCollection(MongoDBClient.getInstance().getMongoDB().getCollection(STATISTIC_COLLECTION_NAME));
     }
 
     /**
@@ -90,6 +95,10 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
         }
     }
 
+    public void setStatisticCollection(final DBCollection collection){
+        this.statisticCollection = collection;
+    }
+
     public void setCollection(final DBCollection collection) {
         assert collection != null : "collection must not be null.";
         this.collection = collection;
@@ -100,9 +109,9 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
     }
 
     public void close() {
-        if (mongo != null) {
+        if (MongoDBClient.getInstance().getMongo() != null) {
             collection = null;
-            mongo.close();
+            MongoDBClient.getInstance().getMongo().close();
         }
     }
     public void setCollectionName(final String collectionName) {
@@ -129,11 +138,38 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
          });
     }
     }
-    
+
+    private static final String KEY_TIMESTAMP = "timestamp";
+    private static final String KEY_LOGGER_NAME = "loggerName";
+    private static final String KEY_LOGMODEL_ID = "logmodelid";
+
+    private String logForStatistics(final LoggingEvent loggingEvent){
+        if (loggingEvent != null) {
+            String message = loggingEvent.getMessage().toString();
+            String logname = loggingEvent.getLoggerName();
+            Map map = LogModelWatcher.messageFormate(logname,message);
+            if(map==null)
+                return null;
+            String logmodelid = (String)map.get("logmodelid");
+            DBObject result = new BasicDBObject();
+            result.put(KEY_TIMESTAMP, new Date(loggingEvent.getTimeStamp()));
+            result.put(KEY_LOGGER_NAME, loggingEvent.getLoggerName());
+            result.put(KEY_LOGMODEL_ID,logmodelid);
+            result.putAll(map);
+            getStatisticCollection().insert(result);
+            return logmodelid;
+        }else {
+            return null;
+        }
+    }
+
+
     
     private void _append(final LoggingEvent loggingEvent) {
         if (isInitialized()) {
             DBObject bson = null;
+            String logmodelid = logForStatistics(loggingEvent);
+
             String json = layout.format(loggingEvent);
 
             if (json.length() > 0) {
@@ -147,8 +183,15 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
 
             if (bson != null) {
                 try {
+                    if(!bson.get("className").equals("org.log4mongo.contrib.JvmMonitor")){
+                        System.out.println("error:className="+bson.get("className"));
+                    }
+
+                    if(logmodelid!=null){
+                        bson.put(KEY_LOGMODEL_ID,logmodelid);
+                    }
                     //由于timestamp被转成了string，所以重新写入时间
-                    bson.put("timestamp",new Date());
+                    bson.put(KEY_TIMESTAMP,new Date());
                     getCollection().insert(bson);
                 } catch (MongoException e) {
                     errorHandler.error("Failed to insert document to MongoDB",
@@ -165,6 +208,10 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
 
     protected DBCollection getCollection() {
         return collection;
+    }
+
+    protected DBCollection getStatisticCollection() {
+        return statisticCollection;
     }
 
 	public String getMongoURI() {
