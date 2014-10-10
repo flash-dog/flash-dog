@@ -45,6 +45,11 @@
 			<!--<systemPath>${basedir}/lib/log4mongo-java-0.7.2.jar</systemPath>-->
 			<version>0.7.4</version>
 		</dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.7.0</version>
+        </dependency>
 	</dependencies>
 	<repositories>
 		<repository>

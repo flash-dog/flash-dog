@@ -142,14 +142,22 @@ angular.module('fd.project', [])  .
             });
         };
         $scope.submitLogModel=function(){
-            var relationMap = {};
+            var relationMap = "{";
             $(".dimension").each(function(key, value) {
-                relationMap.dimensionName=$(this).val();
-                relationMap.index=$(this).attr('index');
+                if($(this).val().trim()!=''){
+                    relationMap+=$(this).val()+":"+$(this).attr('index')+",";
+                }
             });
-            var log_name = $("#logname").val();
-            var temp_log = $("#templog").val();
-            var match_str = $("#matchstr").val();
+            relationMap+="}";
+            var param = {
+                relationMap:relationMap,
+                logname:$("#logname").val(),
+                matchstr:$("#matchstr").val()
+            }
+            $http.post("projects/"+$scope.project.name+"/logs/list?format=json",param).success(
+                function(response) {
+                    $scope.chartData={chartTitle:chartTitle,data:response.data};
+                });
         };
     }).
     controller('ProjectShowCtrl', function($scope,$http,$routeParams) {
@@ -167,11 +175,7 @@ angular.module('fd.project', [])  .
             $http.get(url).success(
                 function(response) {
                     $scope.chartData={chartTitle:chartTitle,data:response.data};
-
-
-
             });
-
         };
         $scope.addChartView=function(){
             $scope.chartView= {title:'',metricNames:[]} ;

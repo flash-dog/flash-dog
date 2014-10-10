@@ -89,10 +89,15 @@ public class LogsAction {
 
         }
     }
+    @RequestMapping(value = "/projects/{projectName}/logs/list", method = RequestMethod.GET)
+    @ResponseBody
+    public void logModelConfig(ModelMap map, @PathVariable String projectName){
+
+    }
 
     @RequestMapping(value = "/projects/{projectName}/logs/list", method = RequestMethod.GET)
     @ResponseBody
-    public List loglist(final HttpServletResponse response, ModelMap map, @PathVariable String projectName, LogQuery logQuery) throws IOException, ParseException {
+    public List loglist( ModelMap map, @PathVariable String projectName, LogQuery logQuery) throws IOException, ParseException {
         Project project = projectService.findProject(projectName);
         final MongoConverter converter = project.fetchMongoTemplate().getConverter();
         final DBCursor cursor = logsService.findLogs(projectName, logQuery);
@@ -129,43 +134,5 @@ public class LogsAction {
     }
 
 
-
-    @RequestMapping(value = "/projects/{projectName}/logs/more", method = RequestMethod.GET)
-    public void console(final HttpServletResponse response, ModelMap map, @PathVariable String projectName, LogQuery logQuery) throws IOException, ParseException {
-        Project project = projectService.findProject(projectName);
-        final MongoConverter converter = project.fetchMongoTemplate().getConverter();
-        final DBCursor cursor = logsService.findLogs(projectName, logQuery);
-        final StringBuffer buf = new StringBuffer();
-        @SuppressWarnings("unchecked")
-        FutureTask<String> task = new FutureTask(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                long startTime = System.currentTimeMillis();
-                //遍历游标，最长不能超过20秒
-                logger.debug("游标遍历结果:");
-                while (cursor.hasNext()) {
-                    Log log = converter.read(Log.class, cursor.next());
-
-                    buf.insert(0, log.toString() + "\n");
-                    long current = System.currentTimeMillis();
-                    if ((current - startTime) / 1000 >= mongWaitSeconds) break;
-                }
-                return buf.toString();
-            }
-        });
-        executor.execute(task);
-        try {
-            task.get(mongWaitSeconds + 5, TimeUnit.SECONDS);
-            cursor.close();
-        } catch (Exception e) {
-            logger.error("查询超时 ", e);
-            task.cancel(true);
-        }
-
-        response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().write(buf.toString());
-        response.getWriter().flush();
-
-    }
 
 }
