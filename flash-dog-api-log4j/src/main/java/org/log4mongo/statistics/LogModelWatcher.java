@@ -14,6 +14,11 @@ public class LogModelWatcher {
     public static String LOGMODEL_COLLECTION = "flash_dog_log_model";
     public static ConcurrentHashMap<String,LogModel> logModels = new ConcurrentHashMap();
     static Timer timer = new Timer();
+
+    /**
+     * 监听日志模型，写入内存
+     * @param db
+     */
     public static void startWatch(final DB db){
         timer.schedule(new TimerTask() {
             @Override
