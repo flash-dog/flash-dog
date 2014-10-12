@@ -164,6 +164,7 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
 
     
     private void _append(final LoggingEvent loggingEvent) {
+        System.out.println("append="+this);
         if (isInitialized()) {
             DBObject bson = null;
             String logmodelid = logForStatistics(loggingEvent);
