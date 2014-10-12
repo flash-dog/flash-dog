@@ -20,6 +20,7 @@ import com.mongodb.util.JSON;
 import com.skymobi.monitor.model.LogQuery;
 import com.skymobi.monitor.model.Project;
 import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -102,5 +103,13 @@ public class LogsService {
         dbObject.put("matchstr",matchstr);
         DBObject result=mongoTemplate.getCollection(collectionName).findOne(dbObject);
         return result!=null;
+    }
+
+    public DBObject queryLogModel(String projectName, String logmodelid) {
+        Project project = projectService.findProject(projectName);
+        MongoTemplate mongoTemplate = project.fetchMongoTemplate();
+        DBObject query  = new BasicDBObject();
+        query .put("_id", new ObjectId(logmodelid));
+        return mongoTemplate.getCollection(collectionName).findOne(query);
     }
 }

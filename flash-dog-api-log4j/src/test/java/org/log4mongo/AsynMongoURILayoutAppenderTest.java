@@ -21,9 +21,9 @@ public class AsynMongoURILayoutAppenderTest {
 	public final void test() throws InterruptedException {
 		MDC.put("p1", 1);
 		MDC.put("p2", "tttt");
-        while(true) {
+//        while(true) {
             logger.info("memoryUsed=121538k cpuUsed=0.0 threadCount=80");
-        }
+//        }
 	}
 
     @Test

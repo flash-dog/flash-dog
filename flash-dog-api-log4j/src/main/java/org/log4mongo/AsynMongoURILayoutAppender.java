@@ -8,13 +8,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import com.mongodb.*;
-import com.sun.xml.internal.ws.util.StringUtils;
 import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
 import org.log4mongo.contrib.JvmMonitor;
 
 import com.mongodb.util.JSON;
-import org.log4mongo.model.LogModel;
 import org.log4mongo.mongo.MongoDBClient;
 import org.log4mongo.statistics.LogModelWatcher;
 

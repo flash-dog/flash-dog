@@ -16,6 +16,7 @@
 package com.skymobi.monitor.action;
 
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.skymobi.monitor.model.Log;
 import com.skymobi.monitor.model.LogQuery;
 import com.skymobi.monitor.model.Project;
@@ -28,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +44,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 
 /**
@@ -90,14 +93,28 @@ public class LogsAction {
     /**
      * 保存日志模型
      * @param projectName
-     * @param relation 维度映射关系
-     * @param logname 日志名称
-     * @param matchstr 匹配正则
      */
     @RequestMapping(value = "/projects/{projectName}/logs/submitLogModel", method = RequestMethod.POST)
     @ResponseBody
-    public void submitLogModel(@PathVariable String projectName,String relation,String logname,String matchstr){
+    public void submitLogModel(@PathVariable String projectName,HttpEntity<Map> httpEntity){
+        Map map = httpEntity.getBody();
+        String relation = (String)map.get("relation");
+        String logname = (String)map.get("logname");
+        String matchstr= (String)map.get("matchstr");
         logsService.saveLogModel(projectName,relation,logname,matchstr);
+    }
+
+    /**
+     * 根据id查询日志模型
+     * @param projectName
+     * @return
+     */
+    @RequestMapping(value = "/projects/{projectName}/logs/queryLogModel", method = RequestMethod.POST)
+    @ResponseBody
+    public DBObject queryLogModel(@PathVariable String projectName,HttpEntity<Map> httpEntity){
+        Map map = httpEntity.getBody();
+        String logmodelid = (String)map.get("logmodelid");
+        return logsService.queryLogModel(projectName,logmodelid);
     }
 
     @RequestMapping(value = "/projects/{projectName}/logs/list", method = RequestMethod.GET)

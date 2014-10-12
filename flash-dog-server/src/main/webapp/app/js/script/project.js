@@ -131,9 +131,14 @@ angular.module('fd.project', [])  .
 
     }).
     controller('LogModelCtrl', function($scope,$http,$location,$routeParams,$rootScope) {
+        $scope.logModel={};
         if(!$rootScope.logForConfig){
             $location.path("/show/"+$scope.project.name+"/log") ;
         }
+        $http.post("projects/"+$scope.project.name+"/logs/queryLogModel",{logmodelid:$rootScope.logForConfig.logmodelid})
+            .success(function(result) {
+                $scope.logModel=result;
+            });
         $scope.separatLog=function(){
             $scope.separateArray=[];
             var temp_log = $("#templog").val();
