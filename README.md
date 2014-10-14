@@ -4,7 +4,7 @@
 ## 
  1. 安装
 * 安装[mongodb](http://www.mongodb.org/downloads),解压出来，配置数据保存路径，即可运行 
-* 下载[flash-dog-server](https://github.com/flash-dog/flash-dog/releases/tag/v.2.0)
+* 下载[flash-dog-server](https://github.com/flash-dog/flash-dog/releases)
 * 修改flash-dog-server文件夹下的log4j.properties文件，修改log4j.appender.MongoDB的hostname和port指向你部署的mongodb地址和端口：  
     log4j.appender.MongoDB.hostname=172.16.3.47  
     log4j.appender.MongoDB.port=27017  
