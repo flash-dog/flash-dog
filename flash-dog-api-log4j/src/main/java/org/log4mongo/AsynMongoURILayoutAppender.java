@@ -13,6 +13,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.log4mongo.contrib.JvmMonitor;
 
 import com.mongodb.util.JSON;
+import org.log4mongo.enums.FieldEnum;
 import org.log4mongo.mongo.MongoDBClient;
 import org.log4mongo.statistics.LogModelWatcher;
 
@@ -137,9 +138,9 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
     }
     }
 
-    private static final String KEY_TIMESTAMP = "timestamp";
-    private static final String KEY_LOGGER_NAME = "loggerName";
-    private static final String KEY_LOGMODEL_ID = "logmodelid";
+//    private static final String KEY_TIMESTAMP = "timestamp";
+//    private static final String KEY_LOGGER_NAME = "loggerName";
+//    private static final String KEY_LOGMODEL_ID = "logmodelid";
 
     private String logForStatistics(final LoggingEvent loggingEvent){
         if (loggingEvent != null) {
@@ -150,9 +151,9 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
                 return null;
             String logmodelid = (String)map.get("logmodelid");
             DBObject result = new BasicDBObject();
-            result.put(KEY_TIMESTAMP, new Date(loggingEvent.getTimeStamp()));
-            result.put(KEY_LOGGER_NAME, loggingEvent.getLoggerName());
-            result.put(KEY_LOGMODEL_ID,logmodelid);
+            result.put(FieldEnum.KEY_TIMESTAMP.getName(), new Date(loggingEvent.getTimeStamp()));
+            result.put(FieldEnum.KEY_LOGGER_NAME.getName(), loggingEvent.getLoggerName());
+            result.put(FieldEnum.KEY_LOGMODEL_ID.getName(),logmodelid);
             result.putAll(map);
             getStatisticCollection().insert(result);
             return logmodelid;
@@ -183,10 +184,10 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
             if (bson != null) {
                 try {
                     if(logmodelid!=null){
-                        bson.put(KEY_LOGMODEL_ID,logmodelid);
+                        bson.put(FieldEnum.KEY_LOGMODEL_ID.getName(),logmodelid);
                     }
                     //由于timestamp被转成了string，所以重新写入时间
-                    bson.put(KEY_TIMESTAMP,new Date());
+                    bson.put(FieldEnum.KEY_TIMESTAMP.getName(),new Date());
                     getCollection().insert(bson);
                 } catch (MongoException e) {
                     errorHandler.error("Failed to insert document to MongoDB",

@@ -2,6 +2,7 @@ package org.log4mongo.model;
 
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+import org.log4mongo.enums.FieldEnum;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class LogModel {
             Matcher matcher = pattern.matcher(message);
             if(matcher.find()) {
                 Map map = new HashMap();
-                map.put("logmodelid",this.get_id());
+                map.put(FieldEnum.KEY_LOGMODEL_ID.getName(),this.get_id());
                 for (int i =0;i<=matcher.groupCount();i++) {
                     if(relation.containsKey("field"+i)){
                         map.put(relation.get("field"+i),matcher.group(i));
