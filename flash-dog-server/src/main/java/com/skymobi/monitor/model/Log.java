@@ -33,7 +33,7 @@ public class Log {
     private LoggerName loggerName;
     private String pid;
     private String ip;
-    private String logmodelid;
+    private String logModelId;
 
     public String getMessage() {
         return message;
@@ -101,12 +101,12 @@ public class Log {
         this.ip = ip;
     }
 
-    public String getLogmodelid() {
-        return logmodelid;
+    public String getLogModelId() {
+        return logModelId;
     }
 
-    public void setLogmodelid(String logmodelid) {
-        this.logmodelid = logmodelid;
+    public void setLogModelId(String logModelId) {
+        this.logModelId = logModelId;
     }
 
     public String toString() {

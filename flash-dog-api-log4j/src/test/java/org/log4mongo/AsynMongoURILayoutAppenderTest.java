@@ -23,6 +23,9 @@ public class AsynMongoURILayoutAppenderTest {
 		MDC.put("p2", "tttt");
 //        while(true) {
             logger.info("memoryUsed=121538k cpuUsed=0.0 threadCount=80");
+//        Thread.sleep(5000);
+//        logger.info("memoryUsed=121538k cpuUsed=0.0 threadCount=80");
+//        Thread.sleep(100000);
 //        }
 	}
 

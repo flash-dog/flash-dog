@@ -53,9 +53,6 @@ angular.module('fd.project', [])  .
                 }else{
                     $scope.renderResult(result);
                 }
-
-
-
             });
 
 
@@ -135,14 +132,10 @@ angular.module('fd.project', [])  .
         if(!$rootScope.logForConfig){
             $location.path("/show/"+$scope.project.name+"/log") ;
         }
-        $http.post("projects/"+$scope.project.name+"/logs/queryLogModel",{logmodelid:$rootScope.logForConfig.logmodelid})
-            .success(function(result) {
-                $scope.logModel=result;
-            });
         $scope.separatLog=function(){
             $scope.separateArray=[];
             var temp_log = $("#templog").val();
-            var match_str = $("#matchstr").val();
+            var match_str = $("#matchStr").val();
             var result = temp_log.match(match_str);
             angular.forEach(result, function(item,index) {
                 if(index!=0)
@@ -159,8 +152,10 @@ angular.module('fd.project', [])  .
             relationMap+="}";
             var param = {
                 relation:relationMap,
-                logname:$("#logname").val(),
-                matchstr:$("#matchstr").val()
+                logName:$("#logName").val(),
+                matchStr:$("#matchStr").val(),
+                logModelName:$("#logModelName").val(),
+                logModelId:$rootScope.logForConfig._id
             };
             $http.post("projects/"+$scope.project.name+"/logs/submitLogModel?format=json",param).success(
                 function(response) {
@@ -168,6 +163,20 @@ angular.module('fd.project', [])  .
                     $location.path("/show/"+$scope.project.name+"/log") ;
                 });
         };
+        if($rootScope.logForConfig.logModelId)
+            $http.post("projects/"+$scope.project.name+"/logs/queryLogModel",{logModelId:$rootScope.logForConfig.logModelId})
+                .success(function(result) {
+                    $scope.logModel=result;
+                    $scope.separateArray=[];
+                    var temp_log = $rootScope.logForConfig.message;
+                    var match_str = result.matchStr;
+                    var matchResult = temp_log.match(match_str);
+                    angular.forEach(matchResult, function(item,index) {
+                        if(index!=0){
+                            $scope.separateArray.push({key:index,value:item,fieldName:result.relation['field'+index]});
+                        }
+                    });
+                });
     }).
     controller('ProjectShowCtrl', function($scope,$http,$routeParams) {
        console.log("1");
@@ -264,6 +273,9 @@ angular.module('fd.project', [])  .
                 level: $("#level").val()});
 
             window.location  ="projects/"+$scope.project.name+"/logs/download?"+ params;
+        };
+        $scope.clearLog=function(){
+            $scope.logs={};
         };
         $scope.loadLog=function(){
             var params = jQuery.param({

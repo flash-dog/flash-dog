@@ -4,10 +4,18 @@
         <div class="panel-heading">日志切割</div>
         <div class="panel-body">
             <form class="form-horizontal" role="form">
+                <input id="logModelId" type="hidden" value="{{logModel._id}}"  />
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">模型名称:</label>
+                    <div class="col-sm-11 ">
+                        <input id="logModelName" class="required valid setting-input form-control" minlength="1" value="{{logModel.logModelName}}"  />
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label">日志名称:</label>
                     <div class="col-sm-11 ">
-                        <input id="logname" class="required valid setting-input form-control" minlength="1" value="{{logForConfig.className}}" readonly />
+                        <input id="logName" class="required valid setting-input form-control" minlength="1" value="{{logForConfig.className}}" readonly />
                     </div>
                 </div>
 
@@ -22,7 +30,7 @@
 
                     <div class="col-sm-11">
                         <div class="input-group">
-                            <input id="matchstr" type="text" class="form-control" value="{{logModel.matchstr}}">
+                            <input id="matchStr" type="text" class="form-control" value="{{logModel.matchStr}}">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" ng-click="separatLog();">切割</button>
                           </span>
@@ -44,7 +52,7 @@
                         <td>{{content.value}}</td>
                         <td>
                             <input index="{{content.key}}" class="dimension required valid setting-input form-control"
-                                   minlength="1">
+                                 value="{{content.fieldName}}"  minlength="1">
                         </td>
                     </tr>
                     </tbody>

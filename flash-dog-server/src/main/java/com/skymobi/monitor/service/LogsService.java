@@ -21,6 +21,7 @@ import com.skymobi.monitor.model.LogQuery;
 import com.skymobi.monitor.model.Project;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
+import org.log4mongo.enums.FieldEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -77,39 +78,56 @@ public class LogsService {
         this.max = max;
     }
 
-    public void saveLogModel(String projectName,String relation,String logname,String matchstr){
+    public void saveLogModel(String projectName,String logModelId,String relation,String logname,String matchstr,String logModelName){
         if(StringUtils.isBlank(relation)
                 ||StringUtils.isBlank(logname)
-                ||StringUtils.isBlank(matchstr)){
+                ||StringUtils.isBlank(matchstr)
+                ||StringUtils.isBlank(logModelName)){
             return;
         }
         Project project = projectService.findProject(projectName);
         MongoTemplate mongoTemplate = project.fetchMongoTemplate();
-        //已存在的日志模型
-        if(isModleLogExist(mongoTemplate,logname,matchstr)){
+        if(isModleLogExist(mongoTemplate,logname,matchstr)||
+                isModleLogModelNameExist(mongoTemplate,logModelName)){
             return;
         }
-        DBObject dbObject = new BasicDBObject();
+        //已存在的日志模型
+        DBObject result = new BasicDBObject();
+        if(StringUtils.isNotBlank(logModelId)){
+            DBObject query  = new BasicDBObject();
+            query .put("_id", new ObjectId(logModelId));
+            result=mongoTemplate.getCollection(collectionName).findOne(query);
+        }
+
         DBObject relationObj = (DBObject) JSON.parse(relation);
-        dbObject.put("relation",relationObj);
-        dbObject.put("logname",logname);
-        dbObject.put("matchstr",matchstr);
-        mongoTemplate.getCollection(collectionName).insert(dbObject);
+        result.put(FieldEnum.KEY_RELATION.getName(),relationObj);
+        result.put(FieldEnum.KEY_LOGGER_NAME.getName(),logname);
+        result.put(FieldEnum.KEY_MATCH_STR.getName(),matchstr);
+        result.put(FieldEnum.KEY_LOGGER_MODEL_NAME.getName(),logModelName);
+
+        mongoTemplate.getCollection(collectionName).save(result);
     }
 
     public boolean isModleLogExist(MongoTemplate mongoTemplate,String logname,String matchstr){
         DBObject dbObject = new BasicDBObject();
-        dbObject.put("logname",logname);
-        dbObject.put("matchstr",matchstr);
+        dbObject.put("logName",logname);
+        dbObject.put("matchStr",matchstr);
         DBObject result=mongoTemplate.getCollection(collectionName).findOne(dbObject);
         return result!=null;
     }
 
-    public DBObject queryLogModel(String projectName, String logmodelid) {
+    public boolean isModleLogModelNameExist(MongoTemplate mongoTemplate,String logModelName){
+        DBObject dbObject = new BasicDBObject();
+        dbObject.put("logModelName",logModelName);
+        DBObject result=mongoTemplate.getCollection(collectionName).findOne(dbObject);
+        return result!=null;
+    }
+
+    public DBObject queryLogModel(String projectName, String logModelId) {
         Project project = projectService.findProject(projectName);
         MongoTemplate mongoTemplate = project.fetchMongoTemplate();
         DBObject query  = new BasicDBObject();
-        query .put("_id", new ObjectId(logmodelid));
+        query .put("_id", new ObjectId(logModelId));
         return mongoTemplate.getCollection(collectionName).findOne(query);
     }
 }

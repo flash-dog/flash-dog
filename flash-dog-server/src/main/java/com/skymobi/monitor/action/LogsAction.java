@@ -99,9 +99,11 @@ public class LogsAction {
     public void submitLogModel(@PathVariable String projectName,HttpEntity<Map> httpEntity){
         Map map = httpEntity.getBody();
         String relation = (String)map.get("relation");
-        String logname = (String)map.get("logname");
-        String matchstr= (String)map.get("matchstr");
-        logsService.saveLogModel(projectName,relation,logname,matchstr);
+        String logname = (String)map.get("logName");
+        String matchstr= (String)map.get("matchStr");
+        String logModelId= (String)map.get("logModelId");
+        String logModelName = (String)map.get("logModelName");
+        logsService.saveLogModel(projectName,logModelId,relation,logname,matchstr,logModelName);
     }
 
     /**
@@ -113,8 +115,8 @@ public class LogsAction {
     @ResponseBody
     public DBObject queryLogModel(@PathVariable String projectName,HttpEntity<Map> httpEntity){
         Map map = httpEntity.getBody();
-        String logmodelid = (String)map.get("logmodelid");
-        return logsService.queryLogModel(projectName,logmodelid);
+        String logModelId = (String)map.get("logModelId");
+        return logsService.queryLogModel(projectName,logModelId);
     }
 
     @RequestMapping(value = "/projects/{projectName}/logs/list", method = RequestMethod.GET)

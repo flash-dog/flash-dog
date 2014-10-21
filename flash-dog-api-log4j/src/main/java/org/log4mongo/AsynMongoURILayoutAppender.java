@@ -138,10 +138,6 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
     }
     }
 
-//    private static final String KEY_TIMESTAMP = "timestamp";
-//    private static final String KEY_LOGGER_NAME = "loggerName";
-//    private static final String KEY_LOGMODEL_ID = "logmodelid";
-
     private String logForStatistics(final LoggingEvent loggingEvent){
         if (loggingEvent != null) {
             String message = loggingEvent.getMessage().toString();
@@ -149,14 +145,16 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
             Map map = LogModelWatcher.messageFormate(logname,message);
             if(map==null)
                 return null;
-            String logmodelid = (String)map.get("logmodelid");
+            String logModelId = (String)map.get(FieldEnum.KEY_LOGMODEL_ID.getName());
+            String logModelName = (String)map.get(FieldEnum.KEY_LOGGER_MODEL_NAME.getName());
             DBObject result = new BasicDBObject();
             result.put(FieldEnum.KEY_TIMESTAMP.getName(), new Date(loggingEvent.getTimeStamp()));
             result.put(FieldEnum.KEY_LOGGER_NAME.getName(), loggingEvent.getLoggerName());
-            result.put(FieldEnum.KEY_LOGMODEL_ID.getName(),logmodelid);
+            result.put(FieldEnum.KEY_LOGMODEL_ID.getName(),logModelId);
+            result.put(FieldEnum.KEY_LOGGER_MODEL_NAME.getName(),logModelName);
             result.putAll(map);
             getStatisticCollection().insert(result);
-            return logmodelid;
+            return logModelId;
         }else {
             return null;
         }
@@ -165,7 +163,6 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
 
     
     private void _append(final LoggingEvent loggingEvent) {
-        System.out.println("append="+this);
         if (isInitialized()) {
             DBObject bson = null;
             String logmodelid = logForStatistics(loggingEvent);

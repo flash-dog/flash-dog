@@ -14,32 +14,33 @@ import java.util.regex.Pattern;
  */
 public class LogModel {
     private String _id;
-    private String logname;
-    private String matchstr;
+    private String logName;
+    private String logModelName;
+    private String matchStr;
     private Map<Integer,String> relation;
 
     public LogModel(DBObject dbObject){
         _id = dbObject.get("_id").toString();
-        logname = dbObject.get("logname").toString();
-        matchstr = dbObject.get("matchstr").toString();
+        logName = dbObject.get(FieldEnum.KEY_LOGGER_NAME.getName()).toString();
+        matchStr = dbObject.get(FieldEnum.KEY_MATCH_STR.getName()).toString();
+        logModelName = dbObject.get(FieldEnum.KEY_RELATION.getName()).toString();
         relation = (Map)dbObject.get("relation");
     }
 
     public Map formatMessage(String logname,String message){
-        System.out.println(" LogModel format message="+message);
         //日志名称完全匹配
-        if(this.logname.equals(logname)){
-            Pattern pattern = Pattern.compile(matchstr);
+        if(this.logName.equals(logname)){
+            Pattern pattern = Pattern.compile(matchStr);
             Matcher matcher = pattern.matcher(message);
             if(matcher.find()) {
                 Map map = new HashMap();
                 map.put(FieldEnum.KEY_LOGMODEL_ID.getName(),this.get_id());
+                map.put(FieldEnum.KEY_LOGGER_MODEL_NAME.getName(),this.getLogModelName());
                 for (int i =0;i<=matcher.groupCount();i++) {
                     if(relation.containsKey("field"+i)){
                         map.put(relation.get("field"+i),matcher.group(i));
                     }
                 }
-                System.out.println(" LogModel mapsize="+map.size());
                 return map;
             }
         }
@@ -54,27 +55,35 @@ public class LogModel {
         this._id = _id;
     }
 
-    public String getLogname() {
-        return logname;
+    public String getLogName() {
+        return logName;
     }
 
-    public void setLogname(String logname) {
-        this.logname = logname;
+    public void setLogName(String logName) {
+        this.logName = logName;
     }
 
-    public String getMatchstr() {
-        return matchstr;
+    public String getLogModelName() {
+        return logModelName;
     }
 
-    public void setMatchstr(String matchstr) {
-        this.matchstr = matchstr;
+    public void setLogModelName(String logModelName) {
+        this.logModelName = logModelName;
     }
 
-    public Map getRelation() {
+    public String getMatchStr() {
+        return matchStr;
+    }
+
+    public void setMatchStr(String matchStr) {
+        this.matchStr = matchStr;
+    }
+
+    public Map<Integer, String> getRelation() {
         return relation;
     }
 
-    public void setRelation(Map relation) {
+    public void setRelation(Map<Integer, String> relation) {
         this.relation = relation;
     }
 
@@ -86,8 +95,10 @@ public class LogModel {
         LogModel logModel = (LogModel) o;
 
         if (_id != null ? !_id.equals(logModel._id) : logModel._id != null) return false;
-        if (logname != null ? !logname.equals(logModel.logname) : logModel.logname != null) return false;
-        if (matchstr != null ? !matchstr.equals(logModel.matchstr) : logModel.matchstr != null) return false;
+        if (logModelName != null ? !logModelName.equals(logModel.logModelName) : logModel.logModelName != null)
+            return false;
+        if (logName != null ? !logName.equals(logModel.logName) : logModel.logName != null) return false;
+        if (matchStr != null ? !matchStr.equals(logModel.matchStr) : logModel.matchStr != null) return false;
         if (relation != null ? !relation.equals(logModel.relation) : logModel.relation != null) return false;
 
         return true;
@@ -96,8 +107,9 @@ public class LogModel {
     @Override
     public int hashCode() {
         int result = _id != null ? _id.hashCode() : 0;
-        result = 31 * result + (logname != null ? logname.hashCode() : 0);
-        result = 31 * result + (matchstr != null ? matchstr.hashCode() : 0);
+        result = 31 * result + (logName != null ? logName.hashCode() : 0);
+        result = 31 * result + (logModelName != null ? logModelName.hashCode() : 0);
+        result = 31 * result + (matchStr != null ? matchStr.hashCode() : 0);
         result = 31 * result + (relation != null ? relation.hashCode() : 0);
         return result;
     }

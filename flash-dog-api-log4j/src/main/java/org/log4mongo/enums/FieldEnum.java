@@ -8,6 +8,12 @@ public enum  FieldEnum {
 
     KEY_LOGGER_NAME("loggerName"),
 
+    KEY_LOGGER_MODEL_NAME("logModelName"),
+
+    KEY_RELATION("relation"),
+
+    KEY_MATCH_STR("matchStr"),
+
     KEY_LOGMODEL_ID("logModelId");
 
     private String name;
