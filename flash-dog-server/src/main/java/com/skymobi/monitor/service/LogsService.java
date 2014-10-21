@@ -110,15 +110,15 @@ public class LogsService {
 
     public boolean isModleLogExist(MongoTemplate mongoTemplate,String logname,String matchstr){
         DBObject dbObject = new BasicDBObject();
-        dbObject.put("logName",logname);
-        dbObject.put("matchStr",matchstr);
+        dbObject.put(FieldEnum.KEY_LOGGER_NAME.getName(),logname);
+        dbObject.put(FieldEnum.KEY_MATCH_STR.getName(),matchstr);
         DBObject result=mongoTemplate.getCollection(collectionName).findOne(dbObject);
         return result!=null;
     }
 
     public boolean isModleLogModelNameExist(MongoTemplate mongoTemplate,String logModelName){
         DBObject dbObject = new BasicDBObject();
-        dbObject.put("logModelName",logModelName);
+        dbObject.put(FieldEnum.KEY_LOGGER_NAME.getName(),logModelName);
         DBObject result=mongoTemplate.getCollection(collectionName).findOne(dbObject);
         return result!=null;
     }
