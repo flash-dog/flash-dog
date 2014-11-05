@@ -341,7 +341,7 @@ angular.module('fd.project', [])  .
                                     Highcharts.dateFormat('%Y-%m-%d %H:%M', this.x) + ':<br/>' +
                                     Highcharts.numberFormat(this.y, 2);
                         }},
-                        turboThreshold:50000,
+
                         series: series
                     });
                 };
@@ -359,7 +359,7 @@ angular.module('fd.project', [])  .
                                 symbol: 'circle',
                                 radius: 0
 
-                            }});
+                            },  turboThreshold:50000});
                     }) ;
                     angular.forEach(chartData.data,function(row,rowIndex){
                         if(rowIndex>0)  {
