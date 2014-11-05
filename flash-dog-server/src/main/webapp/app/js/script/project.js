@@ -160,6 +160,9 @@ angular.module('fd.project', [])  .
            }
         };
         $scope.saveChartView=function(chartView){
+            var title = chartView.title;
+            if(!title || title.length<1)
+                return;
             var metricNames=[];
                 $("#metricsViewForm").find("input[name='metricName']:checked").each(function(index,item){
                     metricNames.push($(item).val());
