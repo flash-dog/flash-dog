@@ -81,14 +81,14 @@ m=function () {
 * 为什么添加的新项目没有看到图表  
    大部分问题都是数据库链接问题，可在项目设置和日志里面查看数据链接是否正常。遵守命名约定可以减少低级错误
 * 如何输出自定义变量  
-   通过log4j的MDC实现，如跟踪用户请求的所有日志： 
+   通过log4j的MDC实现，MDC内部使用了类似map的机制来存储信息，相对应的方法，MDC.put(key,value);在配置PatternLayout的时候使用：%x{key}来输出对应的value,如跟踪用户请求的所有日志： 
    java代码：
     <pre><code class="java"> 
 	MDC.put("UUID", userId); 
     </code></pre>
   log4j配置： 
     <pre><code class="java">  
-  log4j.appender.MongoDB.layout.ConversionPattern={"timestamp":"%d","level":"%p","className":"%c","message":"%m","pid":"%V","ip":"%I",uuid:"%UUID"}
+  log4j.appender.MongoDB.layout.ConversionPattern={"timestamp":"%d","level":"%p","className":"%c","message":"%m","pid":"%V","ip":"%I",uuid:"%X{UUID}"}
     </code></pre>   
   
 **扩展**   
