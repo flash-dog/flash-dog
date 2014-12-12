@@ -11,7 +11,7 @@
 * 修改conf/develop/app.properties，也指向刚才部署的mongodb  
     mongo.uri=mongodb://172.16.3.47:27017/monitor_test  
 * 进入bin下，运行start.sh develop或者start-dev.bat  
- 在浏览器里打开http://localhost:8080/flash-dog/projects 输入用户名：admin 密码 123456 ，你将看到一个叫闪电狗的项目，这是因为闪电狗也会监控自己，wow
+ 在浏览器里打开http://localhost:8080/flash-dog 输入用户名：admin 密码 123456 ，你将看到一个叫闪电狗的项目，这是因为闪电狗也会监控自己，wow
 ![screenshot](https://github.com/flash-dog/flash-dog/blob/master/screenshot/monitor1.jpg?raw=true)
  2. 把你自己的项目加入闪电狗
 * 从[flash-dog-api-log4j](https://github.com/flash-dog/flash-dog/downloads)下载客户端的lib库，或者从flash-dog-server文件夹lib目录下拷贝log4mongo-java ,flash-dog-api-log4j 和 mongo-java-driver 到项目的lib库下，注意还需要log4j 1.2.15以上的版本
