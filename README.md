@@ -3,7 +3,7 @@
 该项目由[杭州斯凯网络](http://www.sky-mobi.com/)开源，目前已经在公司内部支付等关键业务中使用，对创业团队和中小型公司有较大吸引力。目前只支持java的log4j和logback日志输出，通过简单扩展可以支持其他语言。在线demo ，http://115.28.11.12:8080/flash-dog/   用户 admin  密码 123456  
 ## 
  1. 安装
-* 安装[mongodb](http://www.mongodb.org/downloads),解压出来，配置数据保存路径，即可运行 
+* 安装[mongodb](http://www.mongodb.org/downloads),解压出来，配置数据保存路径，打开cmd，输入：D:\mongodb\bin\mongod.exe -dbpath=data即可运行（路径修改成实际目录） 
 * 下载[flash-dog-server](https://github.com/flash-dog/flash-dog/releases)
 * 修改flash-dog-server文件夹下的log4j.properties文件，修改log4j.appender.MongoDB的hostname和port指向你部署的mongodb地址和端口：  
     log4j.appender.MongoDB.hostname=172.16.3.47  
