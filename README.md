@@ -90,7 +90,16 @@ m=function () {
     <pre><code class="java">  
   log4j.appender.MongoDB.layout.ConversionPattern={"timestamp":"%d","level":"%p","className":"%c","message":"%m","pid":"%V","ip":"%I",uuid:"%X{UUID}"}
     </code></pre>   
-  
+* 如何监控tomcat访问日志  
+  1.先配置将tomcat日志输出到log4j，下载tomcat-juli.jar到tomcat/bin,覆盖原来的jar，下载tomcat-util.jar到tomcat/lib，复制log4mongo-java ,flash-dog-api-log4j 和 mongo-java-driver ，log4j.properties到lib  
+  2.修改tomcat/conf/server.xml中access-log部分： 
+    <pre><code class="java">  
+<Valve className="com.skymobi.tomcat.Log4JAccessLogValve" directory="logs"
+               prefix="localhost_access." suffix=".log"
+               pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+    </code></pre>   
+  3.重启tomcat，在logs/catalina.log 可以看到访问日志    
+
 **扩展**   
   如果您的项目没有使用log4j，也可以使用logback.
 * 下载安装 [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
