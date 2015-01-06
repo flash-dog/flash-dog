@@ -1,6 +1,6 @@
 **概述**  
 应用通过log4j输出日志到mongodb数据库中，闪电狗定时运行脚本分析日志，生成监控曲线和告警。主要优点是不影响业务代码，只需加入几个jar包和修改log4j配置文件就能接入。配置一些javascript小脚本，几乎就能监控所有你想监控的信息，如cpu内存，错误日志百分比，每日访问人数，收入等等  
-该项目由[杭州斯凯网络](http://www.sky-mobi.com/)开源，目前已经在公司内部支付等关键业务中使用，对创业团队和中小型公司有较大吸引力。目前只支持java的log4j和logback日志输出，通过简单扩展可以支持其他语言。在线demo ，http://115.28.11.12:8080/flash-dog/   用户 admin  密码 123456  
+该项目由[杭州斯凯网络](http://www.sky-mobi.com/)开源，目前已经在公司内部支付等关键业务中使用，对创业团队和中小型公司有较大吸引力。目前只支持java的log4j和logback日志输出，也可以通过[代理模式](https://github.com/flash-dog/flash-dog/wiki/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)支持任意日志。在线demo ，http://115.28.11.12:8080/flash-dog/   用户 admin  密码 123456  
 ## 
  1. 安装
 * 安装[mongodb](http://www.mongodb.org/downloads),解压出来，配置数据保存路径，打开cmd，输入：D:\mongodb\bin\mongod.exe -dbpath=data即可运行（路径修改成实际目录） 
