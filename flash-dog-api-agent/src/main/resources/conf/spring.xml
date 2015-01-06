@@ -8,7 +8,7 @@
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations" value="classpath:conf.properties"/>
+        <property name="locations" value="classpath:conf/app.properties"/>
     </bean>
     <context:annotation-config/>
     <context:component-scan base-package="org.flashdog"/>

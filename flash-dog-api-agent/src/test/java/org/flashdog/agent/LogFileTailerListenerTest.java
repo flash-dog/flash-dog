@@ -11,7 +11,7 @@ public class LogFileTailerListenerTest extends TestCase {
     @Override
     public void setUp() throws Exception {
         listener.setPatternTxt(".*\\[(.*)\\] - (.*)");
-        listener.setFormat("className message");
+        listener.setFields("className message");
         line = "2015-01-05 20:32:30,985 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from class path resource [spring/spring-security.xml]";
 
     }

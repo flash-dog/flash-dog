@@ -13,6 +13,9 @@ import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,8 +30,8 @@ public class LogFileTailerListener extends TailerListenerAdapter {
     private String patternTxt = "";
     @Value("${input.dateFormat}")
     private String dateFormat = "";
-    @Value("${output.format}")
-    private String format;
+    @Value("${input.fields}")
+    private String fields;
     private Pattern pattern;
     @Value("${mongo.uri}")
     private String mongoURI;
@@ -40,20 +43,36 @@ public class LogFileTailerListener extends TailerListenerAdapter {
     @Value("${input.file}")
     private String fileName;
     private AtomicLong counter = new AtomicLong();
+    /**
+     * 后台写日志的线程个数
+     */
+    private int threadCount = 2;
+    private LinkedBlockingQueue<Runnable> workQueue;
+    private int maxWorkSize = 1000;
+    private static ThreadPoolExecutor executorService;
 
     @Override
     public void handle(String line) {
         try {
 
-
-            DBObject bson = convert(line);
+            final DBObject bson = convert(line);
             if (logger.isDebugEnabled()) {
-               logger.debug("json= " + bson.toString());
+                logger.debug("json= " + bson.toString());
             }
 
-            collection.insert(bson);
             counter.incrementAndGet();
-
+            if (workQueue.size() < maxWorkSize) {
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            collection.insert(bson);
+                        } catch (Exception e) {
+                            //ingore errors
+                        }
+                    }
+                });
+            }
         } catch (Exception e) {
             logger.error("parse line err:", e);
         }
@@ -78,6 +97,11 @@ public class LogFileTailerListener extends TailerListenerAdapter {
         MongoURI uri = new MongoURI(mongoURI);
         mongo = new Mongo(uri);
         collection = (mongo.getDB(uri.getDatabase()).getCollection(collectionName));
+
+        workQueue = new LinkedBlockingQueue<Runnable>(2 * maxWorkSize);
+        executorService = new ThreadPoolExecutor(threadCount, threadCount,
+                0L, TimeUnit.MILLISECONDS,
+                workQueue);
     }
 
     public void setPatternTxt(String patternTxt) {
@@ -90,29 +114,29 @@ public class LogFileTailerListener extends TailerListenerAdapter {
 
     }
 
-    public void setFormat(String format) {
-        this.format = format;
+    public void setFields(String fields) {
+        this.fields = fields;
     }
 
     public DBObject convert(String line) {
         Matcher matcher = pattern.matcher(line);
         DBObject bson = new BasicDBObject();
-        String[] fields = format.split(" ");
+        String[] fields = this.fields.split(" ");
         if (matcher.matches()) {
             if (matcher.groupCount() >= fields.length) {
                 for (int i = 1; i <= matcher.groupCount(); i++) {
                     String field = fields[i - 1];
                     String group = matcher.group(i);
-                    if(field.equalsIgnoreCase("timestamp")){
+                    if (field.equalsIgnoreCase("timestamp")) {
 
                         bson.put(field, toDate(group));
-                    } else{
+                    } else {
                         bson.put(field, group);
                     }
 
                 }
             } else {
-                logger.error("解析结果字段个数不一致:" + format);
+                logger.error("解析结果字段个数不一致:" + this.fields);
             }
 
         } else {
@@ -124,14 +148,14 @@ public class LogFileTailerListener extends TailerListenerAdapter {
         return bson;
     }
 
-    private Date toDate(String group)  {
+    private Date toDate(String group) {
         try {
-            SimpleDateFormat sdf=new SimpleDateFormat(dateFormat);
+            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
             return sdf.parse(group);
         } catch (ParseException e) {
-           logger.error("date convert fail input=[{}] ,format=[{}]",group,dateFormat);
+            logger.error("date convert fail input=[{}] ,format=[{}]", group, dateFormat);
         }
-        return  new Date();
+        return new Date();
     }
 
     @Override

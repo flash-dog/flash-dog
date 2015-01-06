@@ -85,6 +85,28 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+
+                        <manifest>
+                            <mainClass>org.flashdog.agent.DogMain</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <packageName>flash-dog-api-agent</packageName>
+
+                        </manifest>
+
+                    </archive>
+                    <includes>
+                        <include>
+                            **/flashdog/**
+                        </include>
+                    </includes>
+
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

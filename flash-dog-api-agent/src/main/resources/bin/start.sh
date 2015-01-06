@@ -1,22 +1,17 @@
 #!/bin/bash
-ENV=$1
-if [ -z "$ENV" ]; then
-    echo "ERROR:PLEASE SPEC ENV ARGS,SUCH AS test,develop,product..  "
-    echo "app exit"
-    exit 1
-fi
+
 cd `dirname $0`
 BIN_DIR=`pwd`
 cd ..
 DEPLOY_DIR=`pwd`
 CONF_DIR=$DEPLOY_DIR/conf
-DUBBO_FILE=conf/$ENV/dubbo.properties
-SERVER_NAME=`sed '/dubbo.application.name/!d;s/.*=//' conf/$ENV/*.properties | tr -d '\r'`
-SERVER_PORT=`sed '/dubbo.protocol.port/!d;s/.*=//' conf/$ENV/*.properties | tr -d '\r'`
-JAVA_OPTS=`sed '/dubbo.jvm.opts/!d;s/[^=]*=//' conf/$ENV/*.properties | tr -d '\r'`
-SPRING_CONFIG=`sed '/dubbo.spring.config/!d;s/.*=//' conf/$ENV/*.properties | tr -d '\r'`
-LOGS_FILE=`sed '/dubbo.log4j.file/!d;s/.*=//' conf/$ENV/*.properties | tr -d '\r'`
-DOUBBO_CONTAINER=`sed '/dubbo.container/!d;s/.*=//' conf/$ENV/*.properties | tr -d '\r'`
+DUBBO_FILE=conf/dubbo.properties
+SERVER_NAME=`sed '/dubbo.application.name/!d;s/.*=//' conf/*.properties | tr -d '\r'`
+SERVER_PORT=`sed '/dubbo.protocol.port/!d;s/.*=//' conf/*.properties | tr -d '\r'`
+JAVA_OPTS=`sed '/dubbo.jvm.opts/!d;s/[^=]*=//' conf/*.properties | tr -d '\r'`
+SPRING_CONFIG=`sed '/dubbo.spring.config/!d;s/.*=//' conf/*.properties | tr -d '\r'`
+LOGS_FILE=`sed '/dubbo.log4j.file/!d;s/.*=//' conf/*.properties | tr -d '\r'`
+DOUBBO_CONTAINER=`sed '/dubbo.container/!d;s/.*=//' conf/*.properties | tr -d '\r'`
 
 if [ -z "$SERVER_NAME" ]; then
 	SERVER_NAME=`hostname`
@@ -70,7 +65,7 @@ else
 fi
 
 echo -e "Starting the $SERVER_NAME ...\c"
-nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS -classpath $CONF_DIR:$LIB_JARS com.skymobi.monitor.util.SpringJettyMain > $STDOUT_FILE 2>&1 &
+nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS -classpath $CONF_DIR:$LIB_JARS org.flashdog.agent.DogMain > $STDOUT_FILE 2>&1 &
 
 COUNT=0
 while [ $COUNT -lt 1 ]; do    

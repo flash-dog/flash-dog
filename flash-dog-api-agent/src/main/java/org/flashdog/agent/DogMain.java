@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class DogMain {
       public  static  void main(String[] args) throws IOException {
-          FileSystemXmlApplicationContext applicationContext=new FileSystemXmlApplicationContext("classpath:spring.xml");
+          FileSystemXmlApplicationContext applicationContext=new FileSystemXmlApplicationContext("classpath:conf/spring.xml");
           LogFileTailerListener listener = applicationContext.getBean(LogFileTailerListener.class);
 
           File file = new File(listener.getFileName());
