@@ -1,6 +1,8 @@
 **概述**  
-应用通过log4j输出日志到mongodb数据库中，闪电狗定时运行脚本分析日志，生成监控曲线和告警。主要优点是不影响业务代码，只需加入几个jar包和修改log4j配置文件就能接入。配置一些javascript小脚本，几乎就能监控所有你想监控的信息，如cpu内存，错误日志百分比，每日访问人数，收入等等  
-该项目由[杭州斯凯网络](http://www.sky-mobi.com/)开源，目前已经在公司内部支付等关键业务中使用，对创业团队和中小型公司有较大吸引力。目前只支持java的log4j和logback日志输出，也可以通过[代理模式](https://github.com/flash-dog/flash-dog/wiki/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)支持任意日志。在线demo ，http://115.28.11.12:8080/flash-dog/   用户 admin  密码 123456  
+闪电狗监控(flash-dog)起源于杭州斯凯网络科技有限公司一个真实项目，主要优点是轻巧快捷，非侵入式，不影响业务代码，只需加入几个jar包和修改log4j配置文件，就能监控任意指标，如CPU，内存、线程，游戏收入，在线人数等等。2012年开源后，在游戏、支付、教育等多种互联网公司广泛应用。
+在线demo ，http://115.28.11.12:8080/flash-dog/   用户 admin  密码 123456  
+详细图文教程请看[wiki](https://github.com/flash-dog/flash-dog/wiki)
+
 ## 
  1. 安装
 * 安装[mongodb](http://www.mongodb.org/downloads),解压出来，配置数据保存路径，打开cmd，输入：D:\mongodb\bin\mongod.exe -dbpath=data即可运行（路径修改成实际目录） 
@@ -94,77 +96,5 @@ m=function () {
   1.先配置将tomcat日志输出到log4j，下载tomcat-juli.jar到tomcat/bin,覆盖原来的jar，下载tomcat-util.jar到tomcat/lib，复制log4mongo-java ,flash-dog-api-log4j 和 mongo-java-driver ，log4j.properties到lib  
   2.修改tomcat/conf/server.xml中access-log部分：  className="com.skymobi.tomcat.Log4JAccessLogValve"   
   3.重启tomcat，在logs/catalina.log 可以看到访问日志    
-
-**扩展**   
-  如果您的项目没有使用log4j，也可以使用logback.
-* 下载安装 [logback-mongodb](https://github.com/flash-dog/logback-mongodb)
-        <pre><code>
-            mvn clean install
-        </code></pre>
-
-* 增加slf4j 和 logback 的依赖
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.6.5</version>
-		</dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>logback.mongodb</groupId>
-            <artifactId>logback.mongodb</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
-
-* logback的配置
-
-        <appender name="MONGO" class="logback.mongodb.MongoDBAppender">
-            <connectionSource class="logback.mongodb.MongoDBConnectionSource">
-                <uri>mongodb://172.16.3.47:27017</uri>
-                <db>ugglog</db>
-                <collection>paylog</collection>
-            </connectionSource>
-        </appender>
-
-        <appender name="ASYNCMONGO" class="ch.qos.logback.classic.AsyncAppender">
-            <appender-ref ref="MONGO" />
-        </appender>
-
-        <logger name="currency" additivity="false" level="warn">
-            <appender-ref ref="MONGO"/>
-        </logger>
-
-
-* 在logback中可以使用MDC功能输出附加的字段
-        <pre><code class="java">
-                MDC.clear();
-                MDC.put("mob", mob.name());
-                MDC.put("value", value + "");
-                MDC.put("currency", type.name());
-                MDC.put("reason", reason);
-                MDC.put("saveAtOnce", saveAtOnce + "");
-                mongoLogger.info("{}:{} {} {} {} {}", new Object[]{logPre, mob.name(), value, type, reason, saveAtOnce});
-        </code></pre>
-
-* 这样在mongodb的collection中保存的scheme会增加这些字段:
-        <pre><code>
-           {
-              mob: '',
-              value: '',
-              currency: '',
-              reason: '',
-              saveAtOnce: ''
-           }
-        </code></pre>
+ 
+ 
