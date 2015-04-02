@@ -34,7 +34,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
-* @author hill.hu
+ * @author hill.hu
  *
  */
 @Controller
@@ -45,59 +45,15 @@ public class TaskAction {
     private ProjectService projectService;
 
 
-    /**
-     * 显示任务列表
-     *
-     * @param map
-     * @param projectName
-     * @return
-     */
-    @RequestMapping(value = "/projects/{projectName}/tasks", method = RequestMethod.GET)
-    public String show(ModelMap map, @PathVariable String projectName) throws IOException {
+
+
+    @RequestMapping(value = "/projects/{projectName}/tasks/template/{id}", method = RequestMethod.GET)
+    public String edit(ModelMap map, @PathVariable String projectName,  @PathVariable String id)   {
         Project project = projectService.findProject(projectName);
 
         map.put("project", project);
-        map.put("tasks", project.getTasks());
-        return "task/list";
-    }
 
-    /**
-     * 创建任务
-     *
-     * @param map
-     * @param projectName
-     * @return
-     */
-    @RequestMapping(value = "/projects/{projectName}/tasks/new", method = RequestMethod.POST)
-    public String create(ModelMap map, @PathVariable String projectName, String taskName) {
-
-        Project project = projectService.findProject(projectName);
-        Task projectTask = project.findTask(taskName);
-        if (projectTask == null) {
-            Task task = new Task();
-            task.setName(taskName);
-            project.saveTask(task);
-            projectService.saveProject(project);
-        }
-        return String.format("redirect:/projects/%s/tasks/%s", projectName, taskName);
-
-    }
-
-    /**
-     * 编辑任务
-     *
-     * @param map
-     * @param projectName
-     * @param taskName
-     * @return
-     */
-    @RequestMapping(value = "/projects/{projectName}/tasks/{taskName}", method = RequestMethod.GET)
-    public String edit(ModelMap map, @PathVariable String projectName, @PathVariable String taskName) throws IOException {
-        Project project = projectService.findProject(projectName);
-        Task task = project.findTask(taskName);
-        map.put("project", project);
-        map.put("task", task);
-        return "task/edit";
+        return "task/templates/"+id;
     }
 
     @RequestMapping(value = "/projects/{projectName}/tasks/update", method = RequestMethod.POST)

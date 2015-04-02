@@ -37,7 +37,7 @@
     </repositories>
     <modules>
         <module>flash-dog-api-log4j</module>
-        <module>flash-dog-api-file</module>
+        <module>flash-dog-api-agent</module>
         <module>flash-dog-server</module>
     </modules>
 

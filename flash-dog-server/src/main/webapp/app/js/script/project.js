@@ -28,7 +28,7 @@ angular.module('fd.project', [])  .
             angular.forEach( $scope.projects, function(item) {
 
                 if( $.inArray(item.name, view.projectNames)>-1)
-                     $scope.visibleProjects.push(item);
+                    $scope.visibleProjects.push(item);
 
             });
 
@@ -64,9 +64,9 @@ angular.module('fd.project', [])  .
     }).
     controller("ProjectWarningsCtrl",function($scope,$http,$routeParams){
         $http.get("projects/"+$routeParams.name+"/warning/list").success(
-          function(data){
-              $scope.alerts=data.list;
-          }
+            function(data){
+                $scope.alerts=data.list;
+            }
         );
         $scope.clearAlerts=function(){
             $http.get("projects/"+$routeParams.name+"/warning/clear").success(
@@ -102,7 +102,7 @@ angular.module('fd.project', [])  .
 
                         }
                     });
-                   $scope.renderResult(result);
+                    $scope.renderResult(result);
                 });
             }
 
@@ -131,11 +131,11 @@ angular.module('fd.project', [])  .
 
     }).
     controller('ProjectShowCtrl', function($scope,$http,$routeParams) {
-       console.log("1");
-      $scope.$watch("project",function(){
-       if($scope.project&& $scope.project.chartViews.length>0){
-            $scope.drawChartView($scope.project.chartViews[0].title);
-        }
+        console.log("1");
+        $scope.$watch("project",function(){
+            if($scope.project&& $scope.project.chartViews.length>0){
+                $scope.drawChartView($scope.project.chartViews[0].title);
+            }
         }) ;
         $scope.chartData={chartTitle:"",data:[]};
         $scope.drawChartView=function(chartTitle){
@@ -148,31 +148,31 @@ angular.module('fd.project', [])  .
 
 
 
-            });
+                });
 
         };
         $scope.addChartView=function(){
             $scope.chartView= {title:'',metricNames:[]} ;
         } ;
         $scope.addMetric=function(metric){
-           if(!$scope.chartView.title){
-               $scope.chartView.title= metric;
-           }
+            if(!$scope.chartView.title){
+                $scope.chartView.title= metric;
+            }
         };
         $scope.saveChartView=function(chartView){
             var title = chartView.title;
             if(!title || title.length<1)
                 return;
             var metricNames=[];
-                $("#metricsViewForm").find("input[name='metricName']:checked").each(function(index,item){
-                    metricNames.push($(item).val());
+            $("#metricsViewForm").find("input[name='metricName']:checked").each(function(index,item){
+                metricNames.push($(item).val());
             });
             console.log(metricNames) ;
             chartView.metricNames=metricNames;
             $http.post("projects/"+$scope.project.name+"/metrics/add?",chartView)
                 .success(function(data){
-                 $scope.project.chartViews.push(chartView);
-            });
+                    $scope.project.chartViews.push(chartView);
+                });
         };
         $scope.removeChartView=function(){
             var title = $scope.chartTitle;
@@ -202,7 +202,7 @@ angular.module('fd.project', [])  .
     filter('projectFilter', function() {
         return function( items,view) {
             if(!items)
-            return;
+                return;
             console.log('projectView',arguments);
             var filtered = [];
             angular.forEach(items, function(item) {
@@ -221,7 +221,7 @@ angular.module('fd.project', [])  .
         var now = new Date();
         var today =now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+" 00:00:00";
         $("#datepicker_start").val(today);
-       var script_text = CodeMirror.fromTextArea(document.getElementById("script_text"), {
+        var script_text = CodeMirror.fromTextArea(document.getElementById("script_text"), {
             lineNumbers: true,
             electricChars: false
         });
@@ -273,13 +273,13 @@ angular.module('fd.project', [])  .
                     lineNumbers: true
                 });
 
-               $scope.$watch('initScript',function(nv){
-                   if(nv){
-                       $scope.script_text.setValue(nv.trim());
-                       $scope.script_text.scrollTo(1,1);
-                   }
+                $scope.$watch('initScript',function(nv){
+                    if(nv){
+                        $scope.script_text.setValue(nv.trim());
+                        $scope.script_text.scrollTo(1,1);
+                    }
 
-               });
+                });
                 $scope.clearConsole=function(){
                     script_console.setValue('');
                 }  ;
@@ -294,8 +294,10 @@ angular.module('fd.project', [])  .
                 $(".template_btn").click(function(){
                     var template=$("#"+$(this).attr("data-target"));
                     var cron=template.attr("data-cron");
-
-                    $scope.script_text.setValue(template.html().trim());
+                    $http.get("projects/"+$scope.project.name+"/tasks/template/"+$(this).attr("data-target")).success(function(data){
+                        $scope.script_text.setValue(data);
+                    });
+//                    $scope.script_text.setValue(template.html().trim());
                 });
             }
         };
@@ -343,7 +345,7 @@ angular.module('fd.project', [])  .
                                 return '<b>' + this.series.name + '</b><br/>' +
                                     Highcharts.dateFormat('%Y-%m-%d %H:%M', this.x) + ':<br/>' +
                                     Highcharts.numberFormat(this.y, 2);
-                        }},
+                            }},
 
                         series: series
                     });
@@ -351,7 +353,7 @@ angular.module('fd.project', [])  .
                 scope.$watch("chartData", function (chartData) {
 
                     if(!scope.chartData || !scope.chartData.data||scope.chartData.data.length<1)
-                    return;
+                        return;
                     console.log("render fire") ;
                     var series=[];
                     var columns = chartData.data[0];
