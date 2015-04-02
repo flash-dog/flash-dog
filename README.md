@@ -1,79 +1,16 @@
 **概述**  
 闪电狗监控(flash-dog)起源于杭州斯凯网络科技有限公司一个真实项目，主要优点是轻巧快捷，非侵入式，不影响业务代码，只需加入几个jar包和修改log4j配置文件，就能监控任意指标，如CPU，内存、线程，游戏收入，在线人数等等。2012年开源后，在游戏、支付、教育等多种互联网公司广泛应用。
 在线demo ，http://115.28.11.12:8080/flash-dog/   用户 admin  密码 123456  
-详细图文教程请看[wiki](https://github.com/flash-dog/flash-dog/wiki)
+QQ群：256733302
 
-## 
- 1. 安装
-* 安装[mongodb](http://www.mongodb.org/downloads),解压出来，配置数据保存路径，打开cmd，输入：D:\mongodb\bin\mongod.exe -dbpath=data即可运行（路径修改成实际目录） 
-* 下载[flash-dog-server](https://github.com/flash-dog/flash-dog/releases)
-* 修改flash-dog-server文件夹下的log4j.properties文件，修改log4j.appender.MongoDB的hostname和port指向你部署的mongodb地址和端口：  
-    log4j.appender.MongoDB.hostname=172.16.3.47  
-    log4j.appender.MongoDB.port=27017  
-* 修改conf/develop/app.properties，也指向刚才部署的mongodb  
-    mongo.uri=mongodb://172.16.3.47:27017/monitor_test  
-* 进入bin下，运行start.sh develop或者start-dev.bat  
- 在浏览器里打开http://localhost:8080/flash-dog 输入用户名：admin 密码 123456 ，你将看到一个叫闪电狗的项目，这是因为闪电狗也会监控自己，wow
-![screenshot](https://github.com/flash-dog/flash-dog/blob/master/screenshot/monitor1.jpg?raw=true)
- 2. 把你自己的项目加入闪电狗
-* 从[flash-dog-api-log4j](https://github.com/flash-dog/flash-dog/downloads)下载客户端的lib库，或者从flash-dog-server文件夹lib目录下拷贝log4mongo-java ,flash-dog-api-log4j 和 mongo-java-driver 到项目的lib库下，注意还需要log4j 1.2.15以上的版本
-* 修改您自己的log4j.properties配置文件
-* 重启您的项目
-* 进入http://localhost:8080/flash-dog/projects ,新建项目，如果配置正确，你将在【日志分析】栏目中查询到您的日志，enjoy your self！
-
- 3. log4j配置说明
-* log4j.properties
-
-<pre><code>
-log4j.appender.MongoDB=org.log4mongo.AsynMongoURILayoutAppender
-log4j.appender.MongoDB.layout=org.log4mongo.contrib.HostInfoPatternLayout
-#pid表示进程号，ip为当前服务器ip
-log4j.appender.MongoDB.layout.ConversionPattern={"timestamp":"%d","level":"%p","className":"%c","message":"%m","pid":"%V","ip":"%I"}
-#mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
-log4j.appender.MongoDB.mongoURI=mongodb://mongolog:123456@192.168.173.207:5281,192.168.173.238:5281/test?slaveOk=true
-log4j.appender.MongoDB.jvmMonitor=true
-log4j.appender.MongoDB.collectionName=flash_dog_log
-log4j.rootLogger=info,stdout,logfile,MongoDB
-</code></pre>
+详细图文教程 
+* [安装部署](https://github.com/flash-dog/flash-dog/wiki/1%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2)
+* [应用接入](https://github.com/flash-dog/flash-dog/wiki/2.%E5%BA%94%E7%94%A8%E6%8E%A5%E5%85%A5)
+* [代理模式](https://github.com/flash-dog/flash-dog/wiki/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)
+* [logback扩展](https://github.com/flash-dog/flash-dog/wiki/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)
 
 
- 4. 监控示例
-* 在闪电狗里面新建监控项目后，点击[定时任务]->[新建任务]。假设业务会打印出：
- <pre><code class="java">
-  username=jordon pay money=100
-</code></pre>
-  点击[指标监控]按钮，自动生成脚本如下：
-<pre><code class="java">
-m=function () { 
-     result = this.message.match(".*money=(\\d+)"); 
-     if (result) { 
-         pricePaied = new NumberLong(result[1]);         
-         emit("pricePaied", pricePaied); 
-     } 
- }  
- r= function (key, values) { 
-     var total = 0; 
-     for (var i = 0; i < values.length; i++) { 
-         total += values[i]; 
-     } 
-     return total; 
- }   
- res=db.flash_dog_log.mapReduce(m, r, {out:"flash_dog_log_output", query:{timestamp:{$gt:new Date(new Date - 300000)}}}); 
- pricePaied=db.flash_dog_log_output.findOne({_id:"pricePaied"});
- if(pricePaied) 
-    v=pricePaied.value; 
-   else 
-     v=0;    
- db.flash_dog_metrics.save({name:"5分钟收入",value:v,timeStamp:new Date().getTime()}); 
- return res;   
-</code></pre>
-
-  目的为通过脚本扫描最近5分钟日志，通过正则表示提取 this.message.match(".*money=(\\d+)") 金额，加起来即为最近5分钟收入。生成曲线图如下：  
-![screenshot](https://github.com/flash-dog/flash-dog/blob/master/screenshot/shouru1.jpg?raw=true)
-* 设置告警 当最近5分钟收入少于100的时候发送邮件，凌晨0点到4点的时候除外。
-![screenshot](https://github.com/flash-dog/flash-dog/blob/master/screenshot/warning1.jpg?raw=true)
-* 闪电狗目前有4个脚本模板，可以边修改，边调试，非常有趣
- 5. 常见问题
+#常见问题 
 * 是否可以监控业务   
   可以，默认是监控jvm性能和错误日志，里面提供了脚步模板，稍作修改便能通过分析业务日志进行业务统计和监控  
 * 是否需要连接业务数据库    
