@@ -3,13 +3,15 @@
 在线demo ，http://115.28.11.12:8080/flash-dog/   用户 admin  密码 123456  
 QQ群：256733302
 
-详细图文教程 
+#详细图文教程 
 * [安装部署](https://github.com/flash-dog/flash-dog/wiki/1%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2)
 * [应用接入](https://github.com/flash-dog/flash-dog/wiki/2.%E5%BA%94%E7%94%A8%E6%8E%A5%E5%85%A5)
 * [代理模式](https://github.com/flash-dog/flash-dog/wiki/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)
 * [logback扩展](https://github.com/flash-dog/flash-dog/wiki/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)
 
-
+#界面快照
+![项目主页](https://raw.githubusercontent.com/flash-dog/flash-dog/master/screenshot/monitor1.jpg)
+![项目主页](https://raw.githubusercontent.com/flash-dog/flash-dog/master/screenshot/shouru1.jpg)
 #常见问题 
 * 是否可以监控业务   
   可以，默认是监控jvm性能和错误日志，里面提供了脚步模板，稍作修改便能通过分析业务日志进行业务统计和监控  
