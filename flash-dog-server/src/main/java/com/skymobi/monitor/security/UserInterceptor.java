@@ -36,7 +36,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
             request.setAttribute(SimpleAuthz.USER_PRINCIPAL, request.getUserPrincipal());
             request.setAttribute("userName", request.getUserPrincipal().getName());
         }
-
+        logger.debug("receive a  page request ");
         return true;
     }
 

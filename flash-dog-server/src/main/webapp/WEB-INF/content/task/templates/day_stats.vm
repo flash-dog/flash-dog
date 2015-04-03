@@ -1,0 +1,16 @@
+#set($layout="/WEB-INF/content/layout/none.vm")
+//统计某个关键字，先统计5分钟，再把所有5分钟加起来
+var now=new Date();
+var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+var value=db.${project.logCollection}.find({'message':/receive a  page request/,timestamp:{'$gt':new Date(now - 300000)}}).count()
+var total=0;
+db.${project.metricCollection}.save({name:'5分钟页面请求',value:value,timeStamp:new Date().getTime()});
+cur=db.${project.metricCollection}.find({name:'5分钟页面请求',timeStamp:{'$gt':today.getTime()}});
+cur.forEach( function(metric) {
+    total+=metric.value;
+});
+
+db.${project.metricCollection}.save({name:'今日页面请求',value:total,timeStamp:new Date().getTime()});
+
+
+return  '五分钟：'+value +',今日总数：'+total;

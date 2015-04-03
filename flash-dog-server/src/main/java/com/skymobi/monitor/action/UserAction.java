@@ -85,11 +85,7 @@ public class UserAction {
         return "redirect:/projects";
     }
 
-    @RequestMapping(value = "/user/new", method = RequestMethod.GET)
-    public String register(ModelMap map) {
 
-        return "user/new";
-    }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public String register(User user, HttpServletRequest request,ModelMap mm) throws UnsupportedEncodingException {
@@ -137,9 +133,5 @@ public class UserAction {
         userManager.removeUser(user.getUsername());
         return result;
     }
-    @RequestMapping(value = "/user/wait", method = RequestMethod.GET)
-    public String wait(User user, ModelMap mm) {
-        mm.put("user", user);
-        return "user/wait";
-    }
+
 }

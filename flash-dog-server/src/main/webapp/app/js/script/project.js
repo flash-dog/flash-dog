@@ -39,16 +39,22 @@ angular.module('fd.project', [])  .
     controller('ProjectNewCtrl', function($scope,$http,Project,$location,$rootScope) {
         $("#add_form").validate();
         $scope.project={};
+        $scope.initTasks=[{name:'jvm_stats',title:'jvm性能监控',checked:true},{name:'log_stats',title:'日志监控',checked:true}];
         $scope.projectNameChanged=function(){
             var name=$scope.project.name.replace(/-/g,"_");
             $scope.project.logCollection=name+"_log";
             $scope.project.metricCollection=name+"_metrics"
         };
         $scope.addProject=function(){
+            $scope.project.tasks=[];
+            $.each($scope.initTasks,function(i,item){
+                if(item.checked)
+                    $scope.project.tasks.push({name:item.name})
+            });
             $http.post("projects/add", $scope.project).success(function(result){
 
                 if(result.success) {
-                    $location.path("/show/"+$scope.project.name+"/task/new") ;
+                    $location.path("/show/"+$scope.project.name+"/task") ;
                     $scope.addMessage("创建成功，从模板开始，先添加几个测试任务吧") ;
                 }else{
                     $scope.renderResult(result);

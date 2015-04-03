@@ -66,21 +66,7 @@ public class TaskAction {
         return new WebResult();
     }
 
-    /**
-     * 更新任务
-     *
-     * @param map
-     * @param projectName
-     * @param task
-     * @return
-     */
-    @RequestMapping(value = "/projects/{projectName}/tasks", method = RequestMethod.POST)
-    public String update(ModelMap map, @PathVariable String projectName, Task task) {
-        logger.debug("update task {}", new Gson().toJson(task));
-        projectService.saveTask(projectName, task);
 
-        return String.format("redirect:/projects/%s/tasks", projectName);
-    }
     @RequestMapping(value = "/projects/{projectName}/tasks/{taskName}/destroy")
     public @ResponseBody WebResult deleteTask(ModelMap map, @PathVariable String projectName, @PathVariable String taskName) throws IOException {
         projectService.removeTask(projectName, taskName);

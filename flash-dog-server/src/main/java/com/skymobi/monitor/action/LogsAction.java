@@ -59,12 +59,7 @@ public class LogsAction {
     @Resource
     private LogsService logsService;
 
-    @RequestMapping(value = "/projects/{projectName}/logs", method = RequestMethod.GET)
-    public String test(ModelMap map, @PathVariable String projectName) {
-        Project project = projectService.findProject(projectName);
-        map.put("project", project);
-        return "logs/show";
-    }
+
 
     @RequestMapping(value = "/projects/{projectName}/logs/download", method = RequestMethod.GET)
     public void download(final HttpServletResponse response, ModelMap map, @PathVariable String projectName, LogQuery logQuery) throws IOException, ParseException {

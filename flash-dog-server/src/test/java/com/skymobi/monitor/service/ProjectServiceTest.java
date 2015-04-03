@@ -17,6 +17,7 @@ package com.skymobi.monitor.service;
 
 import com.skymobi.monitor.model.Project;
 import com.skymobi.monitor.model.Status;
+import com.skymobi.monitor.util.ProjectCreator;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
@@ -34,7 +35,8 @@ import static org.junit.Assert.*;
 public class ProjectServiceTest extends AbstractJUnit4SpringContextTests {
     @Resource
     ProjectService projectService;
-
+     @Resource
+    ProjectCreator projectCreator;
 
     @Before
     public void setUp() throws Exception {
@@ -86,7 +88,7 @@ public class ProjectServiceTest extends AbstractJUnit4SpringContextTests {
         project.setName("test_project_1222");
         project.setMongoUri("mongodb://172.16.3.82:9999/mongolog");
         try {
-            projectService.create(project);
+            projectCreator.create(project);
         } catch (IllegalArgumentException e) {
           logger.debug("test error",e);
         }

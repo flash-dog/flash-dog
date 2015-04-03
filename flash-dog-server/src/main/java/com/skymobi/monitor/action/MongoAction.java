@@ -69,11 +69,5 @@ public class MongoAction {
          return result;
     }
 
-    @RequestMapping(value = "/projects/{projectName}/mongo/console", method = RequestMethod.GET)
-    public String console(ModelMap map, @PathVariable String projectName) throws IOException {
-        Project project = projectService.findProject(projectName);
-        map.put("project", project);
-        return "mongo/console";
-    }
 
 }

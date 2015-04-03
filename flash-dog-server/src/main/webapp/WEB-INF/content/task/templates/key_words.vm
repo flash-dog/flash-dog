@@ -1,7 +1,7 @@
 #set($layout="/WEB-INF/content/layout/none.vm")
 //统计日志里某些关键字频率，并提取到告警邮件里
 var   metric_name="异常数据次数";
-var cur = db.${project.logCollection}.find({message:/系统错误/,timestamp:{'$gt':new Date(new Date - 60*60*1000)}});
+var cur = db.${project.metricCollection}.find({name:/系统错误/,timestamp:{'$gt':new Date(new Date - 60*60*1000)}});
 var content = "";
 var count=0;
 cur.forEach( function(log) {

@@ -122,15 +122,6 @@ public class MetricAction {
 
 
 
-    @RequestMapping(value = "/projects/{projectName}/metrics/timeRange", method = RequestMethod.POST)
-    public String save(@PathVariable String projectName, TimeRange timeRange) {
-        Project project = projectService.findProject(projectName);
-
-        project.setTimeRange(timeRange);
-
-        projectService.saveProject(project);
-        return "redirect:/projects/" + projectName;
-    }
     @RequestMapping(value = "/projects/{projectName}/setting/timeRange", method = RequestMethod.POST)
     public @ResponseBody String timeRange(@PathVariable String projectName, HttpEntity<TimeRange> entity) {
         TimeRange timeRange=entity.getBody();

@@ -49,7 +49,7 @@ public class ProjectCreatorTest extends AbstractJUnit4SpringContextTests {
     public void test_render_task_template() throws Exception {
         project.setLogCollection("flash_dog_log");
         project.setMetricCollection("flash_dog_metrics");
-        Task task1 = creator.renderTask(task, project);
+        Task task1 = creator.renderTemplateTask(task, project);
         assertEquals(task.getCron(), task1.getCron());
         assertEquals(task.getName(), task1.getName());
         assertEquals(task.getTimeout(), task1.getTimeout());

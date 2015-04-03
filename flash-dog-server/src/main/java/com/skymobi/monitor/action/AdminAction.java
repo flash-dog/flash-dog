@@ -46,32 +46,6 @@ public class AdminAction {
     private UserManager userManager;
     @Resource
     private ViewService viewService;
-     @Resource
-     private ProjectService projectService;
-    @RequestMapping(value = "/admin/user/list", method = RequestMethod.GET)
-    public String show(ModelMap map) {
-        List<User> users = userManager.listUsers();
-
-        map.put("users", users);
-        return "user/list";
-    }
-
-    @RequestMapping(value = "/admin/user/", method = RequestMethod.POST)
-    public String update(User user, ModelMap map) {
-        userManager.monitorUser(user);
-        map.put("user", user);
-        return "redirect:/admin/user/list";
-    }
-
-    @RequestMapping(value = "/admin/views/", method = RequestMethod.POST)
-    public String addView(View view, String projectName) {
-        if (projectName != null)
-            view.setProjectNames(Lists.newArrayList(projectName.split(",")));
-        logger.debug("save view ={}",view);
-        viewService.saveView(view);
-
-        return "redirect:/projects";
-    }
 
     @RequestMapping(value = "/admin/views/destroy" )
     public @ResponseBody  WebResult deleteView(String name,  ModelMap map) {

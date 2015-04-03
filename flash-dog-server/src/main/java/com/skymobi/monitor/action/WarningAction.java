@@ -55,23 +55,7 @@ public class WarningAction {
         return  result;
     }
 
-    @RequestMapping(value = "/projects/{projectName}/warnings", method = RequestMethod.GET)
-    public String listWarnings(ModelMap map, @PathVariable String projectName) throws IOException {
-        Project project = projectService.findProject(projectName);
-        map.put("project", project);
-        map.put("alerts", alertService.findAlerts(projectName));
-        return "warning/list";
-    }
 
-    @RequestMapping(value = "/projects/{projectName}/warnings", method = RequestMethod.POST)
-    public String update(ModelMap map, @PathVariable String projectName, MetricDog metricDog) throws IOException {
-        Project project = projectService.findProject(projectName);
-        project.saveDog(metricDog);
-        projectService.saveProject(project);
-        map.put("project", project);
-
-        return "redirect:/projects/" + projectName + "/settings/warnings";
-    }
 
     @RequestMapping(value = "/projects/{projectName}/warning/clear", method = RequestMethod.GET)
     public @ResponseBody String clear(ModelMap map, @PathVariable String projectName) throws IOException {
@@ -83,12 +67,5 @@ public class WarningAction {
         return "true";
     }
 
-    @RequestMapping(value = "/projects/{projectName}/warnings/remove")
-    public String remove(@PathVariable String projectName,  String dogName) throws IOException {
-        Project project = projectService.findProject(projectName);
 
-        project.removeDog(dogName);
-        projectService.saveProject(project);
-        return "redirect:/projects/" + projectName + "/settings/warnings";
-    }
 }

@@ -41,6 +41,7 @@
               <list>
                   <ref bean="logTask"/>
                   <ref bean="jvmTask"/>
+                  <ref bean="dayTask"/>
               </list>
          </property>
        <property name="projectService" ref="projectService"/>
