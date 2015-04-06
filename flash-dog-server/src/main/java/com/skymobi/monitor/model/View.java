@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * organization for projects
+ *
  * @author Hill.Hu
  */
 public class View {
@@ -13,7 +15,8 @@ public class View {
     private String id;
     private String name;
     private List<String> projectNames;
-    private Date createTime=new Date();
+    private Date createTime = new Date();
+
     public String getName() {
         return name;
     }

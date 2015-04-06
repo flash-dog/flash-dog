@@ -18,9 +18,9 @@ package com.skymobi.monitor.model;
 import java.util.Date;
 
 /**
-* @author hill.hu
+ * result of metric
  *
- * 度量因子的值
+ * @author hill.hu
  */
 public class MetricValue implements IdentifyObject {
     private double value;

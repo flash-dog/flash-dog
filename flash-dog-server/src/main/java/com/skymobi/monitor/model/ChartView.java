@@ -5,12 +5,13 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
+ * a chart show one or more metrics
+ *
  * @author hushan
- * 图表视图
  */
 public class ChartView {
     private String title;
-    private List<String> metricNames= Lists.newArrayList();
+    private List<String> metricNames = Lists.newArrayList();
 
     public List<String> getMetricNames() {
         return metricNames;

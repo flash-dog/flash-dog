@@ -16,8 +16,7 @@ public class ChartUtil {
     private static SimpleDateFormat sdf = new SimpleDateFormat("M月dd HH:mm");
 
     /**
-     * 格式成google图表，参见单元测试
-     * 如：
+     * example：
      * [[time, request, pay],
      * [7月01 00:00, 10.0, 0.0],
      * [8月01 00:00, 12.0, 2.0],
@@ -70,9 +69,7 @@ public class ChartUtil {
     }
 
     /**
-     * 寻找最接近指定时间点的值
-     * 如果找不到则返回上一个时间点的值
-     *
+     *  find near value
      * @param timeStamp
      * @param list
      * @return

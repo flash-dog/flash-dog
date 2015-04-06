@@ -31,9 +31,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 
 /**
+ * define a dog for the metric
+ *
  * @author hill.hu
- *         <p/>
- *         度量监控
  */
 public class MetricDog {
     private static Logger logger = LoggerFactory.getLogger(MetricDog.class);
@@ -120,7 +120,7 @@ public class MetricDog {
     public void setMetricName(String metricName) {
         this.metricName = metricName;
     }
-    
+
     public String getMailList() {
         return mailList;
     }
@@ -271,8 +271,8 @@ public class MetricDog {
         try {
             now = sdf.parse(sdf.format(current));
 
-            Date start = sdf.parse(startTime) ;
-            Date end = sdf.parse(endTime );
+            Date start = sdf.parse(startTime);
+            Date end = sdf.parse(endTime);
             //如果为"除了某时间段"模式
             if (excludeTimeMode) {
                 return !(now.after(start) && now.before(end));

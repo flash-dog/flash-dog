@@ -2,12 +2,12 @@
     <div ng-include="'app/partial/project/_project_nav.html'" ></div>
     <br/>
     <a href="javascript:void(0)" class="btn btn-danger pull-right"
-       ng-click="deleteProject()" > 删除项目</a>
+       ng-click="deleteProject()" translate> label.deleteProject</a>
     <ul class="nav nav-tabs   " role="tablist">
-        <li class="active"><a data-target="#home" role="tab" data-toggle="tab">概要</a></li>
-        <li><a data-target="#profile" role="tab" data-toggle="tab">狗狗</a></li>
+        <li class="active"><a data-target="#home" role="tab" data-toggle="tab" translate>label.general</a></li>
+        <li><a data-target="#profile" role="tab" data-toggle="tab" translate>label.dogs</a></li>
 
-        <li><a data-target="#settings" role="tab" data-toggle="tab">插件</a></li>
+        <li><a data-target="#settings" role="tab" data-toggle="tab" translate>label.plugins</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -17,7 +17,7 @@
             <form id="info_form"  method="post" class="form-horizontal ">
                 <div ng-include="'app/partial/project/_info.html'"></div>
                 <div class="form-group">
-                    <label  class="col-sm-2 control-label">管理员</label>
+                    <label  class="col-sm-2 control-label" translate>label.admin</label>
                     <div class="col-sm-10">
                         <input type="text"  class="form-control" input-tip="多个用逗号分隔"   ng-model="admins" ng-value="admins"/>
 
@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label  class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="javascript:void(0)" class="btn btn-primary" ng-click="updateBasic()"  >确定</a>
+                        <a href="javascript:void(0)" class="btn btn-primary" ng-click="updateBasic()"  translate>label.ok</a>
 
                     </div>
                 </div>
@@ -45,35 +45,27 @@
                 <table width="100%">
                     <tr  ><td  colspan="3">
 
-                        <label  >
-                            HTTP告警通知(POST):
+                        <label translate >
+                          label.httpNotify
                         </label></td>
                         <td></td></tr>
                     <tr ><td class="setting-name">url:</td>
-                        <td class="setting-main"><input name="_httpNotifyConfig_url" class="setting-input" ng-model="project.properties.httpNotifyConfig_url" placeholder="如：http://www.baidu.com"/></td>
+                        <td class="setting-main"><input name="_httpNotifyConfig_url" class="setting-input" ng-model="project.properties.httpNotifyConfig_url" placeholder=""/></td>
                     </tr>
-                    <tr ><td class="setting-name">编码:</td><td class="setting-main"><input name="" class="setting-input"  ng-model="project.properties.httpNotifyConfig_encode" /></td>
+                    <tr ><td class="setting-name">encode</td><td class="setting-main"><input name="" class="setting-input"  ng-model="project.properties.httpNotifyConfig_encode" /></td>
                     </tr>
-                    <tr><td class="setting-name">发送数据模板:</td><td class="setting-main"><textarea style="height: 80px"    class="setting-input"  ng-model="project.properties.httpNotifyConfig_template" ></textarea></td>
+                    <tr><td class="setting-name" translate>label.notifyDataTemplate</td><td class="setting-main"><textarea style="height: 80px"    class="setting-input"  ng-model="project.properties.httpNotifyConfig_template" ></textarea></td>
                     </tr>
-                    <tr><td class="setting-name">自定义变量:</td><td class="setting-main"><textarea style="height: 90px"   class="setting-input"  ng-model="project.properties.httpNotifyConfig_properties"></textarea> </td>
+                    <tr><td class="setting-name" translate>label.notifyCustomData</td><td class="setting-main"><textarea style="height: 90px"   class="setting-input"  ng-model="project.properties.httpNotifyConfig_properties"></textarea> </td>
                     </tr>
                 </table>
 
-                <input type="button" class="btn btn-primary" ng-click="updateExt()" value="确定"/>
+                <input type="button" class="btn btn-primary" ng-click="updateExt()" value="{{'label.ok' | translate}}"/>
 
-                <a class="btn"  id="http_alert_test_btn" onclick="$('#http_alert_test_form').toggle()">测试>></a>
+                <a class="btn"  id="http_alert_test_btn" ng-click="testAlert()" translate> label.test</a>
             </form>
             <br/>
-            <form id="http_alert_test_form"   style="display: none;">
-                测试前需要先保存设置:<br/>
-                <input type="hidden" name="projectName" ng-value="project.name">
-                <input type="hidden" name="level" value="ERROR">
-                标题(title):<input name="title" value="测试信息，请忽略">    <br/>
-                内容(content): <input name="content" value="测试：收入>0">     <br/>
-                IP: <input name="ip" value="127.0.0.1">     <br/>
-                <input type="submit" value="发送">
-            </form>
+
         </div>
     </div>
 </div>

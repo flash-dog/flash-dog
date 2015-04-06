@@ -1,14 +1,14 @@
 #set($layout="/WEB-INF/content/layout/none.vm")
-//统计日志里某些关键字频率，并提取到告警邮件里
-var   metric_name="异常数据次数";
-var cur = db.${project.metricCollection}.find({name:/系统错误/,timestamp:{'$gt':new Date(new Date - 60*60*1000)}});
+//stats key words,
+var   metric_name="#springMessage('label.5minExceptionStats')";
+var cur = db.${project.metricCollection}.find({name:/exception/,timestamp:{'$gt':new Date(new Date() - 5*60*1000)}});
 var content = "";
 var count=0;
 cur.forEach( function(log) {
-count++;
-content =content+"\
-"+log.timestamp.toLocaleDateString()+" "+ log.timestamp.toLocaleTimeString() +" " +log["message"];
+    count++;
+    content =content+"\
+    "+log.timestamp.toLocaleDateString()+" "+ log.timestamp.toLocaleTimeString() +" " +log["message"];
 });
 
 db.${project.metricCollection}.save({name:metric_name,value:count, content:content,timeStamp:new Date().getTime()});
-return    "次数:"+ count +" 内容"+content;
+return    "count:"+ count +", content"+content;

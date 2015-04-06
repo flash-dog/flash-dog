@@ -19,21 +19,21 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
-* @author hill.hu
+ * time range for chart view
  *
- * 时间范围
+ * @author hill.hu
  */
 public class TimeRange {
 
     private transient Date now = new Date();
-    private int last=1;
+    private int last = 1;
     /**
-     * 时间单位，参见Calendar
+     * @see Calendar
      * hour =10
      * MINUTE=12
      * DATE = 5
      */
-    private int unit=5;
+    private int unit = 5;
     private transient Date start, end;
 
     public TimeRange(int last, int unit) {

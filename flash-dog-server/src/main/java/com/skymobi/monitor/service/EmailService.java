@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
- * 扫描各个项目发件箱，并发出邮件
+ * scan alerts and send email
  *
  * @author hill.hu
  */

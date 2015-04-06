@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" type="image/x-icon" href="#springUrl('/app/images/logo.png')"/>
-    <title>闪电狗监控</title>
+    <title>#springMessage("app.title")</title>
     <link href="app/styles/style.css" rel="stylesheet">
     <link href="app/js/vender/bootstrap/css/bootstrap.css" rel="stylesheet">
     <script type="text/javascript" src="app/js/vender/jquery/jquery-1.7.2.min.js"></script>
@@ -44,24 +44,24 @@
         </div>
         <div class="setting-input">
             <label for="username" class="setting-name">
-                用户名
+                #springMessage("label.username")
             </label>
             <input name="j_username" id="username" class="setting-main {required:true}" type="text">
         </div>
         <div class="setting-input">
             <label for="password" class="setting-name">
-                密码
+                #springMessage("label.password")
             </label>
             <input name="j_password" id="password" class="setting-main {required:true}" type="password">
         </div>
         <div data-role="fieldcontain" data-controltype="textinput" style="display:  none">
             <label for="autologin" class="setting-name">
-                记住我
+                #springMessage("label.rememberMe")
             </label>
             <input name="_spring_security_remember_me" id="autologin" type="checkbox" checked="checked">
         </div>
         <div>
-            <input id="login_btn" class="btn btn-primary btn-lg btn-block" type="submit" value="登录">  </input></div>
+            <input id="login_btn" class="btn btn-primary btn-lg btn-block" type="submit" value="  #springMessage("label.login")">  </input></div>
     </div>
 </form>
 </body>

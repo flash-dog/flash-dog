@@ -24,8 +24,8 @@
          <div id="content">
 
              <div style="display: inline;"  id="query_div">
-                 关键字:<input type="text" id="key_word_input"  />
-                 日志级别:<select id="level" >
+                 {{'label.keyWords'|translate}}:<input type="text" id="key_word_input"  />
+                 {{'label.level'|translate}}:<select id="level" >
                  <option value="">ALL</option>
                  <option value="DEBUG">DEBUG</option>
                  <option value="INFO">INFO</option>
@@ -38,15 +38,15 @@
 
                  to: <input type="text" id="datepicker_end"   onClick="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})" >
 
-                 <input type="button" id="search_btn" ng-click="loadLog()" value="查询"  />
+                 <button type="button" id="search_btn" ng-click="loadLog()" translate>label.query</button>
              </div>
-             <input type="button" ng-click="downloadLog()"  value="下载"  />
-             <input type="checkbox" ng-click="loadLog()" ng-model="autoLoad" id="refresh_check_box"  /> 实时输出
-             <input type="button" ng-click=" clearLog()" value="清空输出"/><br/>
+             <button type="button" ng-click="downloadLog()"   translate>label.download</button>
+             <!--<input type="checkbox" ng-click="loadLog()" ng-model="autoLoad" id="refresh_check_box"  /> auto refresh -->
+             <button type="button" ng-click=" clearLog()"  translate>label.clear</button><br/>
 
          </div>
 
-         <textarea id="script_text" style="width:90%">正在加载</textarea>
+         <textarea id="script_text" style="width:90%">loading...</textarea>
 
      </div>
 </div>

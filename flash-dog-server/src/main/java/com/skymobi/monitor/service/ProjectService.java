@@ -72,14 +72,10 @@ public class ProjectService {
         return project;
     }
 
-    /**
-     * 从老版本的view兼容新的chartView
-     * @param project
-     */
     private void checkChartView(Project project) {
         List<ChartView> chartViews = project.getChartViews();
+        //compatible for old version ,will delete
         Map<String, String> views = project.getViews();
-
         if (chartViews.isEmpty() && !views.isEmpty()) {
             for (String metricName : views.keySet()) {
                 ChartView view=new ChartView();

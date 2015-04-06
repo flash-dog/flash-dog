@@ -23,18 +23,16 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
-* @author hill.hu
- *
- * 统计类
+ * @author hill.hu
+ * @see com.skymobi.monitor.model.ChartView
  */
+@Deprecated
 public class Chart implements IdentifyObject {
 
     private static Logger logger = LoggerFactory.getLogger(Chart.class);
 
     private String name;
-    /**
-     * mongodb的查询脚本
-     */
+
     private String query;
 
     public Chart(String name) {

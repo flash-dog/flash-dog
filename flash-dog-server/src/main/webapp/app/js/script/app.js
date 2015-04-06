@@ -3,7 +3,8 @@
  * @author hill.hu.
  */
 var  _auth;
-angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate',"fd.directives"])
+
+angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate',"fd.directives", 'pascalprecht.translate'])
 
 .controller('MainController', function($scope, $route, $routeParams, $location,$rootScope) {
     $scope.$route = $route;
@@ -27,7 +28,7 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
 
 
 }).
-    config(function($routeProvider,$httpProvider){
+    config(["$routeProvider","$httpProvider","$translateProvider",function($routeProvider,$httpProvider,$translateProvider){
         $routeProvider.when("/list",{
             controller:"ProjectListCtrl",
             templateUrl:"app/partial/project/list.html"
@@ -93,7 +94,12 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
         }];
 
         $httpProvider.responseInterceptors.push(interceptor);
-    }).directive('fdMessage', function () {
+
+        $translateProvider.useUrlLoader('/flash-dog/resource/messages');
+//        $translateProvider.useStorage('UrlLanguageStorage');
+        $translateProvider.preferredLanguage(_auth.lang);
+        $translateProvider.fallbackLanguage('en');
+    }]).directive('fdMessage', function () {
         return {
             restrict: 'C',
 //            replace: true,
@@ -111,10 +117,19 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
                 } ;
                 scope.renderResult=function(result){
                     if(result.success){
-                       scope.addMessage(result.message||"操作成功","success")
+                       scope.addMessage(result.message||"tip.success","success")
                     } else{
-                        scope.addMessage(result.message||"操作失败","danger")
+                        scope.addMessage(result.message||"tip.fail","danger")
                     }
                 }
             }}
-    });
+    })
+    . factory('UrlLanguageStorage', ['$location', function($location) {
+        return {
+            put: function (name, value) {},
+            get: function (name) {
+                return $location.search()['lang']
+            }
+        };
+    }])
+;

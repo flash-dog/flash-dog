@@ -5,14 +5,16 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
- * @author  hill.hu
+ * common model for  web response
+ *
+ * @author hill.hu
  */
 public class WebResult {
     private int count;
-    private List  list= Lists.newArrayList();
-    private int pageSize=10;
+    private List list = Lists.newArrayList();
+    private int pageSize = 10;
     private int page;
-    private boolean success=true;
+    private boolean success = true;
     private String message;
 
     public String getMessage() {

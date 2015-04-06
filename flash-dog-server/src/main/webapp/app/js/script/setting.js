@@ -67,22 +67,21 @@ angular.module('fd.setting', ["fd.project"]).
     controller('SettingExtCtrl', function($scope,$http,Project,$location) {
         var properties=$scope.project.properties;
         if(!properties.httpNotifyConfig_url ){
-            properties.httpNotifyConfig_url="";
+            properties.httpNotifyConfig_url="http://www.baidu.com";
             properties.httpNotifyConfig_encode="utf-8";
-            properties.httpNotifyConfig_template="user=$x";
+            properties.httpNotifyConfig_template="user=$x&title=$title&content=$content";
             properties.httpNotifyConfig_properties="x=1";
 
         }
-        $('#http_alert_test_form').submit(function() {
-            var data=$(this).serialize();
-            $http.get("./projects/"+$scope.project.name+"/notifier/http/test?"+data).success(
-                function(){
-                    $scope.addMessage("发送成功!");
+        $scope.testAlert=function() {
+            var data=properties;
+            $http.post("./projects/"+$scope.project.name+"/notifier/http/test?",data).success(
+                function(result){
+                    $scope.renderResult(result);
                 }
             );
 
-        return false;
-    });
+        };
         $scope.updateExt=function(){
             $http.post("./projects/"+$scope.project.name+"/ext",properties).success(function(result){
                  $scope.renderResult(result);

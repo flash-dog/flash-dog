@@ -37,11 +37,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.util.*;
 
 /**
- * 项目,包括4个方面
- * 1.图表
- * 2.告警
- * 3.任务
- * 4.度量因子
+ * config of project,such as :charts,alerts,tasks,metrics etc.
  *
  * @author hill.hu
  */
@@ -60,6 +56,9 @@ public class Project {
      * mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
      */
     private String mongoUri;
+    /**
+     * @see com.skymobi.monitor.model.Project#chartViews
+     */
     @Deprecated
     private List<Chart> charts = Lists.newArrayList();
     private List<Task> tasks = Lists.newArrayList();
@@ -73,16 +72,17 @@ public class Project {
     private Properties properties = new Properties();
     /**
      * 用于存储视图
-     * @see  #chartViews
+     *
+     * @see #chartViews
      */
     @Deprecated
     private Map<String, String> views = new HashMap();
     /**
      * 图表视图
      */
-    private List<ChartView> chartViews=Lists.newArrayList();
-    private Status status=Status.FINE;
-    private Date createTime=new Date();
+    private List<ChartView> chartViews = Lists.newArrayList();
+    private Status status = Status.FINE;
+    private Date createTime = new Date();
 
     public Date getCreateTime() {
         return createTime;
@@ -177,21 +177,6 @@ public class Project {
         return null;
     }
 
-
-    public Chart findChart(String chartName) {
-        for (Chart chart : charts) {
-            if (StringUtils.equals(chart.getName(), chartName))
-                return chart;
-        }
-        return null;
-    }
-
-
-    public void saveChart(Chart chart) {
-        this.charts.remove(chart);
-        this.charts.add(chart);
-    }
-
     public List getCharts() {
         return charts;
     }
@@ -209,6 +194,7 @@ public class Project {
         this.metricDogs = metricDogs;
     }
 
+    @Deprecated
     public Map<String, String> getViews() {
         return views;
     }
@@ -274,10 +260,10 @@ public class Project {
         }
 
     }
-    
-	private static String parseChars(char[] chars) {
-		return chars == null ? null : String.valueOf(chars);
-	}
+
+    private static String parseChars(char[] chars) {
+        return chars == null ? null : String.valueOf(chars);
+    }
 
     public List<String> findMetricNames() {
 
@@ -331,15 +317,15 @@ public class Project {
 
 
     public void removeDog(String dogName) {
-        for(int i=0;i<metricDogs.size();i++){
-            if(metricDogs.get(i).getName().equals(dogName))  {
-                logger.debug("delete dog [{}] from [{}]",dogName,name);
+        for (int i = 0; i < metricDogs.size(); i++) {
+            if (metricDogs.get(i).getName().equals(dogName)) {
+                logger.debug("delete dog [{}] from [{}]", dogName, name);
                 metricDogs.remove(i);
                 return;
             }
         }
 
-       logger.warn("delete fail,can't find dog [{}] from [{}]",dogName,name);
+        logger.warn("delete fail,can't find dog [{}] from [{}]", dogName, name);
 
 
     }

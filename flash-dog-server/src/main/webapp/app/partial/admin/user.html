@@ -13,9 +13,9 @@
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr class="active">
-                    <th>Name</th>
-                    <th>状态</th>
-                    <th>注册时间</th>
+                    <th translate>label.name</th>
+                    <th translate>label.status</th>
+                    <th translate>label.registerTime</th>
 
                 </tr>
                 </thead>
@@ -23,7 +23,7 @@
 
                 <tr  ng-repeat="user in webResult.list"   ng-click="editUser(user)" ng-class="{success:user==selectedUser}">
                     <td>{{user.username}}</td>
-                    <td>{{user.enabled?"正常":"冻结"}}</td>
+                    <td>{{user.enabled}}</td>
                     <td>
                        {{ user.registerTime|date:'yyyy-MM-dd HH:mm'}}
                     </td>
@@ -37,13 +37,13 @@
 <form class="form-horizontal  edit-form" role="form" ng-show="selectedUser" ng-submit="updateUser()">
 
     <div class="form-group"  >
-        <label   class="col-sm-2 control-label">用户名</label>
+        <label   class="col-sm-2 control-label" translate>label.username</label>
         <div class="col-sm-10">
             <input  name="name" ng-disabled="selectedUser.registerTime" type="text" ng-model="selectedUser.username"   class="form-control"  >
         </div>
     </div>
     <div class="form-group"  >
-        <label   class="col-sm-2 control-label">密码</label>
+        <label   class="col-sm-2 control-label" translate>label.password</label>
         <div class="col-sm-10">
             <input  name="name"   type="password" ng-model="selectedUser.password"   class="form-control"  >
         </div>
@@ -52,16 +52,16 @@
         <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" ng-model="selectedUser.enabled" > 状态正常
+                    <input type="checkbox" ng-model="selectedUser.enabled" > {{'label.statusEnable' | translate}}
                 </label>
             </div>
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit"  class="btn btn-primary">确定</button>
-            <a  ng-click="editUser()" class="btn btn-default">取消</a>
-            <a  ng-click="removeUser(selectedUser)" class="btn btn-danger pull-right">删除</a>
+            <button type="submit"  class="btn btn-primary" translate>label.ok</button>
+            <a  ng-click="editUser()" class="btn btn-default" translate>label.cancel</a>
+            <a  ng-click="removeUser(selectedUser)" class="btn btn-danger pull-right" translate>label.delete</a>
         </div>
     </div>
 

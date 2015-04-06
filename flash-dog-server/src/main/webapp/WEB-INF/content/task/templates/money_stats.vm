@@ -1,24 +1,25 @@
 #set($layout="/WEB-INF/content/layout/none.vm")
-//统计日志里某些数字总值，如每5分钟收入等
+//stats some mertric,such as money ,user etc.
+var metricName='#springMessage('label.5minMoneyStats')';
 m=function () {
-result = this.message.match(".*money=(\\d+)");
-if (result) {
-pricePaied = new NumberLong(result[1]);
-emit("pricePaied", pricePaied);
+    result = this.message.match(".*money=(\\d+)");
+    if (result) {
+    pricePaied = new NumberLong(result[1]);
+    emit("pricePaied", pricePaied);
 }
 }
 r= function (key, values) {
-var total = 0;
-for (var i = 0; i < values.length; i++) {
-total += values[i];
+    var total = 0;
+    for (var i = 0; i < values.length; i++) {
+    total += values[i];
 }
 return total;
 }
 res=db.${project.logCollection}.mapReduce(m, r, {out:"${project.logCollection}_output", query:{timestamp:{'$gt':new Date(new Date - 300000)}}});
 pricePaied=db.${project.logCollection}_output.findOne({_id:"pricePaied"});
 if(pricePaied)
-v=pricePaied.value;
+    v=pricePaied.value;
 else
-v=0;
-db.${project.metricCollection}.save({name:"5分钟收入",value:v,timeStamp:new Date().getTime()});
+    v=0;
+db.${project.metricCollection}.save({name:metricName,value:v,timeStamp:new Date().getTime()});
 return res;

@@ -1,0 +1,4 @@
+#set($layout="/WEB-INF/content/layout/none.vm")
+var name='metricName';
+db.${project.metricCollection}.remove({name:name});
+return db.${project.metricCollection}.findOne({name:name});

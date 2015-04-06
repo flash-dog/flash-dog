@@ -61,7 +61,7 @@ public class ProjectCreator {
         Assert.isTrue(project.fetchMongoTemplate().collectionExists(project.getLogCollection()), " [" + project.getLogCollection() + "] 日志表不存在");
         try {
             List<Task> taskList = Lists.newArrayList();
-            logger.debug("初始脚本个数:{}", project.getTasks().size());
+            logger.debug("init task count:{}", project.getTasks().size());
             for (Task _task : project.getTasks()) {
 
                 Task task = getTemplateTask(_task);
@@ -87,8 +87,7 @@ public class ProjectCreator {
     }
 
     /**
-     * 通过log4jProperties的配置来设置mongodb信息
-     *
+     * config mongo uri from  log4jProperties
      * @param project
      */
     private void setMongoInfoByLog4j(Project project) {
@@ -136,7 +135,7 @@ public class ProjectCreator {
             task1.setScript(out.toString());
             return task1;
         } catch (Exception e) {
-            logger.error("从模板初始化脚本失败", e);
+            logger.error("init task from template fail:", e);
             return null;
         }
 

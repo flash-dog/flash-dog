@@ -39,7 +39,7 @@ public class TaskService {
 
     public void scheduledTask(final Project project, final Task task) {
         final String projectName = project.getName();
-        //先取消老的任务
+        //first,cancel old task
         removeScheduled(projectName, task);
         String taskKey = getTaskKey(projectName, task);
         ScheduledFuture<?> future = executor.schedule(new Runnable() {

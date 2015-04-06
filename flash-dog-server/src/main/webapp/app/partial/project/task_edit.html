@@ -14,29 +14,36 @@
         <div ng-include="'app/partial/project/_project_nav.html'" ></div>
 
 
-        <form id="add_form" ng-submit="updateTask()" >
+        <form id="add_form" ng-submit="updateTask()" class="form-horizontal  ng-valid" >
             <div class="tool-bar" style="text-align: left">
+
                 <table>
                     <tbody>
-                    <tr>
-                        <td class="setting-name">名      称</td>
-                        <td class="setting-main"><input name="name" id="task_name"   class="{required:true,name:true,minlength:2}" ng-model="task.name"/></td>
+                    <tr class="setting-input">
+
+                        <td class="setting-name " translate>label.name </td>
+                        <td class="setting-main"><input name="name" id="task_name"   class="{required:true,name:true,minlength:2}  form-control" ng-model="task.name" style="width: 200px;"/></td>
                     </tr>
                     <tr  >
-                        <td class="setting-name">执行周期</td>
-                        <td class="setting-main"><input name="cron" id="cron_text" class="{required:true,cron:true,minlength:6}"  ng-model="task.cron" value=""/>秒 分 时 天 月 年</td>
+                        <td class="setting-name" translate>label.cron</td>
+                        <td class="setting-main"><input name="cron" id="cron_text" class="{required:true,cron:true,minlength:6}  form-control"
+                                                        ng-model="task.cron" value=""  style="width: 200px;display: inline-block"/> <a href="javascript:void(0)" onclick="$('#cronTipDiv').toggle()">?</a> </td>
+                    </tr>
+                    <tr  id="cronTipDiv" style="display: none">
+                        <td class="setting-name"  > </td>
+                        <td class="setting-main" ><span translate> tip.cron</span> <br/>more info search for : quartz + crontrigger</td>
                     </tr>
                     <tr  >
-                        <td class="setting-name">超时(秒)</td>
-                        <td class="setting-main"><input name="timeout" id="time_out"  ng-model="task.timeout"/></td>
+                        <td class="setting-name" translate>label.timeout</td>
+                        <td class="setting-main "><input name="timeout" id="time_out"  ng-model="task.timeout" class=" form-control" style="width: 200px;"/></td>
                     </tr>
-                    <tr>  <td>
-                        脚本模板
-                    </td> <td>  <a  class="btn btn-sm btn-default template_btn" data-target="log_stats">日志监控</a>
-                        <a  class="btn btn-sm  btn-default template_btn" data-target="money_stats" >指标监控</a>
-                        <a  class="btn  btn-sm btn-default template_btn" data-target="key_words" >关键字监控</a>
-                        <a  class="btn  btn-sm btn-default template_btn" data-target="jvm_stats">性能监控</a>
-                        <a  class="btn  btn-sm btn-default template_btn" data-target="day_stats">当日统计</a></td>
+                    <tr>  <td translate>
+                        label.template
+                    </td> <td>  <a  class="btn btn-sm btn-default template_btn" data-target="log_stats" translate>label.logStats</a>
+                        <a  class="btn btn-sm  btn-default template_btn" data-target="money_stats" translate>label.moneyStats</a>
+                        <a  class="btn  btn-sm btn-default template_btn" data-target="key_words" translate>label.keyWordStats</a>
+                        <a  class="btn  btn-sm btn-default template_btn" data-target="jvm_stats" translate>label.jvmStats</a>
+                        <a  class="btn  btn-sm btn-default template_btn" data-target="day_stats" translate>label.dayStats</a></td>
                     </tr>
                 </table>
 
@@ -48,9 +55,9 @@
             </div>
             <br/>
             <div style="float:left;">
-                <input class="btn  btn-sm btn-primary" type="submit" value="确定"/>
-                <input  class="btn  btn-sm btn-default " type="button" id="run_btn" ng-click="runScript()" value="测试"/>
-                <input class="btn  btn-sm btn-default " type="button" id="clear_btn" ng-click="clearConsole()"  value="清空"/>
+                <button class="btn  btn-sm btn-primary" type="submit" translate>label.ok</button>
+                <button  class="btn  btn-sm btn-success " type="button" id="run_btn" ng-click="runScript()" translate>label.test</button>
+                <button class="btn  btn-sm btn-default " type="button" id="clear_btn" ng-click="clearConsole()" translate>label.clear</button>
             </div>
             <br/>
             <br/>

@@ -32,8 +32,9 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Author: Hill.Hu
  * keep user data in mongodb
+ *
+ * @author Hill.Hu
  */
 public class MongoUserManager implements UserManager, UserDetailsService {
     private static Logger logger = LoggerFactory.getLogger(MongoUserManager.class);
@@ -99,8 +100,8 @@ public class MongoUserManager implements UserManager, UserDetailsService {
 
         User user = mongoTemplate.findOne(new Query(Criteria.where("username").is(username)),
                 User.class, COLLECTION_NAME_USER);
-        if(user!=null && isSystemAdmin(username))    {
-            user.setAuthorities( AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
+        if (user != null && isSystemAdmin(username)) {
+            user.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
         }
         return user;
     }

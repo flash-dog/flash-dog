@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * springMVC+Jetty的容器
+ * springMVC+Jetty
  *
  * @author Hill.Hu
  */

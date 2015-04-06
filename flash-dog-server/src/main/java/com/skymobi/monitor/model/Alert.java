@@ -23,7 +23,6 @@ import java.util.Date;
 /**
 * @author hill.hu
  *
- * 告警
  */
 @Document
 public class Alert {

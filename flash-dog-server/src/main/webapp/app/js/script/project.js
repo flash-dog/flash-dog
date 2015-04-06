@@ -4,8 +4,8 @@
  */
 angular.module('fd.project', [])  .
     controller('ProjectListCtrl', function($scope,$http,$location) {
-        $scope.setPageTitle("首页");
-        $scope. ALL_VIEW_NAME="全部";
+        $scope.setPageTitle("Index");
+        $scope. ALL_VIEW_NAME="All";
         $scope.loadProjects=function(){
             $http.get("project/list").success(function(data,status){
                 $scope.projects=data.projects;
@@ -39,7 +39,8 @@ angular.module('fd.project', [])  .
     controller('ProjectNewCtrl', function($scope,$http,Project,$location,$rootScope) {
         $("#add_form").validate();
         $scope.project={};
-        $scope.initTasks=[{name:'jvm_stats',title:'jvm性能监控',checked:true},{name:'log_stats',title:'日志监控',checked:true}];
+        $scope.initTasks=[{name:'jvm_stats',title:'label.jvmStats',checked:true},
+            {name:'log_stats',title:'label.logStats',checked:true}];
         $scope.projectNameChanged=function(){
             var name=$scope.project.name.replace(/-/g,"_");
             $scope.project.logCollection=name+"_log";
@@ -55,7 +56,7 @@ angular.module('fd.project', [])  .
 
                 if(result.success) {
                     $location.path("/show/"+$scope.project.name+"/task") ;
-                    $scope.addMessage("创建成功，从模板开始，先添加几个测试任务吧") ;
+                    $scope.addMessage("tip.projectAdded") ;
                 }else{
                     $scope.renderResult(result);
                 }
@@ -193,7 +194,7 @@ angular.module('fd.project', [])  .
                             $scope.drawChartView(chartViews[0].title);
                         }
                     });
-                    $scope.addMessage("删除成功!");
+                    $scope.addMessage("tip.success");
 
                 });
 

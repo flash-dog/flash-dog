@@ -1,14 +1,14 @@
 #set($layout="/WEB-INF/content/layout/none.vm")
-var now = new Date;
+var now = new Date();
 var o=db.${project.logCollection}.findOne({"className":"org.log4mongo.contrib.JvmMonitor",timestamp:{'$gt':new Date(now - 3*60*1000)}});
 if(o){
-result = o.message.match(".*memoryUsed=(\\d+).*cpuUsed=(\\d+).*threadCount=(\\d+)");
-var memoryUsed = result[1]/1024;
-var cpuUsed = result[2];
-var threadCount = result[3];
-db.${project.metricCollection}.save({name:"memoryUsed (M)",value:memoryUsed,timeStamp:now.getTime()});
-db.${project.metricCollection}.save({name:"cpuUsed",value:cpuUsed,timeStamp:now.getTime()});
-db.${project.metricCollection}.save({name:"threadCount",value:threadCount,timeStamp:now.getTime()});
-return "cpuUsed="+ cpuUsed  +" memoryUsed="+memoryUsed  +" threadCount="+threadCount;
+    result = o.message.match(".*memoryUsed=(\\d+).*cpuUsed=(\\d+).*threadCount=(\\d+)");
+    var memoryUsed = result[1]/1024;
+    var cpuUsed = result[2];
+    var threadCount = result[3];
+    db.${project.metricCollection}.save({name:"memoryUsed (M)",value:memoryUsed,timeStamp:now.getTime()});
+    db.${project.metricCollection}.save({name:"cpuUsed",value:cpuUsed,timeStamp:now.getTime()});
+    db.${project.metricCollection}.save({name:"threadCount",value:threadCount,timeStamp:now.getTime()});
+    return "cpuUsed="+ cpuUsed  +" memoryUsed="+memoryUsed  +" threadCount="+threadCount;
 }
-return "无记录";
+return "no log record found";

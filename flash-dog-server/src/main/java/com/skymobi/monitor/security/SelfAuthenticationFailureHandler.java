@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * author: Hill.Hu
+ * @author  Hill.Hu
  */
 public class SelfAuthenticationFailureHandler implements AuthenticationFailureHandler {
     private static Logger logger = LoggerFactory.getLogger(SelfAuthenticationFailureHandler.class);

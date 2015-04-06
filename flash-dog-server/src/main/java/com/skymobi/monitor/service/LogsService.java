@@ -30,7 +30,7 @@ import javax.annotation.Resource;
 import java.text.ParseException;
 
 /**
- * 日志分析服务
+ * analysis logs
  *
  * @author Hill.Hu
  */

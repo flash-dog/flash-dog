@@ -1,0 +1,9 @@
+#set($layout="/WEB-INF/content/layout/none.vm")
+//check log collection mode ,and set size =1G
+if(!db.${project.logCollection}.isCapped()){
+size=1 * 1024 * 1024 ;
+db.${project.logCollection}.drop() ;
+db.createCollection("${project.logCollection}", {capped:true, size:size});
+db.${project.logCollection}.ensureIndex({timestamp:1});
+return db.${project.logCollection}.stats()
+}

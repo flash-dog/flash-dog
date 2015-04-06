@@ -54,33 +54,37 @@ public class HttpAlertNotifier extends AbstractAlertNotifier implements AlertLis
             Properties properties = project.getProperties();
 //            if (properties.getProperty(HTTP_NOTIFY_CONFIG_ENABLE, "false").equalsIgnoreCase("false"))
 //                return;
-            String url = properties.getProperty(HTTP_NOTIFY_CONFIG_URL, null);
-            if(url==null || url.length()<3)
-                return;
-            Assert.hasLength(url, "notify url can't be null");
-            Map templateVars = new HashMap();
-            templateVars.putAll(properties);
-            templateVars.put("title", alert.getTitle());
-            templateVars.put("content", alert.getContent());
-            templateVars.put("createTime", alert.getCreateTime());
-            templateVars.put("ip", alert.getIp());
-            PostMethod httpMethod = new PostMethod();
-            httpMethod.setURI(new HttpURL(url));
-            String template = properties.getProperty(HTTP_NOTIFY_CONFIG_TEMPLATE);
-            Properties configProperties = new Properties();
-            configProperties.load(new StringReader(properties.getProperty(HTTP_NOTIFY_CONFIG_PROPERTIES, "")));
-            templateVars.putAll(configProperties);
-            String data = renderTemplate(template, templateVars);
-            RequestEntity requestEntity = new ByteArrayRequestEntity(data.getBytes(properties.getProperty(HTTP_NOTIFY_CONFIG_ENCODE, "utf-8")));
-            httpMethod.setRequestEntity(requestEntity);
-
-            logger.info("notify alert to {} ,data={}", url, data);
-            int status = httpClient.executeMethod(httpMethod);
-            logger.info("send alert   to third server ={} ,statusCode={} ,response {}", new Object[]{url, status, httpMethod.getResponseBodyAsString()});
+           notify(alert, properties);
         } catch (Exception e) {
             logger.error("", e);
         }
 
+    }
+
+    public String notify(Alert alert, Properties properties) throws IOException {
+        String url = properties.getProperty(HTTP_NOTIFY_CONFIG_URL, null);
+
+        Assert.hasLength(url, "notify url can't be null");
+        Map templateVars = new HashMap();
+        templateVars.putAll(properties);
+        templateVars.put("title", alert.getTitle());
+        templateVars.put("content", alert.getContent());
+        templateVars.put("createTime", alert.getCreateTime());
+        templateVars.put("ip", alert.getIp());
+        PostMethod httpMethod = new PostMethod();
+        httpMethod.setURI(new HttpURL(url));
+        String template = properties.getProperty(HTTP_NOTIFY_CONFIG_TEMPLATE);
+        Properties configProperties = new Properties();
+        configProperties.load(new StringReader(properties.getProperty(HTTP_NOTIFY_CONFIG_PROPERTIES, "")));
+        templateVars.putAll(configProperties);
+        String data = renderTemplate(template, templateVars);
+        RequestEntity requestEntity = new ByteArrayRequestEntity(data.getBytes(properties.getProperty(HTTP_NOTIFY_CONFIG_ENCODE, "utf-8")));
+        httpMethod.setRequestEntity(requestEntity);
+
+        logger.info("notify alert to {} ,data: {}", url, data);
+        int status = httpClient.executeMethod(httpMethod);
+        logger.info("send alert   to third server ={} ,statusCode={} ,response {}", new Object[]{url, status, httpMethod.getResponseBodyAsString()});
+        return data;
     }
 
     public String renderTemplate(String template, Map map) {

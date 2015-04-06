@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.Callable;
 
 /**
-* @author hill.hu
+ * a task for script
  *
- * mongodb的脚本任务执行器
+ * @author hill.hu
  */
 @SuppressWarnings("unchecked")
 public class Task implements Callable, IdentifyObject {
@@ -34,7 +34,7 @@ public class Task implements Callable, IdentifyObject {
     public final static int ERROR = 2;
 
     private String script, name;
-    private int interval = 5 * 60;
+
     private int timeout = 20;
     /**
      * 计划执行周期
@@ -63,12 +63,6 @@ public class Task implements Callable, IdentifyObject {
         this.script = script;
     }
 
-
-    public int getInterval() {
-        return this.interval;
-    }
-
-
     public String getName() {
         return this.name;
     }
@@ -77,9 +71,6 @@ public class Task implements Callable, IdentifyObject {
         this.name = name;
     }
 
-    public void setInterval(int interval) {
-        this.interval = interval;
-    }
 
     public void setTimeout(int timeout) {
         this.timeout = timeout;
@@ -100,10 +91,9 @@ public class Task implements Callable, IdentifyObject {
     @Override
     public String toString() {
         return "Task{" +
-        		", name='" + name + '\'' +
-        		", cron='" + cron + '\'' +
+                ", name='" + name + '\'' +
+                ", cron='" + cron + '\'' +
                 "script='" + script + '\'' +
-                ", interval=" + interval +
                 ", timeout=" + timeout +
                 '}';
     }

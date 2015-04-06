@@ -86,7 +86,8 @@ public class AlertService {
     }
 
     private void startDog(final Project project, final MetricDog dog) {
-        //为了避免同时执行，使用了随机数延迟执行
+        //random a delay
+        int delay = ((int) (Math.random() * 1000)) % 30;
         executor.schedule(
                 new Runnable() {
                     @Override
@@ -99,7 +100,7 @@ public class AlertService {
                             logger.error("start dog fail ", e);
                         }
                     }
-                }, ((int) (Math.random() * 1000)) % 30, TimeUnit.SECONDS
+                }, delay, TimeUnit.SECONDS
         );
 
     }
