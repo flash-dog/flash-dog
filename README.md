@@ -1,4 +1,4 @@
-** Summary ** 
+# Summary 
 Bolt Monitoring (flash-dog) originated in Hangzhou Sky Network Technology Co., a real project, the main advantage is lightweight, fast, non-invasive, does not affect the business code, just add a few jar log4j package and modify the configuration file, you can monitor any indicators, such as CPU, memory, threads, gaming revenue, the number of online and so on. After the 2012 Open Source in the game, pay, education and many other Internet companies a wide range of applications.
 Online demo, http: //115.28.11.12: 8080 / flash-dog / user admin password 123456
 
