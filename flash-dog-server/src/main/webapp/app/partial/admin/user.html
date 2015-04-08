@@ -61,7 +61,9 @@
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit"  class="btn btn-primary" translate>label.ok</button>
             <a  ng-click="editUser()" class="btn btn-default" translate>label.cancel</a>
-            <a  ng-click="removeUser(selectedUser)" class="btn btn-danger pull-right" translate>label.delete</a>
+            <button type="button" class="btn btn-danger pull-right" confirmed-click="removeUser(selectedUser)"
+                    ng-confirm-click="{{'tip.confirmDelete' | translate}}[{{selectedUser.username}}]?">{{'label.delete' | translate}}</button>
+
         </div>
     </div>
 

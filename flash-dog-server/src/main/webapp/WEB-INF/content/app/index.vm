@@ -52,6 +52,7 @@
            isAuthenticated:$authz.isAuthenticated(),
            lang:'$request.getLocale()'
        };
+
    </script>
 </head>
 <body ng-app="app" >
@@ -83,8 +84,9 @@
     </div>
 
     <div class="fd-message" >
-        <div class="message"   ng-repeat="message in messages"   ng-class="['bg-'+message.level]" translate>{{message.content}}</div>
+        <div class="message"   ng-repeat="message in messages"   ng-class="['bg-'+message.level]" translate  > message.content </div>
     </div>
+
 </div>
 
 </body>

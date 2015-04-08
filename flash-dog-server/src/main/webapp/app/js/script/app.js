@@ -26,7 +26,6 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
      }  ;
     jQuery.extend($scope.auth,_auth);
 
-
 }).
     config(["$routeProvider","$httpProvider","$translateProvider",function($routeProvider,$httpProvider,$translateProvider){
         $routeProvider.when("/list",{

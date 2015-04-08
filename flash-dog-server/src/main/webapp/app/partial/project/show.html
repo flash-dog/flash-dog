@@ -13,7 +13,9 @@
         <div class="btn-group pull-right visible-lg-inline">
             <a translate class="btn btn-sm btn-default" ng-click="addChartView()" data-toggle="modal" data-target="#metricsViewDialog">
                 <i class="glyphicon glyphicon-plus" ></i>link.add</a>
-            <a  translate ng-click="removeChartView()" class="btn btn-sm btn-default"><i class="glyphicon glyphicon-remove"></i>label.delete</a>
+
+            <a   ng-confirm-click="{{'tip.confirmDelete' | translate}}[{{chartTitle}}]?" confirmed-click="removeChartView()"
+                   class="btn btn-sm btn-default"><i class="glyphicon glyphicon-remove"></i>{{'label.delete' |translate}}</a>
         </div>
 
     </div>

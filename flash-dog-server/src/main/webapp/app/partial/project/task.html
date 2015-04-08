@@ -27,9 +27,12 @@
 
                  <tr ng-repeat="task in project.tasks"    >
 
-                     <td    ><a href="#/show/{{project.name}}/task/{{task.name}}">{{task.name}}</a></td>
+                     <td ><a href="#/show/{{project.name}}/task/{{task.name}}">{{task.name}}</a></td>
                      <td>{{task.cron}}</td>
-                     <td><a class="" href="javascript:void (0)" ng-click="removeTask(task)"><i class="glyphicon glyphicon-remove"></i></a> </td>
+                     <td>
+                         <button class="btn  btn-sm" confirmed-click="removeTask(task)"
+                                 ng-confirm-click="{{'tip.confirmDelete' | translate}} [{{task.name}}]?">{{'label.delete' | translate}}</button>
+                        </td>
                  </tr>
                  </tbody>
              </table>

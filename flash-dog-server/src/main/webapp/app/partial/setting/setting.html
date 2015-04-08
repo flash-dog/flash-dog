@@ -1,8 +1,9 @@
 <div ng-controller="SettingCtrl">
     <div ng-include="'app/partial/project/_project_nav.html'" ></div>
     <br/>
-    <a href="javascript:void(0)" class="btn btn-danger pull-right"
-       ng-click="deleteProject()" translate> label.deleteProject</a>
+
+    <button class="btn btn-danger btn-sm pull-right" confirmed-click="deleteProject()"
+            ng-confirm-click="{{'tip.confirmDelete' | translate}}[{{project.alias}}]?"> {{"label.deleteProject" | translate}}</button>
     <ul class="nav nav-tabs   " role="tablist">
         <li class="active"><a data-target="#home" role="tab" data-toggle="tab" translate>label.general</a></li>
         <li><a data-target="#profile" role="tab" data-toggle="tab" translate>label.dogs</a></li>
