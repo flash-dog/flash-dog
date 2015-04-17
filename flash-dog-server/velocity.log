@@ -1,31 +1,22 @@
-2015-04-02 23:33:43,022 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-02 23:33:43,022 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-02 23:33:43,023 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2015-04-02 23:33:43,025 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2015-04-02 23:33:43,026 - Do unicode file recognition:  false
-2015-04-02 23:33:43,026 - FileResourceLoader : adding path '.'
-2015-04-02 23:33:43,030 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
-2015-04-02 23:33:43,031 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2015-04-02 23:33:43,032 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2015-04-02 23:33:43,032 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2015-04-02 23:33:43,033 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2015-04-02 23:33:43,033 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2015-04-02 23:33:43,056 - Created '20' parsers.
-2015-04-02 23:33:43,060 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
-2015-04-02 23:33:43,060 - Velocimacro : Default library not found.
-2015-04-02 23:33:43,060 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2015-04-02 23:33:43,060 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2015-04-02 23:33:43,060 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2015-04-02 23:33:43,060 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2015-04-02 23:33:43,070 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-02 23:33:43,070 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-02 23:33:43,071 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-02 23:35:17,615 - Log4JLogChute initialized using file 'velocity.log'
-2015-04-02 23:35:17,615 - Velocity was not initialized! Calling init()...
-2015-04-02 23:35:17,615 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
-2015-04-02 23:35:17,615 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
-2015-04-02 23:35:17,615 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
-2015-04-02 23:35:17,615 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+2015-04-06 21:35:06,472 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2015-04-06 21:35:06,474 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2015-04-06 21:35:06,474 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2015-04-06 21:35:06,474 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2015-04-06 21:35:06,474 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2015-04-06 21:35:06,475 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2015-04-06 21:35:06,484 - Created '20' parsers.
+2015-04-06 21:35:06,484 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2015-04-06 21:35:06,485 - Velocimacro : Default library not found.
+2015-04-06 21:35:06,485 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2015-04-06 21:35:06,485 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2015-04-06 21:35:06,485 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2015-04-06 21:35:06,485 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2015-04-06 21:41:25,675 - Log4JLogChute initialized using file 'velocity.log'
+2015-04-06 21:41:25,675 - Velocity was not initialized! Calling init()...
+2015-04-06 21:41:25,675 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2015-04-06 21:41:25,675 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2015-04-06 21:41:25,675 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2015-04-06 21:41:25,677 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
 java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
 	at java.lang.Class.forName0(Native Method)
 	at java.lang.Class.forName(Class.java:247)
@@ -39,129 +30,9 @@ java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
 	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:972)
 	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:307)
 	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:228)
-	at com.skymobi.monitor.util.ProjectCreator.renderTask(ProjectCreator.java:105)
-	at com.skymobi.monitor.util.ProjectCreator.createSelf(ProjectCreator.java:53)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1581)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1522)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1452)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:456)
-	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:294)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:225)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:291)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:585)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:913)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:464)
-	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:384)
-	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:283)
-	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:111)
-	at org.mortbay.jetty.handler.ContextHandler.startContext(ContextHandler.java:549)
-	at org.mortbay.jetty.servlet.Context.startContext(Context.java:136)
-	at org.mortbay.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1282)
-	at org.mortbay.jetty.handler.ContextHandler.doStart(ContextHandler.java:518)
-	at org.mortbay.jetty.webapp.WebAppContext.doStart(WebAppContext.java:499)
-	at org.mortbay.jetty.plugin.Jetty6PluginWebAppContext.doStart(Jetty6PluginWebAppContext.java:115)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.jetty.handler.ContextHandlerCollection.doStart(ContextHandlerCollection.java:156)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerWrapper.doStart(HandlerWrapper.java:130)
-	at org.mortbay.jetty.Server.doStart(Server.java:224)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.plugin.Jetty6PluginServer.start(Jetty6PluginServer.java:132)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.startJetty(AbstractJettyMojo.java:454)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.execute(AbstractJettyMojo.java:396)
-	at org.mortbay.jetty.plugin.AbstractJettyRunMojo.execute(AbstractJettyRunMojo.java:210)
-	at org.mortbay.jetty.plugin.Jetty6RunMojo.execute(Jetty6RunMojo.java:184)
-	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:132)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:208)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:153)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:145)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:116)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:80)
-	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:51)
-	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:120)
-	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:355)
-	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:155)
-	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:584)
-	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:216)
-	at org.apache.maven.cli.MavenCli.main(MavenCli.java:160)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:289)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:229)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:415)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:356)
-	at org.codehaus.classworlds.Launcher.main(Launcher.java:47)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:134)
-Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
-	at org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy.loadClass(SelfFirstStrategy.java:50)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.unsynchronizedLoadClass(ClassRealm.java:271)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:254)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:239)
-	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:401)
-	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:363)
-	at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:320)
-	... 80 more
-2015-04-02 23:35:17,617 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-02 23:35:17,617 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-02 23:35:17,618 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2015-04-02 23:35:17,620 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2015-04-02 23:35:17,620 - Do unicode file recognition:  false
-2015-04-02 23:35:17,620 - FileResourceLoader : adding path '.'
-2015-04-02 23:35:17,624 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
-2015-04-02 23:35:17,625 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2015-04-02 23:35:17,626 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2015-04-02 23:35:17,626 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2015-04-02 23:35:17,627 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2015-04-02 23:35:17,627 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2015-04-02 23:35:17,650 - Created '20' parsers.
-2015-04-02 23:35:17,652 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
-2015-04-02 23:35:17,653 - Velocimacro : Default library not found.
-2015-04-02 23:35:17,653 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2015-04-02 23:35:17,653 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2015-04-02 23:35:17,653 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2015-04-02 23:35:17,653 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2015-04-02 23:35:17,663 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-02 23:35:17,663 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-02 23:35:17,664 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-02 23:35:17,669 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 93] : $gt cannot be resolved.
-2015-04-02 23:35:17,669 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 8, column 69] : $gt cannot be resolved.
-2015-04-03 10:02:30,926 - Log4JLogChute initialized using file 'velocity.log'
-2015-04-03 10:02:30,936 - Velocity was not initialized! Calling init()...
-2015-04-03 10:02:30,936 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
-2015-04-03 10:02:30,936 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
-2015-04-03 10:02:30,936 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
-2015-04-03 10:02:30,938 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
-java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
-	at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Class.java:247)
-	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
-	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
-	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
-	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
-	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:993)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:972)
-	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:307)
-	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:228)
-	at com.skymobi.monitor.util.ProjectCreator.renderTemplateTask(ProjectCreator.java:140)
-	at com.skymobi.monitor.util.ProjectCreator.create(ProjectCreator.java:72)
-	at com.skymobi.monitor.action.ProjectAction.add(ProjectAction.java:112)
+	at com.skymobi.monitor.service.HttpAlertNotifier.renderTemplate(HttpAlertNotifier.java:97)
+	at com.skymobi.monitor.service.HttpAlertNotifier.notify(HttpAlertNotifier.java:80)
+	at com.skymobi.monitor.action.HttpAlertAction.notify(HttpAlertAction.java:37)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
@@ -233,33 +104,31 @@ Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
 	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:363)
 	at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:320)
 	... 77 more
-2015-04-03 10:02:30,944 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:02:30,944 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:02:30,944 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2015-04-03 10:02:30,945 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2015-04-03 10:02:30,945 - Do unicode file recognition:  false
-2015-04-03 10:02:30,945 - FileResourceLoader : adding path '.'
-2015-04-03 10:02:30,945 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
-2015-04-03 10:02:30,945 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2015-04-03 10:02:30,945 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2015-04-03 10:02:30,945 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2015-04-03 10:02:30,945 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2015-04-03 10:02:30,945 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2015-04-03 10:02:30,950 - Created '20' parsers.
-2015-04-03 10:02:30,950 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
-2015-04-03 10:02:30,951 - Velocimacro : Default library not found.
-2015-04-03 10:02:30,951 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2015-04-03 10:02:30,951 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2015-04-03 10:02:30,951 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2015-04-03 10:02:30,951 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2015-04-03 10:02:30,964 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:03:40,475 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:07:11,697 - Log4JLogChute initialized using file 'velocity.log'
-2015-04-03 10:07:11,697 - Velocity was not initialized! Calling init()...
-2015-04-03 10:07:11,697 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
-2015-04-03 10:07:11,697 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
-2015-04-03 10:07:11,697 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
-2015-04-03 10:07:11,698 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+2015-04-06 21:41:25,681 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2015-04-06 21:41:25,681 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2015-04-06 21:41:25,681 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2015-04-06 21:41:25,681 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2015-04-06 21:41:25,681 - Do unicode file recognition:  false
+2015-04-06 21:41:25,681 - FileResourceLoader : adding path '.'
+2015-04-06 21:41:25,681 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2015-04-06 21:41:25,681 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2015-04-06 21:41:25,681 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2015-04-06 21:41:25,681 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2015-04-06 21:41:25,681 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2015-04-06 21:41:25,681 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2015-04-06 21:41:25,685 - Created '20' parsers.
+2015-04-06 21:41:25,685 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2015-04-06 21:41:25,685 - Velocimacro : Default library not found.
+2015-04-06 21:41:25,685 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2015-04-06 21:41:25,685 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2015-04-06 21:41:25,685 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2015-04-06 21:41:25,685 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2015-04-07 22:20:06,461 - Log4JLogChute initialized using file 'velocity.log'
+2015-04-07 22:20:06,491 - Velocity was not initialized! Calling init()...
+2015-04-07 22:20:06,491 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2015-04-07 22:20:06,491 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2015-04-07 22:20:06,491 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2015-04-07 22:20:06,493 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
 java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
 	at java.lang.Class.forName0(Native Method)
 	at java.lang.Class.forName(Class.java:247)
@@ -273,75 +142,183 @@ java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
 	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:972)
 	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:307)
 	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:228)
-	at com.skymobi.monitor.util.ProjectCreator.renderTemplateTask(ProjectCreator.java:137)
+	at com.skymobi.monitor.service.HttpAlertNotifier.renderTemplate(HttpAlertNotifier.java:97)
+	at com.skymobi.monitor.service.HttpAlertNotifier.notify(HttpAlertNotifier.java:80)
+	at com.skymobi.monitor.action.HttpAlertAction.notify(HttpAlertAction.java:37)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.springframework.web.bind.annotation.support.HandlerMethodInvoker.invokeHandlerMethod(HandlerMethodInvoker.java:176)
+	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.invokeHandlerMethod(AnnotationMethodHandlerAdapter.java:436)
+	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.handle(AnnotationMethodHandlerAdapter.java:424)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:900)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:827)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:789)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:727)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:311)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:116)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:113)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:113)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:146)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:45)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilter(BasicAuthenticationFilter.java:150)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:182)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:173)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:259)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
+	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.content(HttpConnection.java:945)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:756)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:218)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy.loadClass(SelfFirstStrategy.java:50)
+	at org.codehaus.plexus.classworlds.realm.ClassRealm.unsynchronizedLoadClass(ClassRealm.java:271)
+	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:254)
+	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:239)
+	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:401)
+	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:363)
+	at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:320)
+	... 77 more
+2015-04-07 22:20:06,497 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2015-04-07 22:20:06,498 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2015-04-07 22:20:06,498 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2015-04-07 22:20:06,498 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2015-04-07 22:20:06,498 - Do unicode file recognition:  false
+2015-04-07 22:20:06,498 - FileResourceLoader : adding path '.'
+2015-04-07 22:20:06,498 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2015-04-07 22:20:06,499 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2015-04-07 22:20:06,499 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2015-04-07 22:20:06,499 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2015-04-07 22:20:06,499 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2015-04-07 22:20:06,499 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2015-04-07 22:20:06,505 - Created '20' parsers.
+2015-04-07 22:20:06,505 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2015-04-07 22:20:06,506 - Velocimacro : Default library not found.
+2015-04-07 22:20:06,506 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2015-04-07 22:20:06,506 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2015-04-07 22:20:06,506 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2015-04-07 22:20:06,506 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2015-04-08 22:06:58,941 - Log4JLogChute initialized using file 'velocity.log'
+2015-04-08 22:06:58,957 - Velocity was not initialized! Calling init()...
+2015-04-08 22:06:58,957 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2015-04-08 22:06:58,957 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2015-04-08 22:06:58,957 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2015-04-08 22:06:58,959 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:247)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:993)
+	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:972)
+	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:307)
+	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:228)
+	at com.skymobi.monitor.util.ProjectCreator.renderTemplateTask(ProjectCreator.java:134)
 	at com.skymobi.monitor.util.ProjectCreator.create(ProjectCreator.java:68)
-	at com.skymobi.monitor.util.ProjectCreator.createSelf(ProjectCreator.java:49)
+	at com.skymobi.monitor.action.ProjectAction.add(ProjectAction.java:110)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
 	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1581)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1522)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1452)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:456)
-	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:294)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:225)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:291)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:585)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:913)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:464)
-	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:384)
-	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:283)
-	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:111)
-	at org.mortbay.jetty.handler.ContextHandler.startContext(ContextHandler.java:549)
-	at org.mortbay.jetty.servlet.Context.startContext(Context.java:136)
-	at org.mortbay.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1282)
-	at org.mortbay.jetty.handler.ContextHandler.doStart(ContextHandler.java:518)
-	at org.mortbay.jetty.webapp.WebAppContext.doStart(WebAppContext.java:499)
-	at org.mortbay.jetty.plugin.Jetty6PluginWebAppContext.doStart(Jetty6PluginWebAppContext.java:115)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.jetty.handler.ContextHandlerCollection.doStart(ContextHandlerCollection.java:156)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerWrapper.doStart(HandlerWrapper.java:130)
-	at org.mortbay.jetty.Server.doStart(Server.java:224)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.plugin.Jetty6PluginServer.start(Jetty6PluginServer.java:132)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.startJetty(AbstractJettyMojo.java:454)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.execute(AbstractJettyMojo.java:396)
-	at org.mortbay.jetty.plugin.AbstractJettyRunMojo.execute(AbstractJettyRunMojo.java:210)
-	at org.mortbay.jetty.plugin.Jetty6RunMojo.execute(Jetty6RunMojo.java:184)
-	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:132)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:208)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:153)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:145)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:116)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:80)
-	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:51)
-	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:120)
-	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:355)
-	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:155)
-	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:584)
-	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:216)
-	at org.apache.maven.cli.MavenCli.main(MavenCli.java:160)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:289)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:229)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:415)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:356)
-	at org.codehaus.classworlds.Launcher.main(Launcher.java:47)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:134)
+	at org.springframework.web.bind.annotation.support.HandlerMethodInvoker.invokeHandlerMethod(HandlerMethodInvoker.java:176)
+	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.invokeHandlerMethod(AnnotationMethodHandlerAdapter.java:436)
+	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.handle(AnnotationMethodHandlerAdapter.java:424)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:900)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:827)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:789)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:727)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:311)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:116)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:113)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:113)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:146)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:45)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilter(BasicAuthenticationFilter.java:150)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:182)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:323)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:173)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:259)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
+	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.content(HttpConnection.java:945)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:756)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:218)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
 Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
 	at org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy.loadClass(SelfFirstStrategy.java:50)
 	at org.codehaus.plexus.classworlds.realm.ClassRealm.unsynchronizedLoadClass(ClassRealm.java:271)
@@ -350,397 +327,53 @@ Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
 	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:401)
 	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:363)
 	at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:320)
-	... 81 more
-2015-04-03 10:07:11,699 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:07:11,699 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:07:11,700 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2015-04-03 10:07:11,702 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2015-04-03 10:07:11,702 - Do unicode file recognition:  false
-2015-04-03 10:07:11,702 - FileResourceLoader : adding path '.'
-2015-04-03 10:07:11,709 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
-2015-04-03 10:07:11,709 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2015-04-03 10:07:11,710 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2015-04-03 10:07:11,711 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2015-04-03 10:07:11,712 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2015-04-03 10:07:11,713 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2015-04-03 10:07:11,734 - Created '20' parsers.
-2015-04-03 10:07:11,737 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
-2015-04-03 10:07:11,737 - Velocimacro : Default library not found.
-2015-04-03 10:07:11,737 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2015-04-03 10:07:11,737 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2015-04-03 10:07:11,737 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2015-04-03 10:07:11,737 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2015-04-03 10:07:11,752 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-03 10:07:11,752 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-03 10:07:11,753 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:07:11,780 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 93] : $gt cannot be resolved.
-2015-04-03 10:07:11,780 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 8, column 69] : $gt cannot be resolved.
-2015-04-03 10:07:46,575 - Log4JLogChute initialized using file 'velocity.log'
-2015-04-03 10:07:46,575 - Velocity was not initialized! Calling init()...
-2015-04-03 10:07:46,575 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
-2015-04-03 10:07:46,575 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
-2015-04-03 10:07:46,575 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
-2015-04-03 10:07:46,576 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
-java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
-	at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Class.java:247)
-	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
-	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
-	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
-	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
-	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:993)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:972)
-	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:307)
-	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:228)
-	at com.skymobi.monitor.util.ProjectCreator.renderTemplateTask(ProjectCreator.java:137)
-	at com.skymobi.monitor.util.ProjectCreator.create(ProjectCreator.java:68)
-	at com.skymobi.monitor.util.ProjectCreator.createSelf(ProjectCreator.java:49)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1581)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1522)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1452)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:456)
-	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:294)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:225)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:291)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:585)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:913)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:464)
-	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:384)
-	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:283)
-	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:111)
-	at org.mortbay.jetty.handler.ContextHandler.startContext(ContextHandler.java:549)
-	at org.mortbay.jetty.servlet.Context.startContext(Context.java:136)
-	at org.mortbay.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1282)
-	at org.mortbay.jetty.handler.ContextHandler.doStart(ContextHandler.java:518)
-	at org.mortbay.jetty.webapp.WebAppContext.doStart(WebAppContext.java:499)
-	at org.mortbay.jetty.plugin.Jetty6PluginWebAppContext.doStart(Jetty6PluginWebAppContext.java:115)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.jetty.handler.ContextHandlerCollection.doStart(ContextHandlerCollection.java:156)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerWrapper.doStart(HandlerWrapper.java:130)
-	at org.mortbay.jetty.Server.doStart(Server.java:224)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.plugin.Jetty6PluginServer.start(Jetty6PluginServer.java:132)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.startJetty(AbstractJettyMojo.java:454)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.execute(AbstractJettyMojo.java:396)
-	at org.mortbay.jetty.plugin.AbstractJettyRunMojo.execute(AbstractJettyRunMojo.java:210)
-	at org.mortbay.jetty.plugin.Jetty6RunMojo.execute(Jetty6RunMojo.java:184)
-	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:132)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:208)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:153)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:145)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:116)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:80)
-	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:51)
-	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:120)
-	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:355)
-	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:155)
-	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:584)
-	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:216)
-	at org.apache.maven.cli.MavenCli.main(MavenCli.java:160)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:289)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:229)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:415)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:356)
-	at org.codehaus.classworlds.Launcher.main(Launcher.java:47)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:134)
-Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
-	at org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy.loadClass(SelfFirstStrategy.java:50)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.unsynchronizedLoadClass(ClassRealm.java:271)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:254)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:239)
-	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:401)
-	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:363)
-	at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:320)
-	... 81 more
-2015-04-03 10:07:46,577 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:07:46,577 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:07:46,578 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2015-04-03 10:07:46,580 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2015-04-03 10:07:46,581 - Do unicode file recognition:  false
-2015-04-03 10:07:46,581 - FileResourceLoader : adding path '.'
-2015-04-03 10:07:46,588 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
-2015-04-03 10:07:46,588 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2015-04-03 10:07:46,590 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2015-04-03 10:07:46,591 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2015-04-03 10:07:46,592 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2015-04-03 10:07:46,592 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2015-04-03 10:07:46,616 - Created '20' parsers.
-2015-04-03 10:07:46,619 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
-2015-04-03 10:07:46,620 - Velocimacro : Default library not found.
-2015-04-03 10:07:46,620 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2015-04-03 10:07:46,620 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2015-04-03 10:07:46,620 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2015-04-03 10:07:46,620 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2015-04-03 10:07:46,631 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-03 10:07:46,631 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-03 10:07:46,632 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:07:46,636 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 93] : $gt cannot be resolved.
-2015-04-03 10:07:46,636 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 8, column 69] : $gt cannot be resolved.
-2015-04-03 10:08:46,208 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:08:46,209 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-03 10:08:46,209 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-03 10:14:04,057 - Log4JLogChute initialized using file 'velocity.log'
-2015-04-03 10:14:04,057 - Velocity was not initialized! Calling init()...
-2015-04-03 10:14:04,057 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
-2015-04-03 10:14:04,058 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
-2015-04-03 10:14:04,058 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
-2015-04-03 10:14:04,059 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
-java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
-	at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Class.java:247)
-	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
-	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
-	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
-	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
-	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:993)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:972)
-	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:307)
-	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:228)
-	at com.skymobi.monitor.util.ProjectCreator.renderTemplateTask(ProjectCreator.java:137)
-	at com.skymobi.monitor.util.ProjectCreator.create(ProjectCreator.java:68)
-	at com.skymobi.monitor.util.ProjectCreator.createSelf(ProjectCreator.java:49)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1581)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1522)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1452)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:456)
-	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:294)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:225)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:291)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:585)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:913)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:464)
-	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:384)
-	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:283)
-	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:111)
-	at org.mortbay.jetty.handler.ContextHandler.startContext(ContextHandler.java:549)
-	at org.mortbay.jetty.servlet.Context.startContext(Context.java:136)
-	at org.mortbay.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1282)
-	at org.mortbay.jetty.handler.ContextHandler.doStart(ContextHandler.java:518)
-	at org.mortbay.jetty.webapp.WebAppContext.doStart(WebAppContext.java:499)
-	at org.mortbay.jetty.plugin.Jetty6PluginWebAppContext.doStart(Jetty6PluginWebAppContext.java:115)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.jetty.handler.ContextHandlerCollection.doStart(ContextHandlerCollection.java:156)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerWrapper.doStart(HandlerWrapper.java:130)
-	at org.mortbay.jetty.Server.doStart(Server.java:224)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.plugin.Jetty6PluginServer.start(Jetty6PluginServer.java:132)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.startJetty(AbstractJettyMojo.java:454)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.execute(AbstractJettyMojo.java:396)
-	at org.mortbay.jetty.plugin.AbstractJettyRunMojo.execute(AbstractJettyRunMojo.java:210)
-	at org.mortbay.jetty.plugin.Jetty6RunMojo.execute(Jetty6RunMojo.java:184)
-	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:132)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:208)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:153)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:145)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:116)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:80)
-	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:51)
-	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:120)
-	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:355)
-	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:155)
-	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:584)
-	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:216)
-	at org.apache.maven.cli.MavenCli.main(MavenCli.java:160)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:289)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:229)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:415)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:356)
-	at org.codehaus.classworlds.Launcher.main(Launcher.java:47)
-Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
-	at org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy.loadClass(SelfFirstStrategy.java:50)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.unsynchronizedLoadClass(ClassRealm.java:271)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:254)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:239)
-	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:401)
-	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:363)
-	at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:320)
-	... 76 more
-2015-04-03 10:14:04,062 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:14:04,062 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:14:04,063 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2015-04-03 10:14:04,065 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2015-04-03 10:14:04,065 - Do unicode file recognition:  false
-2015-04-03 10:14:04,066 - FileResourceLoader : adding path '.'
-2015-04-03 10:14:04,071 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
-2015-04-03 10:14:04,072 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2015-04-03 10:14:04,073 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2015-04-03 10:14:04,073 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2015-04-03 10:14:04,083 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2015-04-03 10:14:04,084 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2015-04-03 10:14:04,109 - Created '20' parsers.
-2015-04-03 10:14:04,120 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
-2015-04-03 10:14:04,121 - Velocimacro : Default library not found.
-2015-04-03 10:14:04,121 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2015-04-03 10:14:04,121 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2015-04-03 10:14:04,121 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2015-04-03 10:14:04,121 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2015-04-03 10:14:04,135 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-03 10:14:04,135 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-03 10:14:04,149 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:14:04,150 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 93] : $gt cannot be resolved.
-2015-04-03 10:14:04,150 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 8, column 69] : $gt cannot be resolved.
-2015-04-03 10:14:54,590 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:15:14,114 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-03 10:15:14,114 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-03 10:21:21,784 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:21:21,785 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-03 10:21:21,785 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-03 10:21:36,946 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:21:36,947 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-03 10:21:36,947 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-03 10:24:09,368 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:26:23,374 - Log4JLogChute initialized using file 'velocity.log'
-2015-04-03 10:26:23,375 - Velocity was not initialized! Calling init()...
-2015-04-03 10:26:23,375 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
-2015-04-03 10:26:23,375 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
-2015-04-03 10:26:23,375 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
-2015-04-03 10:26:23,376 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
-java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
-	at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Class.java:247)
-	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:63)
-	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
-	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
-	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
-	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:993)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:972)
-	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:307)
-	at org.apache.velocity.app.VelocityEngine.evaluate(VelocityEngine.java:228)
-	at com.skymobi.monitor.util.ProjectCreator.renderTemplateTask(ProjectCreator.java:138)
-	at com.skymobi.monitor.util.ProjectCreator.create(ProjectCreator.java:69)
-	at com.skymobi.monitor.util.ProjectCreator.createSelf(ProjectCreator.java:49)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1581)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1522)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1452)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:456)
-	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:294)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:225)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:291)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:585)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:913)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:464)
-	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:384)
-	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:283)
-	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:111)
-	at org.mortbay.jetty.handler.ContextHandler.startContext(ContextHandler.java:549)
-	at org.mortbay.jetty.servlet.Context.startContext(Context.java:136)
-	at org.mortbay.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1282)
-	at org.mortbay.jetty.handler.ContextHandler.doStart(ContextHandler.java:518)
-	at org.mortbay.jetty.webapp.WebAppContext.doStart(WebAppContext.java:499)
-	at org.mortbay.jetty.plugin.Jetty6PluginWebAppContext.doStart(Jetty6PluginWebAppContext.java:115)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.jetty.handler.ContextHandlerCollection.doStart(ContextHandlerCollection.java:156)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.handler.HandlerWrapper.doStart(HandlerWrapper.java:130)
-	at org.mortbay.jetty.Server.doStart(Server.java:224)
-	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
-	at org.mortbay.jetty.plugin.Jetty6PluginServer.start(Jetty6PluginServer.java:132)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.startJetty(AbstractJettyMojo.java:454)
-	at org.mortbay.jetty.plugin.AbstractJettyMojo.execute(AbstractJettyMojo.java:396)
-	at org.mortbay.jetty.plugin.AbstractJettyRunMojo.execute(AbstractJettyRunMojo.java:210)
-	at org.mortbay.jetty.plugin.Jetty6RunMojo.execute(Jetty6RunMojo.java:184)
-	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:132)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:208)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:153)
-	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:145)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:116)
-	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:80)
-	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:51)
-	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:120)
-	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:355)
-	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:155)
-	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:584)
-	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:216)
-	at org.apache.maven.cli.MavenCli.main(MavenCli.java:160)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-	at java.lang.reflect.Method.invoke(Method.java:597)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:289)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:229)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:415)
-	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:356)
-	at org.codehaus.classworlds.Launcher.main(Launcher.java:47)
-Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
-	at org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy.loadClass(SelfFirstStrategy.java:50)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.unsynchronizedLoadClass(ClassRealm.java:271)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:254)
-	at org.codehaus.plexus.classworlds.realm.ClassRealm.loadClass(ClassRealm.java:239)
-	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:401)
-	at org.mortbay.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:363)
-	at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:320)
-	... 76 more
-2015-04-03 10:26:23,379 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:26:23,379 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
-2015-04-03 10:26:23,381 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2015-04-03 10:26:23,383 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2015-04-03 10:26:23,384 - Do unicode file recognition:  false
-2015-04-03 10:26:23,384 - FileResourceLoader : adding path '.'
-2015-04-03 10:26:23,389 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
-2015-04-03 10:26:23,390 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2015-04-03 10:26:23,391 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2015-04-03 10:26:23,391 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2015-04-03 10:26:23,392 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2015-04-03 10:26:23,393 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2015-04-03 10:26:23,421 - Created '20' parsers.
-2015-04-03 10:26:23,433 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
-2015-04-03 10:26:23,433 - Velocimacro : Default library not found.
-2015-04-03 10:26:23,433 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2015-04-03 10:26:23,433 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2015-04-03 10:26:23,433 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2015-04-03 10:26:23,433 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2015-04-03 10:26:23,445 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-03 10:26:23,445 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
-2015-04-03 10:26:23,447 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:26:23,448 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 93] : $gt cannot be resolved.
-2015-04-03 10:26:23,450 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 8, column 69] : $gt cannot be resolved.
-2015-04-03 10:27:24,736 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
-2015-04-03 10:27:24,737 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 67] : $gt cannot be resolved.
-2015-04-03 10:27:24,737 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 53] : $gt cannot be resolved.
+	... 77 more
+2015-04-08 22:06:58,963 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2015-04-08 22:06:58,963 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2015-04-08 22:06:58,963 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2015-04-08 22:06:58,963 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2015-04-08 22:06:58,963 - Do unicode file recognition:  false
+2015-04-08 22:06:58,963 - FileResourceLoader : adding path '.'
+2015-04-08 22:06:58,964 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2015-04-08 22:06:58,964 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2015-04-08 22:06:58,964 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2015-04-08 22:06:58,964 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2015-04-08 22:06:58,965 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2015-04-08 22:06:58,965 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2015-04-08 22:06:58,974 - Created '20' parsers.
+2015-04-08 22:06:58,975 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2015-04-08 22:06:58,975 - Velocimacro : Default library not found.
+2015-04-08 22:06:58,975 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2015-04-08 22:06:58,975 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2015-04-08 22:06:58,975 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2015-04-08 22:06:58,975 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2015-04-08 22:06:58,978 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 22:06:58,980 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 22:06:58,980 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
+2015-04-08 22:19:31,059 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 22:19:31,060 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 22:19:31,060 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
+2015-04-08 22:20:05,179 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 22:20:05,180 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 22:20:05,180 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
+2015-04-08 22:29:23,271 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 22:29:23,272 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 22:29:23,272 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
+2015-04-08 22:33:24,126 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 22:33:24,127 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 22:33:24,127 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
+2015-04-08 22:35:37,951 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 22:35:37,952 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 22:35:37,952 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
+2015-04-08 22:58:14,494 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 22:58:14,495 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 22:58:14,496 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
+2015-04-08 23:22:28,853 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 23:22:28,854 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 23:22:28,854 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
+2015-04-08 23:23:19,040 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 23:23:19,042 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 23:23:19,042 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
+2015-04-08 23:23:52,802 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 3, column 103] : $gt cannot be resolved.
+2015-04-08 23:23:52,806 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 4, column 67] : $gt cannot be resolved.
+2015-04-08 23:23:52,806 - Null reference [template 'com.skymobi.monitor.util.ProjectCreator', line 5, column 53] : $gt cannot be resolved.
