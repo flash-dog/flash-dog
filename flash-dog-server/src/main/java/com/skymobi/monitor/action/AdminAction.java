@@ -47,8 +47,10 @@ public class AdminAction {
     @Resource
     private ViewService viewService;
 
-    @RequestMapping(value = "/admin/views/destroy" )
-    public @ResponseBody  WebResult deleteView(String name,  ModelMap map) {
+    @RequestMapping(value = "/admin/views/destroy")
+    public
+    @ResponseBody
+    WebResult deleteView(String name, ModelMap map) {
 
         viewService.delete(name);
 
@@ -57,19 +59,19 @@ public class AdminAction {
 
 
     @RequestMapping(value = "/admin/views/save")
-    public @ResponseBody
-    WebResult createView(HttpEntity<View> entity,  ModelMap map) {
-        WebResult result=new WebResult();
-        try{
-            View view=entity.getBody();
-            Assert.isTrue(view.getName().length() > 0,"name should not be null");
-            logger.debug("save view ={}",view);
+    public
+    @ResponseBody
+    WebResult createView(HttpEntity<View> entity, ModelMap map) {
+        WebResult result = new WebResult();
+        try {
+            View view = entity.getBody();
+            Assert.isTrue(view.getName().length() > 0, "name should not be null");
+            logger.debug("save view ={}", view);
             viewService.saveView(view);
-        } catch (Exception e){
+        } catch (Exception e) {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
-
 
 
         return result;
